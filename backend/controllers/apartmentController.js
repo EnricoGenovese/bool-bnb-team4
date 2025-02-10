@@ -1,16 +1,61 @@
 import connection from "../connection.js";
 import CustomError from "../classes/CustomError.js";
 
+// function index(req, res) {
+//     const { search, category, minRooms, minBath } = req.query;
+//     if (!search) {
+//         const sql = "SELECT *  FROM `apartments` ORDER BY `likes` DESC;";
+//         connection.query(sql, (err, results) => {
+//             if (err) res.status(500).json({ error: 'Errore del server' })
+//             res.json(results)
+//         })
+//     } else {
+
+//         const searchSql = `SELECT * FROM apartments
+//         JOIN categories ON apartments.id_category = categories.id
+//         WHERE (address LIKE '%${search}%' OR city LIKE '%${search}%')
+//         OR('${category}'IS NULL OR categories.name ='${category}')`
+
+//         connection.query(searchSql, (err, results) => {
+
+//             if (err) res.status(500).json({ error: 'Errore del server' });
+//             res.json(results)
+//         })
+//     }
+//     // const response = {
+//     //     status: "success",
+//     //     count: results.length,
+//     //     items: results
+//     // }
+
+
+
+// }
+
 function index(req, res) {
-    const sql = "SELECT *  FROM `apartments` ORDER BY `likes` DESC;";
-    connection.query(sql, (err, results) => {
-        if (err) res.status(500).json({ error: 'Errore del server' });
-        const response = {
-            status: "success",
-            count: results.length,
-            items: results
-        }
-        res.json(response)
+    let { search, category, minRooms, minBed } = req.query;
+
+    // Se un valore non è stato passato, lo settiamo a una condizione "sempre vera"
+    search = search ? `%${search}%` : '%';   // Se non c'è search, cerca tutto
+    category = category ? category : '0';    // Se category è assente, metti 0 (cioè ignora il filtro)
+    minRooms = minRooms ? minRooms : '0';     // Se minRooms è assente, metti 0 (nessun limite minimo)
+    minBed = minBed ? minBed : '0';        // Se minBath è assente, metti 0 (nessun limite minimo)
+
+    const searchSql = `
+        SELECT *
+        FROM apartments
+    WHERE
+        (address LIKE '${search}' OR city LIKE '${search}')
+    AND(rooms_number >= ${minRooms})
+    AND(beds_number >= ${minBed})
+    AND(id_category = ${category} OR ${category} = '0')
+        `
+
+    console.log("Query eseguita:", searchSql); // Per debug
+
+    connection.query(searchSql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+        res.json(results);
     });
 }
 
