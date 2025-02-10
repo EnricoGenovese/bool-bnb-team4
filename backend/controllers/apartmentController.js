@@ -2,57 +2,55 @@ import connection from "../connection.js";
 import CustomError from "../classes/CustomError.js";
 
 function index(req, res) {
-    const limit = 6;
-    const { page } = req.query;
-    const offset = limit * (page - 1);
-    const sqlCount = "SELECT COUNT(*) AS `count` FROM `apartments`";
-
-    connection.query(sqlCount, (err, results) => {
-        if (err) res.status(500).json({ error: 'Errore del server' });
-        const count = results[0].count;
-
-        const sql = "SELECT * FROM `apartments` LIMIT ? OFFSET ?";
-        connection.query(sql, [limit, offset], (err, results) => {
-            if (err) res.status(500).json({ error: 'Errore del server' });
-            const response = {
-                count,
-                limit,
-                items: results
-            }
-            res.json(response)
-        })
+    let { search, category, minRooms, minBed } = req.query;
+    // Se un valore non è stato passato, lo settiamo a una condizione "sempre vera"
+    search = search ? `%${search.trim()}%` : '%';   // Se non c'è search, cerca tutto
+    category = category ? category : '0';    // Se category è assente, metti 0 (cioè ignora il filtro)
+    minRooms = minRooms ? minRooms : '0';     // Se minRooms è assente, metti 0 (nessun limite minimo)
+    minBed = minBed ? minBed : '0';        // Se minBath è assente, metti 0 (nessun limite minimo)
+    const sql = `
+        SELECT *
+        FROM apartments
+    WHERE
+        (address LIKE ? OR city LIKE ?)
+    AND(rooms_number >= ?)
+    AND(beds_number >= ?)
+    AND(id_category = ? OR ? = '0')
+        `
+    console.log("Query eseguita:", sql); // Per debug
+    connection.query(sql, [search, search, minRooms, minBed, category, category], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+        const response = {
+            status: "success",
+            count: results.length,
+            item: results
+        }
+        res.json(response);
     });
 }
 
 function show(req, res) {
-    const id = parseInt(req.params.id);
-    // Recupero tutti i libri e per ciascun libro il numero delle recensioni e la media voto totale:
-    const sql = `SELECT apartments.*, AVG(reviews.vote) AS vote_average, COUNT(reviews.text) AS commenti
-                FROM reviews
-                RIGHT JOIN apartments 
-                ON apartments.id = reviews.apartment_id
-                WHERE apartments.id = ? `;
-    // Uso il metodo query() per passargli la query SQL e una funzione di callback:
+    const id = +(req.params.id);
+    const sql = `SELECT * FROM apartments WHERE id = ?`
     connection.query(sql, [id], (err, results) => {
-        // Se rilevo un errore nella chiamata al database, restituisco l'errore HTTP 500 Internal Server Error” e un messaggio personalizzato:
-        if (err) return res.status(500).json({
-            error: 'Errore del server'
-        });
-        // Assegno alla costante item i dati ritornati dalla query:
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const item = results[0];
-        if (item.id == null) return res.status(404).json({ error: 'Libro non trovato' });
-        // Creo la query SQL con le Prepared statements (? al posto di id) per evitare le SQL Injections:
-        const sqlReviews = "SELECT * FROM `reviews` WHERE `apartment_id` = ?";
-        // Uso il metodo query() per passargli la query SQL, il valore di di id nel segnaposto "?", e una funzione di callback:
-        connection.query(sqlReviews, [id], (err, reviews) => {
+        if (item.id == null) return res.status(404).json({ error: 'Appartamento non trovato' });
+        const sqlComments = "SELECT * FROM `comments` WHERE `id_apartment` = ?";
+        connection.query(sqlComments, [id], (err, comments) => {
             if (err) return res.status(500).json({ error: "Error server" });
-            // Aggiungo all'oggetto item una chiave/proprietà che conterrà i commenti associati:
-            item.reviews = reviews;
-            // Ritorno l'oggetto (item)
-            res.json(item);
+
+            item.comments = comments;
+
+            const response = {
+                status: "success",
+                commentsCount: comments.length,
+                item
+            }
+            res.json(response)
         });
-    });
-}
+    })
+};
 
 function store(req, res) {
 }

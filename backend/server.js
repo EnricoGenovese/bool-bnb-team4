@@ -5,7 +5,7 @@ import errorsHandler from "./middlewares/errorsHandler.js";
 import notFound from "./middlewares/notFound.js";
 import corsPolicy from "./middlewares/corsPolicy.js";
 // Routing 
-import apartmentsRouter from "./routes/apartments.js";
+import apartmentsRouter from "./routes/apartmentRouter.js";
 
 // create a server instance
 const app = express();
