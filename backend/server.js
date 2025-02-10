@@ -5,7 +5,7 @@ import errorsHandler from "./middlewares/errorsHandler.js";
 import notFound from "./middlewares/notFound.js";
 import corsPolicy from "./middlewares/corsPolicy.js";
 // Routing 
-import booksRouter from "./routes/books.js";
+import apartmentsRouter from "./routes/apartments.js";
 
 // create a server instance
 const app = express();
@@ -28,14 +28,14 @@ app.get("/", (req, res) => {
 });
 
 //other routes
-app.use("/api/books", booksRouter);
+app.use("/api/apartments", apartmentsRouter);
 
 
-// index leggi lista /books metodo get R
-// show leggo un solo libro /books/:id metodo get R
-// store salvo un libro /books metodo post C
-// update aggiorno un libro /books/:id metodo put U
-// destroy elimino un libro /books/:id metodo delete D
+// index leggi lista /apartments metodo get R
+// show leggo un solo libro /apartments/:id metodo get R
+// store salvo un libro /apartments metodo post C
+// update aggiorno un libro /apartments/:id metodo put U
+// destroy elimino un libro /apartments/:id metodo delete D
 
 // gestione errori applicazione
 app.use(errorsHandler);

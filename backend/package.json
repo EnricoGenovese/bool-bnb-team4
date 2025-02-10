@@ -1,5 +1,5 @@
 {
-  "name": "book-express-be",
+  "name": "apartment-express-be",
   "version": "1.0.0",
   "description": "```bash\r # clone repository\r # add package-lock.json to .gitignore\r # edit README.md",
   "main": "server.js",

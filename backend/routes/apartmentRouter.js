@@ -8,7 +8,7 @@ import {
   storeReview,
   update,
   destroy,
-} from "../controllers/bookController.js";
+} from "../controllers/apartmentController.js";
 //Rotte
 
 // Index - Read all

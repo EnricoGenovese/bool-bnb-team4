@@ -20,7 +20,7 @@ PORT=3000
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=root
-DB_NAME=books_db
+DB_NAME=apartments_db
 
 # configure package json with dev and start script (env e watch)
 
@@ -139,7 +139,7 @@ import connection from "../connection.js"
 
 
 function index(req, res) {  
-  const sql = "SELECT * FROM `books`";
+  const sql = "SELECT * FROM `apartments`";
   connection.query(sql, (err, results) => {
     if (err) res.status(500).json({ error: "Errore del server" });
     //console.log(results);
