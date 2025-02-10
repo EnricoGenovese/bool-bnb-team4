@@ -2,25 +2,15 @@ import connection from "../connection.js";
 import CustomError from "../classes/CustomError.js";
 
 function index(req, res) {
-    const limit = 6;
-    const { page } = req.query;
-    const offset = limit * (page - 1);
-    const sqlCount = "SELECT COUNT(*) AS `count` FROM `apartments`";
-
-    connection.query(sqlCount, (err, results) => {
+    const sql = "SELECT *  FROM `apartments` ORDER BY `likes` DESC;";
+    connection.query(sql, (err, results) => {
         if (err) res.status(500).json({ error: 'Errore del server' });
-        const count = results[0].count;
-
-        const sql = "SELECT * FROM `apartments` LIMIT ? OFFSET ?";
-        connection.query(sql, [limit, offset], (err, results) => {
-            if (err) res.status(500).json({ error: 'Errore del server' });
-            const response = {
-                count,
-                limit,
-                items: results
-            }
-            res.json(response)
-        })
+        const response = {
+            status: "success",
+            count: results.length,
+            items: results
+        }
+        res.json(response)
     });
 }
 
