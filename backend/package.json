@@ -1,0 +1,20 @@
+{
+  "name": "book-express-be",
+  "version": "1.0.0",
+  "description": "```bash\r # clone repository\r # add package-lock.json to .gitignore\r # edit README.md",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0",
+    "react-icons": "^5.4.0"
+  }
+}
