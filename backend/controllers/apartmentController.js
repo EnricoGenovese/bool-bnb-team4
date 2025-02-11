@@ -1,5 +1,6 @@
 import connection from "../connection.js";
 import CustomError from "../classes/CustomError.js";
+import { RandomNum } from "../utilities/functions.js";
 
 function index(req, res) {
     let { search, category, minRooms, minBed } = req.query;
@@ -53,7 +54,35 @@ function show(req, res) {
 };
 
 function store(req, res) {
+
+    const { squareMeters,
+        bedsNumber,
+        roomsNumber,
+        bathroomsNumber,
+        city,
+        address,
+        description,
+        category,
+        image
+    } = req.body;
+
+
+    console.log(bathroomsNumber);
+    const sql = `INSERT INTO bool_bnb.apartments
+ (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
+ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    connection.query(sql, [RandomNum(), category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters, image], (err, results) => {
+        console.log(req.body)
+        if (err) return res.status(500).json({ error: err });
+        res.status(201).json({ message: "Apartment added", results });
+
+    })
+
 }
+
+
+
+
 
 // Agiunta dei commenti al singolo libro
 function storeReview(req, res) {
