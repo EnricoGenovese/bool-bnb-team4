@@ -10,8 +10,9 @@ function index(req, res) {
     minBed = minBed ? minBed : '0';
 
     const sql = `
-        SELECT *
+        SELECT apartments.*, categories.name AS category_name
         FROM apartments
+        JOIN categories ON apartments.id_category = categories.id
     WHERE
         (address LIKE ? OR city LIKE ?)
     AND(rooms_number >= ?)
@@ -27,6 +28,7 @@ function index(req, res) {
             count: results.length,
             item: results
         }
+        console.log(response)
         res.json(response);
     });
 }
