@@ -5,9 +5,8 @@ import {
   index,
   show,
   store,
-  storeReview,
-  update,
-  destroy,
+  storeComments,
+  modify,
 } from "../controllers/apartmentController.js";
 //Rotte
 
@@ -21,18 +20,11 @@ router.get("/:id", show);
 router.post("/", store);
 
 // Store - Create review
-router.post("/:id/reviews", storeReview);
+router.post("/:id/comments", storeComments);
 
 //Update - Update  totale
-router.put("/:id", update);
+router.patch("/:id", modify);
 
-// Modify - Update (partial)
-// router.patch("/:id", (req, res) => {
-//   res.send("Modifica parziale item con id: " + req.params.id);
-// });
-
-// Destroy - Delete
-router.delete("/:id", destroy);
 
 //export router
 export default router;

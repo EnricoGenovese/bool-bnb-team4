@@ -1,13 +1,14 @@
 import connection from "../connection.js";
-import CustomError from "../classes/CustomError.js";
+import { RandomNum } from "../utilities/functions.js";
 
 function index(req, res) {
     let { search, category, minRooms, minBed } = req.query;
-    // Se un valore non è stato passato, lo settiamo a una condizione "sempre vera"
-    search = search ? `%${search.trim()}%` : '%';   // Se non c'è search, cerca tutto
-    category = category ? category : '0';    // Se category è assente, metti 0 (cioè ignora il filtro)
-    minRooms = minRooms ? minRooms : '0';     // Se minRooms è assente, metti 0 (nessun limite minimo)
-    minBed = minBed ? minBed : '0';        // Se minBath è assente, metti 0 (nessun limite minimo)
+
+    search = search ? `%${search.trim()}%` : '%';
+    category = category ? category : '0';
+    minRooms = minRooms ? minRooms : '0';
+    minBed = minBed ? minBed : '0';
+
     const sql = `
         SELECT *
         FROM apartments
@@ -16,6 +17,7 @@ function index(req, res) {
     AND(rooms_number >= ?)
     AND(beds_number >= ?)
     AND(id_category = ? OR ? = '0')
+    ORDER BY apartments.likes DESC
         `
     console.log("Query eseguita:", sql); // Per debug
     connection.query(sql, [search, search, minRooms, minBed, category, category], (err, results) => {
@@ -30,11 +32,14 @@ function index(req, res) {
 }
 
 function show(req, res) {
+
     const id = +(req.params.id);
+
     const sql = `SELECT * FROM apartments WHERE id = ?`
     connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const item = results[0];
+
         if (item.id == null) return res.status(404).json({ error: 'Appartamento non trovato' });
         const sqlComments = "SELECT * FROM `comments` WHERE `id_apartment` = ?";
         connection.query(sqlComments, [id], (err, comments) => {
@@ -53,35 +58,71 @@ function show(req, res) {
 };
 
 function store(req, res) {
+    console.log(req.body)
+
+    const { squareMeters,
+        bedsNumber,
+        roomsNumber,
+        bathroomsNumber,
+        city,
+        address,
+        description,
+        category,
+        image
+    } = req.body;
+    if (!squareMeters || !bedsNumber || !roomsNumber || !bathroomsNumber ||
+        !city || !address || !description || !category || !image) {
+        return res.status(400).json({ success: false, message: "Uno o più campi risultano vuoti" })
+
+    }
+
+    console.log(bathroomsNumber);
+    const sql = `INSERT INTO bool_bnb.apartments
+ (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
+ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    connection.query(sql, [RandomNum(), category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters, image], (err, results) => {
+        console.log(req.body)
+
+        if (err) return res.status(500).json({ error: err });
+        res.status(201).json({ message: "Apartment added", results });
+
+    })
+
 }
 
-// Agiunta dei commenti al singolo libro
-function storeReview(req, res) {
-    // Recuperiamo l'id:
+function storeComments(req, res) {
     const { id } = req.params
-    // Recuperiamo il body:
-    const { text, name, vote } = req.body
-    // Prepariamo la query:
-    const sql = "INSERT INTO reviews (text, name, vote, apartment_id) VALUES (?, ?, ?, ?)"
+    const { text, name, entryDate, daysOfStay } = req.body;
 
-    // Eseguo la query:
-    connection.query(sql, [text, name, vote, id], (err, results) => {
-        if (err) return res.status(500).json({ error: "Query non trovata nel database" });
-        res.status(201).json({ message: "Review added", id: results.insertId });
+    const sql = `INSERT INTO bool_bnb.comments
+ (id_apartment, text, name, entry_date, days_of_stay)
+ VALUES (?, ?, ?, ?, ?)`
+
+    connection.query(sql, [id, text, name, entryDate, daysOfStay], (err, results) => {
+        if (err) return res.status(500).json({ error: err });
+        res.status(201).json({ message: "Comment added", results });
     })
 }
 
-function update(req, res) {
-}
-function destroy(req, res) {
-    const id = parseInt(req.params.id);
-    // Uso il metodo query() per passargli la query SQL, il valore di "?", e una funzione di callback:
-    connection.query("DELETE FROM `apartments` WHERE `id` = ?", [id], (err) => {
-        // Se rilevo un errore restituisco l'errore HTTP 500 Internal Server Error” e un messaggio personalizzato:
-        if (err) return res.status(500).json({ error: 'Errore del server! Cancellazione fallita' });
-        // Invio lo status 204: il server ha completato con successo la richiesta, ma restituisco alcun contenuto
-        res.sendStatus(204);
-    });
+function modify(req, res) {
+    const { id } = req.params;
+    const likeCountSql = `SELECT apartments.likes FROM apartments
+    WHERE apartments.id = ?`
+
+    connection.query(likeCountSql, [id], (err, results) => {
+        if (err) return results.status(500).json({ error: err });
+        console.log(results[0].likes);
+
+        let like = results[0].likes;
+        (like === 0 || like === "undefined" || like === null) ? 0 : like = +(like) + 1;
+
+        const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.id = ?);`
+        connection.query(sql, [like, id], (err, result) => {
+            if (err) return res.status(500).json({ error: err });
+            res.status(201).json({ success: true, message: "Likes incrementato correttamente", result });
+        })
+    })
 }
 
-export { index, show, store, storeReview, update, destroy };
+
+export { index, show, store, storeComments, modify };
