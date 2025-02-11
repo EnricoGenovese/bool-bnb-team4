@@ -5,7 +5,7 @@ import {
   index,
   show,
   store,
-  storeReview,
+  storeComments,
   update,
   destroy,
 } from "../controllers/apartmentController.js";
@@ -21,7 +21,7 @@ router.get("/:id", show);
 router.post("/", store);
 
 // Store - Create review
-router.post("/:id/reviews", storeReview);
+router.post("/:id/comments", storeComments);
 
 //Update - Update  totale
 router.put("/:id", update);

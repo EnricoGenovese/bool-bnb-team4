@@ -80,23 +80,17 @@ function store(req, res) {
 
 }
 
-
-
-
-
-// Agiunta dei commenti al singolo libro
-function storeReview(req, res) {
-    // Recuperiamo l'id:
+function storeComments(req, res) {
     const { id } = req.params
-    // Recuperiamo il body:
-    const { text, name, vote } = req.body
-    // Prepariamo la query:
-    const sql = "INSERT INTO reviews (text, name, vote, apartment_id) VALUES (?, ?, ?, ?)"
+    const { text, name, entryDate, daysOfStay } = req.body;
 
-    // Eseguo la query:
-    connection.query(sql, [text, name, vote, id], (err, results) => {
-        if (err) return res.status(500).json({ error: "Query non trovata nel database" });
-        res.status(201).json({ message: "Review added", id: results.insertId });
+    const sql = `INSERT INTO bool_bnb.comments
+ (id_apartment, text, name, entry_date, days_of_stay)
+ VALUES (?, ?, ?, ?, ?)`
+
+    connection.query(sql, [id, text, name, entryDate, daysOfStay], (err, results) => {
+        if (err) return res.status(500).json({ error: err });
+        res.status(201).json({ message: "Comment added", results });
     })
 }
 
@@ -113,4 +107,4 @@ function destroy(req, res) {
     });
 }
 
-export { index, show, store, storeReview, update, destroy };
+export { index, show, store, storeComments, update, destroy };
