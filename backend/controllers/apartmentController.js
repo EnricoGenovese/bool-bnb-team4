@@ -28,7 +28,7 @@ function index(req, res) {
             count: results.length,
             item: results
         }
-        console.log(response)
+
         res.json(response);
     });
 }
@@ -65,7 +65,6 @@ function show(req, res) {
 };
 
 function store(req, res) {
-    console.log(req.body)
 
     const { squareMeters,
         bedsNumber,
@@ -83,12 +82,10 @@ function store(req, res) {
 
     }
 
-    console.log(bathroomsNumber);
     const sql = `INSERT INTO bool_bnb.apartments
  (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     connection.query(sql, [RandomNum(), category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters, image], (err, results) => {
-        console.log(req.body)
 
         if (err) return res.status(500).json({ error: err });
         res.status(201).json({ message: "Apartment added", results });
@@ -118,7 +115,7 @@ function modify(req, res) {
 
     connection.query(likeCountSql, [id], (err, results) => {
         if (err) return results.status(500).json({ error: err });
-        console.log(results[0].likes);
+
 
         let like = results[0].likes;
         (like === 0 || like === "undefined" || like === null) ? 0 : like = +(like) + 1;
