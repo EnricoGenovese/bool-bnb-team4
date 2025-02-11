@@ -49,6 +49,11 @@ function show(req, res) {
 
             item.comments = comments;
 
+            item.comments.forEach((ele) => {
+                const tempString = JSON.stringify(ele.entry_date);
+                ele.entry_date = tempString.slice(1, 11);
+            });
+
             const response = {
                 status: "success",
                 commentsCount: comments.length,
