@@ -29,8 +29,9 @@ function index(req, res) {
             count: results.length,
             item: results
         }
+
         console.log(response)
-        res.json(response);
+
     });
 }
 
@@ -50,6 +51,11 @@ function show(req, res) {
 
             item.comments = comments;
 
+            item.comments.forEach((ele) => {
+                const tempString = JSON.stringify(ele.entry_date);
+                ele.entry_date = tempString.slice(1, 11);
+            });
+
             const response = {
                 status: "success",
                 commentsCount: comments.length,
@@ -62,13 +68,33 @@ function show(req, res) {
 
 function store(req, res) {
 
+    const { squareMeters,
+        bedsNumber,
+        roomsNumber,
+        bathroomsNumber,
+        city,
+        address,
+        description,
+        category,
+        image
+    } = req.body;
+    if (!squareMeters || !bedsNumber || !roomsNumber || !bathroomsNumber ||
+        !city || !address || !description || !category || !image) {
+        return res.status(400).json({ success: false, message: "Uno o più campi risultano vuoti" })
+
     if (!req.file) {
         return res.status(400).send({ error: 'No file uploaded' });
     }
 
+
     // Ottieni i dettagli del file
     const { path } = req.file;
     console.log(path)
+    const sql = `INSERT INTO bool_bnb.apartments
+ (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
+ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    connection.query(sql, [RandomNum(), category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters, image], (err, results) => {
+
 
     // Costruisci l'URL dell'immagine (presupponendo che i file siano serviti dalla cartella "uploads")
     const imageUrl = `${path.slice(11)}`;
@@ -132,7 +158,7 @@ function modify(req, res) {
 
     connection.query(likeCountSql, [id], (err, results) => {
         if (err) return results.status(500).json({ error: err });
-        console.log(results[0].likes);
+
 
         let like = results[0].likes;
         (like === 0 || like === "undefined" || like === null) ? 0 : like = +(like) + 1;
@@ -145,4 +171,4 @@ function modify(req, res) {
     })
 }
 
-export { index, show, storeComments, store, upload, modify, };
+export { index, show, storeComments, store, upload, modify};
