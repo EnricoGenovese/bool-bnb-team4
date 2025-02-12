@@ -1,10 +1,12 @@
 import express from "express";
+
 const router = express.Router();
 
 import {
   index,
   show,
   store,
+  upload,
   storeComments,
   modify,
 } from "../controllers/apartmentController.js";
@@ -17,7 +19,7 @@ router.get("/", index);
 router.get("/:id", show);
 
 //Store - Create
-router.post("/", store);
+router.post("/", upload.single('file'), store);
 
 // Store - Create review
 router.post("/:id/comments", storeComments);
