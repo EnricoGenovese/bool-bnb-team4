@@ -1,5 +1,6 @@
 import connection from "../connection.js";
 import { RandomNum } from "../utilities/functions.js";
+import { upload } from "../utilities/functions.js"
 
 function index(req, res) {
     let { search, category, minRooms, minBed } = req.query;
@@ -10,14 +11,15 @@ function index(req, res) {
     minBed = minBed ? minBed : '0';
 
     const sql = `
-        SELECT *
+        SELECT apartments.*, categories.name AS category_name
         FROM apartments
+        JOIN categories ON apartments.id_category = categories.id
     WHERE
         (address LIKE ? OR city LIKE ?)
     AND(rooms_number >= ?)
     AND(beds_number >= ?)
     AND(id_category = ? OR ? = '0')
-    ORDER BY apartments.likes DESC
+    
         `
     console.log("Query eseguita:", sql); // Per debug
     connection.query(sql, [search, search, minRooms, minBed, category, category], (err, results) => {
@@ -27,6 +29,7 @@ function index(req, res) {
             count: results.length,
             item: results
         }
+        console.log(response)
         res.json(response);
     });
 }
@@ -58,36 +61,54 @@ function show(req, res) {
 };
 
 function store(req, res) {
-    console.log(req.body)
 
-    const { squareMeters,
-        bedsNumber,
-        roomsNumber,
-        bathroomsNumber,
-        city,
-        address,
-        description,
-        category,
-        image
-    } = req.body;
-    if (!squareMeters || !bedsNumber || !roomsNumber || !bathroomsNumber ||
-        !city || !address || !description || !category || !image) {
-        return res.status(400).json({ success: false, message: "Uno o più campi risultano vuoti" })
-
+    if (!req.file) {
+        return res.status(400).send({ error: 'No file uploaded' });
     }
 
-    console.log(bathroomsNumber);
-    const sql = `INSERT INTO bool_bnb.apartments
- (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
- VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    connection.query(sql, [RandomNum(), category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters, image], (err, results) => {
-        console.log(req.body)
+    // Ottieni i dettagli del file
+    const { path } = req.file;
+    console.log(path)
 
-        if (err) return res.status(500).json({ error: err });
-        res.status(201).json({ message: "Apartment added", results });
+    // Costruisci l'URL dell'immagine (presupponendo che i file siano serviti dalla cartella "uploads")
+    const imageUrl = `${path.slice(11)}`;
 
-    })
+    // I dati da inserire nella query
 
+    const { category, description, address, city, roomsNumber, bedsNumber, bathroomsNumber, squareMeters } = req.body;
+
+    if (!squareMeters || !bedsNumber || !roomsNumber || !bathroomsNumber ||
+        !city || !address || !description || !category) {
+        return res.status(400).json({ success: false, message: "Uno o più campi risultano vuoti" })
+    }
+    // Prepara la query per inserire i dati dell'appartamento con l'URL dell'immagine
+    const sql = `INSERT INTO apartments (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    // Inserisci i dati nel database, incluso l'URL dell'immagine
+    connection.query(sql, [
+        RandomNum(),
+        category,
+        description,
+        address,
+        city,
+        roomsNumber,
+        bedsNumber,
+        bathroomsNumber,
+        squareMeters,
+        imageUrl
+    ], (err, results) => {
+        if (err) {
+            console.error('Errore durante il salvataggio nel database:', err);
+            return res.status(500).json({ error: 'Errore nel salvataggio nel database' });
+        }
+
+        res.status(200).json({
+            message: 'Apartment added successfully',
+            file: req.file,
+            imageUrl: imageUrl
+        });
+    });
 }
 
 function storeComments(req, res) {
@@ -124,5 +145,4 @@ function modify(req, res) {
     })
 }
 
-
-export { index, show, store, storeComments, modify };
+export { index, show, storeComments, store, upload, modify, };
