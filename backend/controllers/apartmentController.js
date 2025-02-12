@@ -20,7 +20,6 @@ function index(req, res) {
     AND(beds_number >= ?)
     AND(id_category = ? OR ? = '0')
     ORDER BY apartments.likes DESC
-    
         `
     console.log("Query eseguita:", sql); // Per debug
     connection.query(sql, [search, search, minRooms, minBed, category, category], (err, results) => {
@@ -121,6 +120,11 @@ function store(req, res) {
 function storeComments(req, res) {
     const { id } = req.params
     const { text, name, entryDate, daysOfStay } = req.body;
+
+    if (!text || !name || !entryDate || !daysOfStay) {
+
+        return res.status(400).json({ success: false, message: "Uno o più campi risultano vuoti" })
+    }
 
     const sql = `INSERT INTO bool_bnb.comments
  (id_apartment, text, name, entry_date, days_of_stay)
