@@ -87,7 +87,7 @@ function show(req, res) {
 function store(req, res) {
 
     if (!req.file) {
-        return res.status(400).send({ error: 'No file uploaded', err });
+        return res.status(400).send({ error: 'No file uploaded' });
     }
 
     // Ottieni i dettagli del file
@@ -157,7 +157,7 @@ function storereviews(req, res) {
     }
 
     const sql = `INSERT INTO bool_bnb.reviews
- (id_apartment, text, name, entry_date, days_of_stay)
+ (id_apartment, text, name, entry_date, days_of_stay, vote)
  VALUES (?, ?, ?, ?, ?, ?)`
 
     connection.query(sql, [id, text, name, entryDate, daysOfStay, vote], (err, results) => {
