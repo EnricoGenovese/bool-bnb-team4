@@ -19,7 +19,7 @@ const initialNewApartment = {
     likes: 0
 }
 
-const newComment = {
+const initialNewComment = {
     name: "",
     text: "",
     entryDate: "",
@@ -34,7 +34,7 @@ const GlobalProvider = ({ children }) => {
     const [apartments, setApartments] = useState([]);
     const [apartment, setApartment] = useState();
     const [apartmentData, setApartmentData] = useState(initialNewApartment);
-    const [commentData, setCommentdata] = useState(newComment);
+    const [commentData, setCommentData] = useState(initialNewComment);
     const [isLoading, setIsLoading] = useState(false);
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
@@ -44,9 +44,9 @@ const GlobalProvider = ({ children }) => {
     const [category, setCategory] = useState([]);
 
     const navigate = useNavigate();
-    useEffect(() => {
-        getApartments()
-    }, []);
+    // useEffect(() => {
+    //     getApartments()
+    // }, []);
 
 
     function getApartments() {
@@ -97,7 +97,8 @@ const GlobalProvider = ({ children }) => {
 
     const data = {
         apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
-        search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory
+        search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
+        initialNewComment, commentData, setCommentData
     }
 
     return <GlobalContext.Provider value={data}>
