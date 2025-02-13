@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -77,18 +77,18 @@ const GlobalProvider = ({ children }) => {
             })
     }
 
-    // function addApartement() {
-    //     axios.post(apiUrl + endpoint, newApartment)
-    //         .then((res) => {
-    //             console.log(newApartment)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    //         .finally(() => {
-    //             console.log("Posted!")
-    //         })
-    // }
+    function addApartement() {
+        axios.post(apiUrl + endpoint, newApartment)
+            .then((res) => {
+                console.log(newApartment)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            .finally(() => {
+                console.log("Posted!")
+            })
+    }
 
 
     const data = {

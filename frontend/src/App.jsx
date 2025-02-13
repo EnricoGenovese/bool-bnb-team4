@@ -17,14 +17,14 @@ function App() {
       <GlobalProvider>
         <Routes>
           <Route Component={DefaultLayout}>
-            <Route path="/apartments">
+            <Route path="/">
               <Route index Component={Homepage} />
+              <Route path="/advanced-research" Component={AdvancedResearch} />
               <Route path=":id" Component={ApartmentDetails} />
+              <Route path="/apartment-post-form" Component={ApartmentPostForm} />
             </Route>
-            <Route path="/advanced-research" Component={AdvancedResearch} />
-            <Route path="/post-apartment" Component={ApartmentPostForm} />
-            <Route path="*" Component={NotFound} />
           </Route>
+          <Route path="*" Component={NotFound} />
         </Routes>
       </GlobalProvider>
     </BrowserRouter>
