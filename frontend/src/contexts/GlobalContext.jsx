@@ -41,7 +41,7 @@ const GlobalProvider = ({ children }) => {
     const [search, setSearch] = useState("");
     const [numRooms, setNumRooms] = useState(0);
     const [numBeds, setNumBeds] = useState(0);
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(0);
 
     const navigate = useNavigate();
     // useEffect(() => {
