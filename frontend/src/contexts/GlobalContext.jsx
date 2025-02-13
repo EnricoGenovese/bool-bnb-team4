@@ -35,13 +35,14 @@ const GlobalProvider = ({ children }) => {
     const [apartment, setApartment] = useState();
     const [apartmentData, setApartmentData] = useState(initialNewApartment);
     const [commentData, setCommentData] = useState(initialNewComment);
+    const [likes, setLikes] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
     const [numRooms, setNumRooms] = useState(0);
     const [numBeds, setNumBeds] = useState(0);
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(0);
 
     const navigate = useNavigate();
     // useEffect(() => {
@@ -52,8 +53,9 @@ const GlobalProvider = ({ children }) => {
     function getApartments() {
         axios.get(apiUrl + endpoint)
             .then((res) => {
-                // console.log(initialNewApartment)
-                setApartments(res.data.item);
+                // console.log(res.data.items)
+                console.log(res.data);
+                setApartments(res.data.items);
             })
             .catch((err) => {
                 console.log("Error: ", err);
@@ -95,10 +97,21 @@ const GlobalProvider = ({ children }) => {
     }
 
 
+    function addLike(id) {
+        axios.patch(apiUrl + endpoint + id)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log("Error: ", err)
+            })
+    }
+
+
     const data = {
         apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
-        initialNewComment, commentData, setCommentData
+        initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes
     }
 
     return <GlobalContext.Provider value={data}>
