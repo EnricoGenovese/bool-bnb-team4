@@ -53,7 +53,7 @@ const GlobalProvider = ({ children }) => {
         axios.get(apiUrl + endpoint)
             .then((res) => {
                 // console.log(initialNewApartment)
-                setApartments(res.data.item);
+                setApartments(res.data.items);
             })
             .catch((err) => {
                 console.log("Error: ", err);
@@ -98,7 +98,7 @@ const GlobalProvider = ({ children }) => {
     const data = {
         apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
-        initialNewComment, commentData, setCommentData
+        initialNewComment, commentData, setCommentData, getApartments
     }
 
     return <GlobalContext.Provider value={data}>

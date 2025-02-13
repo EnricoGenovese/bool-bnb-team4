@@ -10,7 +10,7 @@ export default function Homepage() {
     }, [])
 
     return (
-        <div className="container">
+        <div>
             <div className="row">
                 {apartments?.map((apartment) => (
                     <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
