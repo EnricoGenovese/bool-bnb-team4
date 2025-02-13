@@ -6,7 +6,7 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_APIURL;
 const endpoint = "/apartments/";
 
-const newApartment = {
+const initialNewApartment = {
     category: 0,
     city: "",
     address: "",
@@ -33,11 +33,15 @@ const GlobalProvider = ({ children }) => {
 
     const [apartments, setApartments] = useState([]);
     const [apartment, setApartment] = useState();
-    const [apartmentData, setApartmentData] = useState(newApartment);
+    const [apartmentData, setApartmentData] = useState(initialNewApartment);
     const [commentData, setCommentdata] = useState(newComment);
     const [isLoading, setIsLoading] = useState(false);
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("");
+    const [numRooms, setNumRooms] = useState(0);
+    const [numBeds, setNumBeds] = useState(0);
+    const [category, setCategory] = useState([]);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -48,7 +52,7 @@ const GlobalProvider = ({ children }) => {
     function getApartments() {
         axios.get(apiUrl + endpoint)
             .then((res) => {
-                // console.log(newApartment)
+                // console.log(initialNewApartment)
                 setApartments(res.data.item);
             })
             .catch((err) => {
@@ -78,9 +82,9 @@ const GlobalProvider = ({ children }) => {
     }
 
     function addApartement() {
-        axios.post(apiUrl + endpoint, newApartment)
+        axios.post(apiUrl + endpoint, initialNewApartment)
             .then((res) => {
-                console.log(newApartment)
+                console.log(initialNewApartment)
             })
             .catch((error) => {
                 console.log(error)
@@ -92,7 +96,8 @@ const GlobalProvider = ({ children }) => {
 
 
     const data = {
-        apartments, setApartment, apartment,
+        apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
+        search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory
     }
 
     return <GlobalContext.Provider value={data}>
