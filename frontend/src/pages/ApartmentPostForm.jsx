@@ -14,10 +14,10 @@ export default function ApartmentPostForm() {
         city: "",
         address: "",
         description: "",
-        roomsNumber: 1,
-        bedsNumber: 1,
-        bathroomsNumber: 1,
-        squareMeters: 1,
+        roomsNumber: 0,
+        bedsNumber: 0,
+        bathroomsNumber: 0,
+        squareMeters: 0,
         likes: 0
     }
 
@@ -91,23 +91,23 @@ export default function ApartmentPostForm() {
         // Address (Full address)
         if (!formData.address.trim()) {
             errors.address = "The `Full address` field cannot be empty";
-        } else if (formData.description.length < 5) {
-            errors.description = "The `Full Address` field must be at least 5 characters long";
-        } else if (formData.description.length > 100) {
-            errors.description = "The `Full Address` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.description)) {
-            errors.description = "The `Summary Title` can only contain letters, numbers, commas, periods, and spaces."
+        } else if (formData.address.length < 5) {
+            errors.address = "The `Full Address` field must be at least 5 characters long";
+        } else if (formData.address.length > 100) {
+            errors.address = "The `Full Address` field must be to the utmost 100 characters long";
+        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.address)) {
+            errors.address = "The `Address` can only contain letters, numbers, commas, periods, and spaces."
         }
 
         // City (Full city)
         if (!formData.city.trim()) {
             errors.city = "The `City` field cannot be empty";
-        } else if (formData.description.length < 5) {
-            errors.description = "`City` field must be at least 5 characters long";
-        } else if (formData.description.length > 100) {
-            errors.description = "The `City` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.description)) {
-            errors.description = "The `Summary Title` can only contain letters, numbers, commas, periods, and spaces."
+        } else if (formData.city.length < 5) {
+            errors.city = "`City` field must be at least 5 characters long";
+        } else if (formData.city.length > 100) {
+            errors.city = "The `City` field must be to the utmost 100 characters long";
+        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.city)) {
+            errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
         }
 
         // Image (Upload Image)
@@ -125,23 +125,23 @@ export default function ApartmentPostForm() {
         // Rooms, Beds, Bathrooms, and Square Meters
         if (formData.roomsNumber < 1) {
             errors.roomsNumber = "The number of rooms must be at least 1";
-        } else if (!Number.isInteger(formData.roomsNumber)) {
+        } else if (!Number.isInteger(Number(formData.roomsNumber))) {
             errors.roomsNumber = "only integer numbers are accepted"
         }
         if (formData.bedsNumber < 1) {
             errors.bedsNumber = "The number of beds must be at least 1";
-        } else if (!Number.isInteger(formData.roomsNumber)) {
-            errors.roomsNumber = "only integer numbers are accepted"
+        } else if (!Number.isInteger(Number(formData.bedsNumber))) {
+            errors.bedsNumber = "only integer numbers are accepted"
         }
         if (formData.bathroomsNumber < 1) {
             errors.bathroomsNumber = "The number of bathrooms must be at least 1";
-        } else if (!Number.isInteger(formData.roomsNumber)) {
-            errors.roomsNumber = "only integer numbers are accepted"
+        } else if (!Number.isInteger(Number(formData.bathroomsNumber))) {
+            errors.bathroomsNumber = "only integer numbers are accepted"
         }
         if (formData.squareMeters < 1) {
             errors.squareMeters = "The area must be at least 1 square meter";
-        } else if (!Number.isInteger(formData.roomsNumber)) {
-            errors.roomsNumber = "only integer numbers are accepted"
+        } else if (!Number.isInteger(Number(formData.squareMeters))) {
+            errors.squareMeters = "only integer numbers are accepted"
         }
 
         // Category (Property category)
