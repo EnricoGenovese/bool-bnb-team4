@@ -1,38 +1,35 @@
 import express from "express";
+
 const router = express.Router();
 
 import {
   index,
+  indexCategories,
   show,
   store,
-  storeReview,
-  update,
-  destroy,
+  upload,
+  storereviews,
+  modify,
 } from "../controllers/apartmentController.js";
 //Rotte
 
 // Index - Read all
 router.get("/", index);
+router.get("/categories", indexCategories)
+
 
 // Show - Read one -
 router.get("/:id", show);
 
 //Store - Create
-router.post("/", store);
+router.post("/", upload.single('file'), store);
 
 // Store - Create review
-router.post("/:id/reviews", storeReview);
+router.post("/:id/reviews", storereviews);
 
 //Update - Update  totale
-router.put("/:id", update);
+router.patch("/:id", modify);
 
-// Modify - Update (partial)
-// router.patch("/:id", (req, res) => {
-//   res.send("Modifica parziale item con id: " + req.params.id);
-// });
-
-// Destroy - Delete
-router.delete("/:id", destroy);
 
 //export router
 export default router;

@@ -31,12 +31,6 @@ app.get("/", (req, res) => {
 app.use("/api/apartments", apartmentsRouter);
 
 
-// index leggi lista /apartments metodo get R
-// show leggo un solo libro /apartments/:id metodo get R
-// store salvo un libro /apartments metodo post C
-// update aggiorno un libro /apartments/:id metodo put U
-// destroy elimino un libro /apartments/:id metodo delete D
-
 // gestione errori applicazione
 app.use(errorsHandler);
 
@@ -45,5 +39,5 @@ app.use(notFound);
 
 //server must listen on your host and your port
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
