@@ -31,7 +31,7 @@ function index(req, res) {
             count: results.length,
             items: results
         }
-        console.log(response)
+        // console.log(response)
         res.json(response);
     });
 }
