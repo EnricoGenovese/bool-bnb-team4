@@ -54,6 +54,7 @@ const GlobalProvider = ({ children }) => {
         axios.get(apiUrl + endpoint)
             .then((res) => {
                 // console.log(res.data.items)
+                console.log(res.data);
                 setApartments(res.data.items);
             })
             .catch((err) => {
