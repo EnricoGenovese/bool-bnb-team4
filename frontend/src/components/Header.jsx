@@ -1,8 +1,9 @@
-import { NavLink } from "react-router";
-
+import Navbar from "./Navbar";
 
 export default function Header() {
     return (
-        <h1>Header</h1>
+        <header className="container">
+            <Navbar />
+        </header>
     )
 }
