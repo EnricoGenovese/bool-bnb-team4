@@ -140,6 +140,8 @@ export default function ApartmentPostForm() {
             errors.roomsNumber = "only integer numbers are accepted"
         } else if (formData.roomsNumber.startsWith("0")) {
             errors.roomsNumber = "The number of rooms cannot start with 0";
+        } else if (formData.roomsNumber.includes('e') || formData.roomsNumber.includes('E')) {
+            errors.roomsNumber = 'You must enter a number';
         }
         if (formData.bedsNumber < 1) {
             errors.bedsNumber = "The number of beds must be at least 1";
@@ -147,13 +149,19 @@ export default function ApartmentPostForm() {
             errors.bedsNumber = "only integer numbers are accepted"
         } else if (formData.bedsNumber.startsWith("0")) {
             errors.bedsNumber = "The number of beds cannot start with 0";
+        } else if (formData.bedsNumber.includes('e') || formData.bedsNumber.includes('E')) {
+            errors.bedsNumber = 'You must enter a number';
         }
+
+
         if (formData.bathroomsNumber < 1) {
             errors.bathroomsNumber = "The number of bathrooms must be at least 1";
         } else if (!Number.isInteger(Number(formData.bathroomsNumber))) {
             errors.bathroomsNumber = "only integer numbers are accepted"
         } else if (formData.bathroomsNumber.startsWith("0")) {
             errors.bathroomsNumber = "The number of bathrooms cannot start with 0";
+        } else if (formData.bathroomsNumber.includes('e') || formData.bathroomsNumber.includes('E')) {
+            errors.bathroomsNumber = 'You must enter a number';
         }
         if (formData.squareMeters < 1) {
             errors.squareMeters = "The area must be at least 1 square meter";
@@ -161,6 +169,8 @@ export default function ApartmentPostForm() {
             errors.squareMeters = "only integer numbers are accepted"
         } else if (formData.squareMeters.startsWith("0")) {
             errors.squareMeters = "The number of square meters cannot start with 0";
+        } else if (formData.squareMeters.includes('e') || formData.squareMeters.includes('E')) {
+            errors.squareMeters = 'You must enter a number';
         }
 
         // Category (Property category)
@@ -221,7 +231,7 @@ export default function ApartmentPostForm() {
     return (
         <section className={StyleApartmentPostForm.formContainer}>
             <div className="container">
-                <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light">
+                <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
                     <div className="mb-3">
