@@ -45,10 +45,6 @@ const GlobalProvider = ({ children }) => {
     const [category, setCategory] = useState(0);
 
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     getApartments()
-    // }, []);
-
 
     function getApartments() {
         axios.get(apiUrl + endpoint)
