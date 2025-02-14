@@ -22,7 +22,7 @@ router.get("/categories", indexCategories)
 router.get("/:id", show);
 
 //Store - Create
-router.post("/", upload.single('file'), store);
+router.post("/", upload.single("file"), store);
 
 // Store - Create review
 router.post("/:id/reviews", storereviews);
