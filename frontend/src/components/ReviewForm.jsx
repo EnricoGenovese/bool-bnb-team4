@@ -126,7 +126,7 @@ function ReviewForm({ apartment_id }) {
             </div>
             <p>{errors.name && <span className={`error-message  mb-3 ${FormStyle.errorMessage}`}>{errors.name}</span>}</p>
             
-            <label htmlFor="text">Scrivi il tuo commento... *</label>
+            <label htmlFor="text">Write your comment... *</label>
             <div className="input-group">
                 <span className="input-group-text"><MdRateReview /></span>
                 <textarea className="form-control" id="text" name="text" rows="3" placeholder="Write review..." value={formData.text} onChange={onHandleInput}></textarea>

@@ -5,10 +5,10 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaHome, FaDoorOpen, FaEnvelope, FaTimes } from "react-icons/fa";
 import ReviewForm from "./ReviewForm";
-import ApartmentPostForm from "../pages/ApartmentPostForm";     // componente di prova dell'overlay
+import ContactForm from "./ContactForm";     // componente di prova dell'overlay
 import Star from "./Star";
 // Importo lo style del module.css SingleApartment.module.css
-import style from "../styles/SingleApartment.module.css"
+import style from "../styles/SingleApartment.module.css";
 
 export default function SingleApartment({ apartment, categories }) {
     const { id } = useParams();
@@ -81,7 +81,7 @@ export default function SingleApartment({ apartment, categories }) {
                         <button className={`${style["overlay-close"]}`} onClick={() => setIsOverlayOpen(false)}>
                             <FaTimes size={20} />
                         </button>
-                        <ApartmentPostForm />
+                        <ContactForm />
                     </div>
                 </div>
             )}
