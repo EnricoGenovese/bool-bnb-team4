@@ -99,13 +99,15 @@ const GlobalProvider = ({ children }) => {
     }
 
 
-    function addLike(id) {
-        axios.patch(apiUrl + endpoint + id)
+    async function addLike(id) {
+        return axios.patch(apiUrl + endpoint + id)
             .then((res) => {
-                console.log(res)
+                //console.log(res.data.likes);
+                return res.data.likes;
             })
             .catch((err) => {
                 console.log("Error: ", err)
+                return null;
             })
     }
 
