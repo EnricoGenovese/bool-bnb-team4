@@ -110,9 +110,6 @@ function ReviewForm({ apartment_id }) {
         else if (formData.daysOfStay > 365) {
             errors.daysOfStay = 'You cannot enter a number of days greater than 365';
         }
-        else if (formData.daysOfStay === Number) {
-            errors.daysOfStay = 'You must enter a number';
-        }
 
         return errors;
     };
