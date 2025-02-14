@@ -95,10 +95,10 @@ function ReviewForm({ apartment_id }) {
             errors.entryDate = 'Entry date required';
         }
         else if (formData.entryDate > today ) {
-            errors.entryDate = 'The date is not in the future';
+            errors.entryDate = 'You cannot enter a future date';
         }
         else if (formData.entryDate < minDate) {
-            errors.entryDate = 'The date is not in the past';
+            errors.entryDate = 'The date is too old';
         }
 
         if (!formData.daysOfStay) {
@@ -110,7 +110,7 @@ function ReviewForm({ apartment_id }) {
         else if (formData.daysOfStay > 365) {
             errors.daysOfStay = 'You cannot enter a number of days greater than 365';
         }
-        else if (formData.daysOfStay === Number) {
+        else if (formData.daysOfStay.includes('e') || formData.daysOfStay.includes('E')) {
             errors.daysOfStay = 'You must enter a number';
         }
 
@@ -118,7 +118,7 @@ function ReviewForm({ apartment_id }) {
     };
 
     return (
-        <form onSubmit={onHandleSubmit}>
+        <form onSubmit={onHandleSubmit} noValidate>
             <label htmlFor="name">Name *</label>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>
@@ -126,7 +126,7 @@ function ReviewForm({ apartment_id }) {
             </div>
             <p>{errors.name && <span className={`error-message  mb-3 ${FormStyle.errorMessage}`}>{errors.name}</span>}</p>
             
-            <label htmlFor="text">Scrivi il tuo commento... *</label>
+            <label htmlFor="text">Write your comment... *</label>
             <div className="input-group">
                 <span className="input-group-text"><MdRateReview /></span>
                 <textarea className="form-control" id="text" name="text" rows="3" placeholder="Write review..." value={formData.text} onChange={onHandleInput}></textarea>
