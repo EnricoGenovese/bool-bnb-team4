@@ -4,8 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
-
-
 export default function ApartmentPostForm() {
 
 
@@ -26,13 +24,26 @@ export default function ApartmentPostForm() {
     const [apartments, setApartments] = useState([]);
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
+    const [id, setId] = useState(null);
+    const navigate = useNavigate();
+
+    const { setAlertData } = useGlobalContext();
+
+
     const categoriesAPI = "http://localhost:3000/api/apartments/categories";
     const apartmentsAPI = "http://localhost:3000/api/apartments/";
 
     useEffect(() => {
         getCategories();
-        getApartments()
-    }, [])
+        getApartments();
+        if (id) {
+            navigate(`/apartment/${id}`);
+            setAlertData({
+                type: "success",
+                message: `Your apartment has been added successfully`,
+            });
+        }
+    }, [id])
 
 
     function getCategories() {
@@ -84,7 +95,7 @@ export default function ApartmentPostForm() {
             errors.description = "The `Summary Title` field must be at least 5 characters long";
         } else if (formData.description.length > 100) {
             errors.description = "The `Summary Title` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.description)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.description)) {
             errors.description = "The `Summary Title` can only contain letters, numbers, commas, periods, and spaces."
         }
 
@@ -95,7 +106,7 @@ export default function ApartmentPostForm() {
             errors.address = "The `Full Address` field must be at least 5 characters long";
         } else if (formData.address.length > 100) {
             errors.address = "The `Full Address` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.address)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.address)) {
             errors.address = "The `Address` can only contain letters, numbers, commas, periods, and spaces."
         }
 
@@ -106,7 +117,7 @@ export default function ApartmentPostForm() {
             errors.city = "`City` field must be at least 5 characters long";
         } else if (formData.city.length > 100) {
             errors.city = "The `City` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.city)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.city)) {
             errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
         }
 
@@ -127,21 +138,39 @@ export default function ApartmentPostForm() {
             errors.roomsNumber = "The number of rooms must be at least 1";
         } else if (!Number.isInteger(Number(formData.roomsNumber))) {
             errors.roomsNumber = "only integer numbers are accepted"
+        } else if (formData.roomsNumber.startsWith("0")) {
+            errors.roomsNumber = "The number of rooms cannot start with 0";
+        } else if (formData.roomsNumber.includes('e') || formData.roomsNumber.includes('E')) {
+            errors.roomsNumber = 'You must enter a number';
         }
         if (formData.bedsNumber < 1) {
             errors.bedsNumber = "The number of beds must be at least 1";
         } else if (!Number.isInteger(Number(formData.bedsNumber))) {
             errors.bedsNumber = "only integer numbers are accepted"
+        } else if (formData.bedsNumber.startsWith("0")) {
+            errors.bedsNumber = "The number of beds cannot start with 0";
+        } else if (formData.bedsNumber.includes('e') || formData.bedsNumber.includes('E')) {
+            errors.bedsNumber = 'You must enter a number';
         }
+
+
         if (formData.bathroomsNumber < 1) {
             errors.bathroomsNumber = "The number of bathrooms must be at least 1";
         } else if (!Number.isInteger(Number(formData.bathroomsNumber))) {
             errors.bathroomsNumber = "only integer numbers are accepted"
+        } else if (formData.bathroomsNumber.startsWith("0")) {
+            errors.bathroomsNumber = "The number of bathrooms cannot start with 0";
+        } else if (formData.bathroomsNumber.includes('e') || formData.bathroomsNumber.includes('E')) {
+            errors.bathroomsNumber = 'You must enter a number';
         }
         if (formData.squareMeters < 1) {
             errors.squareMeters = "The area must be at least 1 square meter";
         } else if (!Number.isInteger(Number(formData.squareMeters))) {
             errors.squareMeters = "only integer numbers are accepted"
+        } else if (formData.squareMeters.startsWith("0")) {
+            errors.squareMeters = "The number of square meters cannot start with 0";
+        } else if (formData.squareMeters.includes('e') || formData.squareMeters.includes('E')) {
+            errors.squareMeters = 'You must enter a number';
         }
 
         // Category (Property category)
@@ -176,11 +205,20 @@ export default function ApartmentPostForm() {
             }
             axios.post("http://localhost:3000/api/apartments", formData).then((res) => {
                 console.log(res.data);
+                console.log(res.data.id);
+                setId(res.data.id)
+                useEffect(() => {
+
+                }, [id]);
+
                 setApartmentData(initialNewApartment);
+
             }).catch((err) => {
                 console.log(err)
             }).finally(() => {
-                console.log("Tentativo di invio form effettuato")
+                console.log("Tentativo di invio form effettuato");
+
+
             })
             console.log("Il form è stato inviato conb successo!");
         } else {
@@ -193,7 +231,7 @@ export default function ApartmentPostForm() {
     return (
         <section className={StyleApartmentPostForm.formContainer}>
             <div className="container">
-                <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light">
+                <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
                     <div className="mb-3">
@@ -375,4 +413,3 @@ export default function ApartmentPostForm() {
 
 }
 
-// caratteri speciali, numeri interi
