@@ -8,7 +8,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="w-100 bg-dark">
+        <div className="w-100 bg-dark" id="nav-wrapper"> {/*aggiungi altezza 80px in index.css oppure in un module.css Navbar :( */}
             <nav className="container navbar navbar-expand-lg d-navbar-dark bg-dark h-100 p-0">
                 <div className="container-fluid g-0 ">
                     <button
