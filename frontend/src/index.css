@@ -1,7 +1,31 @@
+:root {
+    --text-dark: #2E3532;
+    --main-vanilla: #EADAA2;
+    --contrast: #8B2635;
+    --sunlight: #C6A664;
+}
+
+body {
+    font-family: "Simonetta", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 header {
     position: sticky;
     top: 0;
     left: 0;
     height: 80px;
     z-index: 1000;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    /* Firefox */
 }
