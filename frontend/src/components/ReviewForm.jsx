@@ -118,7 +118,7 @@ function ReviewForm({ apartment_id }) {
     };
 
     return (
-        <form onSubmit={onHandleSubmit} noValidate>
+        <form className="container m-auto" onSubmit={onHandleSubmit} noValidate>
             <label htmlFor="name">Name *</label>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>

@@ -17,7 +17,7 @@ export default function Homepage() {
                     <h1 className="display-4">Vattelo a pija nder culo!!!</h1>
                     <p className="lead">Trova l'appartamento perfetto per te con un solo click.</p>
                 </div>
-                <Link className="btn custum-button mt-5 link-btn" to={"#"} >Scopri di più </Link>
+                <Link className="btn custum-button mt-5 link-btn" to={"/advanced-research"} >Scopri di più </Link>
             </div>
             {isLoading && <Loader />}
             <div className="row container m-auto">

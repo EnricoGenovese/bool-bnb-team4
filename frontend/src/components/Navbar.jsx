@@ -8,7 +8,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="w-100 bg-dark" id="id-navbar">
+        <div className="w-100 bg-dark text-uppercase" id="id-navbar">
             <nav className="container navbar navbar-expand-lg d-navbar-dark bg-dark h-100 p-0">
                 <div className="container-fluid g-0 ">
                     <button
@@ -18,7 +18,7 @@ export default function Navbar() {
                         aria-label="Toggle navigation"
                         onClick={handleToggle}
                     >
-                        <span className="navbar-toggler-icon bg-light" style={{ backgroudColor: '#3F00FF' }}></span>
+                        <span className="navbar-toggler-icon bg-light" style={{ backgroudColor: 'red' }}></span>
                     </button>
                     <div
                         className={`bg-dark w-100 collapse navbar-collapse ${isOpen ? "show" : ""}`}
@@ -29,7 +29,7 @@ export default function Navbar() {
                                 <NavLink
                                     to="/"
                                     className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "#3F00FF" } : { color: "white" })}
+                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
                                     end
                                 >
                                     Homepage
@@ -39,7 +39,7 @@ export default function Navbar() {
                                 <NavLink
                                     to="/advanced-research"
                                     className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "#3F00FF" } : { color: "white" })}
+                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
                                     end
                                 >
                                     Search an apartment
@@ -49,7 +49,7 @@ export default function Navbar() {
                                 <NavLink
                                     to="/post-apartment"
                                     className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "#3F00FF" } : { color: "white" })}
+                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
                                     end
                                 >
                                     Post your announcement

@@ -24,7 +24,7 @@ export default function SingleApartment({ apartment, categories }) {
 
     return (
         <>
-            <div className="pt-5">
+            <div className="pt-5 container m-auto">
                 <Card className="d-flex flex-column flex-md-row p-3 w-100" style={{ maxWidth: "100%" }} key={apartment.item.id}>
                     {/* Mobile: Immagine sopra */}
                     <Card.Img
@@ -47,12 +47,12 @@ export default function SingleApartment({ apartment, categories }) {
                         <Card.Body className="w-100" style={{ width: "66.67%" }}>
                             <Card.Title>{apartment.item.description}</Card.Title>
                             <Card.Text as="div">
-                                <p><FaDoorOpen fill="#BB2D3B" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
-                                <p><FaBed size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
-                                <p><FaBath size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
-                                <p><FaRulerCombined size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
-                                <p><FaMapMarkerAlt size="20" className="me-3" /> {apartment.item.address}</p>
-                                <p><FaHome size="20" className="me-3" /> {category?.name}</p>
+                                <p><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
+                                <p><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
+                                <p><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
+                                <p><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
+                                <p><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}</p>
+                                <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm"
                                         onClick={() => {
@@ -86,7 +86,7 @@ export default function SingleApartment({ apartment, categories }) {
                 </div>
             )}
 
-            <section className="pt-5">
+            <section className="container m-auto pt-5">
                 {apartment.item.reviews.length > 0 ? apartment.item.reviews.map((review, index) => (
                     <div key={review.id}>
                         <div className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>

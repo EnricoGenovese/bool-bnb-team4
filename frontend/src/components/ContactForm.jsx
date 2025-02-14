@@ -45,10 +45,10 @@ export default function ContactForm() {
 
     return (
         <div className={`container ${styles.contactFormContainer}`}>
-            <h2 className="text-center mb-4">Contattaci</h2>
+            <h2 className="text-center mb-4">Contact Us</h2>
             <form onSubmit={handleSubmit} className={styles.contactForm}>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
+                    <label htmlFor="email" className="form-label">Your Email</label>
                     <input
                         type="email"
                         id="email"
@@ -59,7 +59,7 @@ export default function ContactForm() {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Messaggio</label>
+                    <label htmlFor="message" className="form-label">Your message</label>
                     <textarea
                         id="message"
                         className="form-control"
@@ -71,7 +71,7 @@ export default function ContactForm() {
                 </div>
                 <div className="d-grid gap-2">
                     <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                        {isSubmitting ? 'Invio in corso...' : 'Invia'}
+                        {isSubmitting ? 'Sending...' : 'Send'}
                     </button>
                 </div>
             </form>

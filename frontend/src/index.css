@@ -11,6 +11,10 @@ body {
     font-style: normal;
 }
 
+footer {
+    background-image: url("../img/footer.jpg");
+}
+
 header {
     position: sticky;
     top: 0;
@@ -32,7 +36,7 @@ input[type="number"] {
 
 /* CSS Jumbotron */
 .jumbotron {
-    background-image: url("../public/img/Jumbotron.jpg");
+    background-image: url("../img/jumbotron.jpg");
     background-size: cover;
     background-position: center;
     height: 500px;

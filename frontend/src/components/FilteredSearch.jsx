@@ -8,7 +8,7 @@ export default function FilteredSearch() {
 
     return (
 
-        <form >
+        <form className="container m-auto">
             <div className="form-group">
                 <label htmlFor="searchBar">Search here city or address</label>
                 <input 

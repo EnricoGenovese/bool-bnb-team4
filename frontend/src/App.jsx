@@ -19,6 +19,7 @@ function App() {
           <Route Component={DefaultLayout}>
             <Route index Component={Homepage} />
             <Route path="/apartment">
+              <Route index Component={Homepage} />
               <Route path=":id" Component={ApartmentDetails} />
             </Route>
             <Route path="/advanced-research" Component={AdvancedResearch} />

@@ -60,7 +60,7 @@ export default function ApartmentDetails() {
     }, [id]);
 
     return (
-        <section>
+        <section className="container m-auto">
             {apartment && categories ? (
                 <>   
                     <SingleApartment apartment={apartment} categories={categories} />
