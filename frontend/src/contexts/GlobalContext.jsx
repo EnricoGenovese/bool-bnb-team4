@@ -114,7 +114,7 @@ const GlobalProvider = ({ children }) => {
         apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
-        isLoading, initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes, alertData, setAlertData
+        isLoading, alertData, setAlertData
     }
 
     return <GlobalContext.Provider value={data}>
