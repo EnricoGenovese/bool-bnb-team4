@@ -29,3 +29,39 @@ input[type="number"] {
     -moz-appearance: textfield;
     /* Firefox */
 }
+
+/* CSS Jumbotron */
+.jumbotron {
+    background-image: url("../public/img/Jumbotron.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+}
+
+.custum-button {
+    padding: 20px 30px;
+    border: 2px solid var(--text-dark);
+    border-radius: 0px;
+    color: var(--text-dark);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.custum-button:hover {
+    border: 2px solid var(--contrast);
+    color: var(--text-dark);
+}
+
+.link-btn {
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.link-btn:hover {
+    color: var(--contrast);
+}
+
+#id-navbar {
+    height: 80px;
+}

@@ -11,7 +11,7 @@ export default function DefaultLayout() {
         <>
             <Header />
             <Alert />
-            <main className="container">
+            <main>
                 <Outlet />
             </main>
             <Footer />
