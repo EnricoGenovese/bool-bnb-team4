@@ -46,3 +46,10 @@
     background-color: #cce5ff;
     border-color: #b8daff;
 }
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}

@@ -220,7 +220,7 @@ export default function ApartmentPostForm() {
 
 
             })
-            console.log("Il form è stato inviato conb successo!");
+            console.log("Il form è stato inviato con successo!");
         } else {
             console.log("L'invio del modulo non è riuscito a causa di errori di convalida");
         }
