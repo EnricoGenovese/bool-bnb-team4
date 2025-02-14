@@ -31,7 +31,7 @@ function index(req, res) {
             count: results.length,
             items: results
         }
-        console.log(response)
+        // console.log(response)
         res.json(response);
     });
 }
@@ -85,6 +85,8 @@ function show(req, res) {
 };
 
 function store(req, res) {
+
+    console.log(req.file)
 
     if (!req.file) {
         return res.status(400).send({ error: 'No file uploaded' });
