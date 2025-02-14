@@ -8,11 +8,7 @@ export default function Homepage() {
     useEffect(() => {
         getApartments()
     }, [])
-
-    // useEffect(() => {
-    //     addLike()
-    // }, [])
-
+    
     return (
         <div>
             <div className="row">

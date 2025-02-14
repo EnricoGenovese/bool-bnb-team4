@@ -169,7 +169,7 @@ function storereviews(req, res) {
 function modify(req, res) {
     const { id } = req.params;
     const likeCountSql = `SELECT apartments.likes FROM apartments
-    WHERE apartments.id = ?`
+    WHERE apartments.id = ?`;
 
     connection.query(likeCountSql, [id], (err, results) => {
         if (err) return results.status(500).json({ error: err });
@@ -178,10 +178,14 @@ function modify(req, res) {
         let like = results[0].likes;
         (like === 0 || like === "undefined" || like === null) ? 0 : like = +(like) + 1;
 
-        const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.id = ?);`
+        const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.id = ?)`;
         connection.query(sql, [like, id], (err, result) => {
             if (err) return res.status(500).json({ error: err });
-            res.status(201).json({ success: true, message: "Likes incrementato correttamente", result });
+            res.status(201).json({ success: true, 
+                message: "Likes incrementato correttamente", 
+                result,
+                likes:like
+            });
         })
     })
 }
