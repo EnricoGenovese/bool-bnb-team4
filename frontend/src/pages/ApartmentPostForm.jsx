@@ -95,7 +95,7 @@ export default function ApartmentPostForm() {
             errors.description = "The `Summary Title` field must be at least 5 characters long";
         } else if (formData.description.length > 100) {
             errors.description = "The `Summary Title` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.description)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.description)) {
             errors.description = "The `Summary Title` can only contain letters, numbers, commas, periods, and spaces."
         }
 
@@ -106,7 +106,7 @@ export default function ApartmentPostForm() {
             errors.address = "The `Full Address` field must be at least 5 characters long";
         } else if (formData.address.length > 100) {
             errors.address = "The `Full Address` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.address)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.address)) {
             errors.address = "The `Address` can only contain letters, numbers, commas, periods, and spaces."
         }
 
@@ -117,7 +117,7 @@ export default function ApartmentPostForm() {
             errors.city = "`City` field must be at least 5 characters long";
         } else if (formData.city.length > 100) {
             errors.city = "The `City` field must be to the utmost 100 characters long";
-        } else if (!/^[a-zA-Z0-9,.'\s]*$/.test(formData.city)) {
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.city)) {
             errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
         }
 
