@@ -1,6 +1,7 @@
-
 import emailjs from 'emailjs-com';
 import { useState } from "react";
+import styles from '../styles/ContactForm.module.css';
+
 export default function ContactForm() {
 
     const [email, setEmail] = useState('');
@@ -43,35 +44,38 @@ export default function ContactForm() {
     };
 
     return (
-        <div>
-            <h2>Contattaci</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
+        <div className={`container ${styles.contactFormContainer}`}>
+            <h2 className="text-center mb-4">Contattaci</h2>
+            <form onSubmit={handleSubmit} className={styles.contactForm}>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
                     <input
                         type="email"
+                        id="email"
+                        className="form-control"
                         value={email}
                         onChange={handleEmailChange}
                         required
                     />
                 </div>
-                <div>
-                    <label>Messaggio</label>
+                <div className="mb-3">
+                    <label htmlFor="message" className="form-label">Messaggio</label>
                     <textarea
+                        id="message"
+                        className="form-control"
+                        rows="4"
                         value={message}
                         onChange={handleMessageChange}
                         required
                     />
                 </div>
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Invio in corso...' : 'Invia'}
-                </button>
+                <div className="d-grid gap-2">
+                    <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                        {isSubmitting ? 'Invio in corso...' : 'Invia'}
+                    </button>
+                </div>
             </form>
-            {statusMessage && <p>{statusMessage}</p>}
+            {statusMessage && <p className={`mt-3 text-center ${styles.statusMessage}`}>{statusMessage}</p>}
         </div>
     );
-};
-
-
-
-
+}

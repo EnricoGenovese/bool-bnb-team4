@@ -20,11 +20,14 @@ function App() {
           <Route Component={DefaultLayout}>
             <Route index Component={Homepage} />
             <Route path="/apartment">
-              <Route path=":id" Component={ApartmentDetails} />
+              <Route path=":id">
+                <Route index Component={ApartmentDetails} />
+                <Route path="contact-form" Component={ContactForm} />
+              </Route>
             </Route>
             <Route path="/advanced-research" Component={AdvancedResearch} />
             <Route path="/post-apartment" Component={ApartmentPostForm} />
-            <Route path="/contact-form" Component={ContactForm} />
+
             <Route path="*" Component={NotFound} />
           </Route>
         </Routes>
