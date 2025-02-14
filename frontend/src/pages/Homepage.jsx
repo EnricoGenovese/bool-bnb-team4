@@ -9,7 +9,7 @@ export default function Homepage() {
     useEffect(() => {
         getApartments()
     }, [])
-
+  
     return (
         <div>
             {isLoading && <Loader />}
