@@ -7,7 +7,6 @@ import ApartmentDetails from "./pages/ApartmentDetails.jsx";
 import ApartmentPostForm from "./pages/ApartmentPostForm.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import ContactForm from "./pages/ContactForm.jsx";
 
 
 
@@ -24,7 +23,6 @@ function App() {
             </Route>
             <Route path="/advanced-research" Component={AdvancedResearch} />
             <Route path="/post-apartment" Component={ApartmentPostForm} />
-            <Route path="/contact-form" Component={ContactForm} />
             <Route path="*" Component={NotFound} />
           </Route>
         </Routes>
