@@ -138,7 +138,7 @@ function store(req, res) {
             return res.status(500).json({ error: 'Errore nel salvataggio nel database', err });
         }
 
-        // console.log(results)
+        console.log(results)
 
         res.status(200).json({
             message: 'Apartment added successfully',

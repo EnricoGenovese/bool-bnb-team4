@@ -11,7 +11,7 @@ export default function SingleApartment({ apartment, categories }) {
     let category = "";
     const imgPath = import.meta.env.VITE_IMGPATH;
     console.log("Tutte le categorie: ", categories);
-    console.log("Id delle categorie: ", categories[0].id);
+    // console.log("Id delle categorie: ", categories[0].id);
 
     function findCategory() {
         return category = categories.find(element => element.id == apartment["id_category"])

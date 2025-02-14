@@ -43,6 +43,8 @@ const GlobalProvider = ({ children }) => {
     const [numRooms, setNumRooms] = useState(0);
     const [numBeds, setNumBeds] = useState(0);
     const [category, setCategory] = useState(0);
+    const initialData = { type: "", message: "" };
+    const [alertData, setAlertData] = useState(initialData);
 
     const navigate = useNavigate();
     // useEffect(() => {
@@ -111,7 +113,7 @@ const GlobalProvider = ({ children }) => {
     const data = {
         apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
-        initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes
+        initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes, alertData, setAlertData
     }
 
     return <GlobalContext.Provider value={data}>
