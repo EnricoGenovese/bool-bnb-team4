@@ -14,7 +14,7 @@ export default function Footer() {
                         Search an apartment
                     </div>
                 </NavLink>
-                <NavLink to="/apartment-post" className="text-body">
+                <NavLink to="/post-apartment" className="text-body">
                     <div className="text-center p-3 bg-dark text-light ">
                         Post your announcement
                     </div>
