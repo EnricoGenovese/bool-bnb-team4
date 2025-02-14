@@ -10,11 +10,12 @@ import Star from "./Star";
 // Importo lo style del module.css SingleApartment.module.css
 import style from "../styles/SingleApartment.module.css";
 
-export default function SingleApartment({ apartment, categories }) {
+export default function SingleApartment({ apartment, categories, ownerMail }) {
     const { id } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
     const imgPath = import.meta.env.VITE_IMGPATH;
+
 
     function findCategory() {
         return category = categories.find(element => element.id == apartment.item["id_category"])
@@ -81,7 +82,7 @@ export default function SingleApartment({ apartment, categories }) {
                         <button className={`${style["overlay-close"]}`} onClick={() => setIsOverlayOpen(false)}>
                             <FaTimes size={20} />
                         </button>
-                        <ContactForm />
+                        <ContactForm ownerMail={ownerMail} />
                     </div>
                 </div>
             )}

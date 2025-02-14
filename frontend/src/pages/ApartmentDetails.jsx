@@ -14,6 +14,7 @@ export default function ApartmentDetails() {
     const { id } = useParams();     // Destrutturo useParames e ricavo l'id
     const [apartment, setApartment] = useState("");
     const [categories, setCategory] = useState([]);
+    const [mail, setMail] = useState("");
 
     function getApartment(id) {
         console.log("id: ", id);        // prova funzionamento
@@ -21,8 +22,9 @@ export default function ApartmentDetails() {
 
         axios.get(apiUrl + endpoint + id)
             .then((res) => {
-                console.log(res.data)
+                console.log(res.data, "ciaooooooooooooo")
                 setApartment(res.data);
+                setMail(res.data.item.email)
             })
             .catch((err) => {
                 console.log(err);
@@ -37,11 +39,11 @@ export default function ApartmentDetails() {
             })
     }
 
-    function getCategories(){
+    function getCategories() {
         axios.get(apiUrl + endpoint + "/categories")
-        .then((res) => {
-            setCategory(res.data.items);
-        })
+            .then((res) => {
+                setCategory(res.data.items);
+            })
             .catch((err) => {
                 console.log(err);
                 if (err.status === 404) {
@@ -62,8 +64,8 @@ export default function ApartmentDetails() {
     return (
         <section className="container m-auto">
             {apartment && categories ? (
-                <>   
-                    <SingleApartment apartment={apartment} categories={categories} />
+                <>
+                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} />
                 </>
             )
                 : "Non trovata"}

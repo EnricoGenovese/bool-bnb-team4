@@ -2,7 +2,7 @@ import emailjs from 'emailjs-com';
 import { useState } from "react";
 import styles from '../styles/ContactForm.module.css';
 
-export default function ContactForm() {
+export default function ContactForm({ ownerMail }) {
 
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -22,10 +22,11 @@ export default function ContactForm() {
         const templateParams = {
             from_email: email,
             message: message,
+            to_email: ownerMail
         };
 
         emailjs
-            .send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams, 'YOUR_USER_ID')
+            .send('service_8ildxuc', 'template_0lntz26', templateParams, 'WYoHdRceyJKxA4E26')
             .then(
                 (result) => {
                     console.log(result.text);
