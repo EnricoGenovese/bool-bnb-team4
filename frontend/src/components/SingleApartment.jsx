@@ -9,14 +9,19 @@ import ContactForm from "./ContactForm";     // componente di prova dell'overlay
 import Star from "./Star";
 // Importo lo style del module.css SingleApartment.module.css
 import style from "../styles/SingleApartment.module.css";
+import axios from "axios"
 
 
-export default function SingleApartment({ apartment, categories, ownerMail, addLike, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
+export default function SingleApartment({ apartment, categories, ownerMail, addLike, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes }) {
     const { id } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
-    const [likes, setLikes] = useState(apartment.likes);
+    const [likes, setLikes] = useState(apartment.item.likes);
+    console.log(apartment.item.likes)
     const imgPath = import.meta.env.VITE_IMGPATH;
+    const apiUrl = import.meta.env.VITE_APIURL;
+    const endpoint = "/apartments/";
+
 
 
     function findCategory() {
@@ -24,6 +29,8 @@ export default function SingleApartment({ apartment, categories, ownerMail, addL
 
     }
     findCategory();
+
+
 
     return (
         <>
@@ -58,11 +65,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, addL
                                 <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm"
-                                        onClick={() => {
-                                            addLike(id).then((newLikes) => {
-                                                setLikes(newLikes);
-                                            });
-                                        }}>
+                                        onClick={updateLikes}>
                                         <span className="d-inline-block me-2">&#9829;</span>
                                         <span className="ml-3 d-inline-block align-self-center">{apartment.item.likes}</span>
                                     </button>

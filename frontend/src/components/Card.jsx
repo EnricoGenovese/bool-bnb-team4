@@ -21,14 +21,14 @@ export default function Card({ apartment, addLike }) {
             <div className="d-flex flex-nowrap justify-content-between" >
                 <button className="btn btn-danger text-light mx-4 my-2" id={style.likeButton}
                     onClick={() => {
-                        addLike(id).then((newLikes) => {
-                            setLikes(newLikes);
+                        addLike(id).then(() => {
+                            setLikes(likes + 1);
                         });
                     }}>
                     <span className="d-inline-block me-2">&#9829;</span>
                     <span className="ml-3 d-inline-block align-self-center">{likes}</span>
                 </button>
             </div>
-        </div>
+        </div >
     )
 }

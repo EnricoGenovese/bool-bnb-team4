@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function AdevancedResearch() {
 
-    const { search, category, numRooms, numBeds } = useGlobalContext();
+    const { search, category, numRooms, numBeds, addLike } = useGlobalContext();
     const [filteredApi, setFilteredApi] = useState([]);
 
     const apiURL = `http://localhost:3000/api`;
@@ -63,7 +63,7 @@ export default function AdevancedResearch() {
             <div className="container m-auto row">
                 {filteredApi?.map((apartment) => (
                     <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
-                        <Card apartment={apartment} />
+                        <Card apartment={apartment} addLike={addLike} />
                     </div>
                 ))}
             </div>

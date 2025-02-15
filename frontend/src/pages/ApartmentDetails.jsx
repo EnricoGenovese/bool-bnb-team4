@@ -150,6 +150,17 @@ export default function ApartmentDetails() {
         }
     };
 
+    function addLike() {
+        axios.patch(apiUrl + endpoint + id)
+            .then((res) => {
+                console.log(res.data);
+                getApartment();
+            })
+            .catch((err) => {
+                console.log("Error: ", err)
+            })
+    }
+
     useEffect(() => {
         getApartment();
         getCategories();
@@ -159,7 +170,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} />
+                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} />
                 </>
             )
                 : "Non trovata"}
