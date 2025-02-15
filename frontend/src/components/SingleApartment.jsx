@@ -11,7 +11,7 @@ import Star from "./Star";
 import style from "../styles/SingleApartment.module.css";
 
 
-export default function SingleApartment({ apartment, categories, ownerMail, addLike }) {
+export default function SingleApartment({ apartment, categories, ownerMail, addLike, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { id } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
@@ -59,7 +59,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, addL
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm"
                                         onClick={() => {
-                                            addLike(id).then((newLikes)=>{
+                                            addLike(id).then((newLikes) => {
                                                 setLikes(newLikes);
                                             });
                                         }}>
@@ -112,7 +112,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, addL
             </section>
 
             <section>
-                <ReviewForm apartment_id={id} singleApartment={apartment} />
+                <ReviewForm apartment_id={id} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
             </section>
         </>
     );
