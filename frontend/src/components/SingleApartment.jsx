@@ -10,10 +10,12 @@ import Star from "./Star";
 // Importo lo style del module.css SingleApartment.module.css
 import style from "../styles/SingleApartment.module.css";
 
-export default function SingleApartment({ apartment, categories, ownerMail }) {
+
+export default function SingleApartment({ apartment, categories, ownerMail, addLike }) {
     const { id } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
+    const [likes, setLikes] = useState(apartment.likes);
     const imgPath = import.meta.env.VITE_IMGPATH;
 
 
@@ -57,7 +59,9 @@ export default function SingleApartment({ apartment, categories, ownerMail }) {
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm"
                                         onClick={() => {
-                                            addLike(id)
+                                            addLike(id).then((newLikes)=>{
+                                                setLikes(newLikes);
+                                            });
                                         }}>
                                         <span className="d-inline-block me-2">&#9829;</span>
                                         <span className="ml-3 d-inline-block align-self-center">{apartment.item.likes}</span>
