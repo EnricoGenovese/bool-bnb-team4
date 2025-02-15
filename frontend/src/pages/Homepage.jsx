@@ -12,7 +12,7 @@ export default function Homepage() {
 
     return (
         <div>
-            <div className="container-fluid jumbotron p-5 mb-4 bg-light rounded-3 text-center">
+            <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
                 <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "10px" }}>
                     <h1 className="display-4">Vattelo a pija nder culo!!!</h1>
                     <p className="lead">Trova l'appartamento perfetto per te con un solo click.</p>

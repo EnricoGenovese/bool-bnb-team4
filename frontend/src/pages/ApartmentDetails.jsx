@@ -15,6 +15,7 @@ export default function ApartmentDetails() {
     const [apartment, setApartment] = useState("");
     const [categories, setCategory] = useState([]);
     const [mail, setMail] = useState("");
+    const {addLike} = useGlobalContext();
 
     function getApartment(id) {
         console.log("id: ", id);        // prova funzionamento
@@ -65,7 +66,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} />
+                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} addLike={addLike}/>
                 </>
             )
                 : "Non trovata"}
