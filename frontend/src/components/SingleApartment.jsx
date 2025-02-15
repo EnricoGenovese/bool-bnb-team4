@@ -69,12 +69,12 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                         onClick={() => {
                                             addLike(id).then(() => {
                                                 setLikes(likes + 1);
-                                                show();
+                                                // show();
 
                                             });
                                         }}>
                                         <span className="d-inline-block me-2">&#9829;</span>
-                                        <span className="ml-3 d-inline-block align-self-center">{apartment.item.likes}</span>
+                                        <span className="ml-3 d-inline-block align-self-center">{likes}</span>
                                     </button>
 
                                     <button className="btn btn-primary text-light btn-sm"
