@@ -18,12 +18,12 @@ export default function ContactForm({ ownerMail }) {
     const validateForm = (formData) => {
         const errors = {};
 
-        if (!formData.from_email.trim()) {
-            errors.from_email = 'Email required';
-        } else if (!emailPattern.test(formData.from_email)) {
-            errors.from_email = 'Please enter a valid email address';
-        } else if (formData.from_email.length > 255) {
-            errors.from_email = 'Email must be at most 255 characters long';
+        if (!formData.user_email.trim()) {
+            errors.user_email = 'Email required';
+        } else if (!emailPattern.test(formData.user_email)) {
+            errors.user_email = 'Please enter a valid email address';
+        } else if (formData.user_email.length > 255) {
+            errors.user_email = 'Email must be at most 255 characters long';
         }
 
         if (!formData.message.trim()) {
@@ -40,7 +40,7 @@ export default function ContactForm({ ownerMail }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const templateParams = {
-            from_email: email,
+            user_email: email,
             message: message,
             to_email: ownerMail
         };
@@ -88,9 +88,9 @@ export default function ContactForm({ ownerMail }) {
                         onChange={handleEmailChange}
                         required
                     />
-                    {errors.from_email && (
+                    {errors.user_email && (
                         <span className={`error-message ${styles.errorMessage}`}>
-                            {errors.from_email}
+                            {errors.user_email}
                         </span>
                     )}
 

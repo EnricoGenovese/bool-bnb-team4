@@ -1,6 +1,6 @@
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import SingleApartment from "../components/SingleApartment";
 import axios from "axios";
 // Api url ed endpoint per axiox
@@ -25,6 +25,8 @@ export default function ApartmentDetails() {
     const [errors, setErrors] = useState({});
     const today = new Date().toISOString().split("T")[0];
     const minDate = new Date("2010-01-01").toISOString().split("T")[0];
+    const navigate = useNavigate();
+
 
     const validateForm = (formData) => {
         const errors = {};

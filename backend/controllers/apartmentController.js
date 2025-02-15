@@ -60,6 +60,7 @@ function show(req, res) {
     WHERE apartments.id = ?`
     connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+        if (results.length == 0) return res.status(404).json({ error: 'Appartamento non trovato', err });
         const item = results[0];
 
         if (item.id == null) return res.status(404).json({ error: 'Appartamento non trovato', err });
@@ -183,10 +184,11 @@ function modify(req, res) {
         const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.id = ?)`;
         connection.query(sql, [like, id], (err, result) => {
             if (err) return res.status(500).json({ error: err });
-            res.status(201).json({ success: true, 
-                message: "Likes incrementato correttamente", 
+            res.status(201).json({
+                success: true,
+                message: "Likes incrementato correttamente",
                 result,
-                likes:like
+                likes: like
             });
         })
     })

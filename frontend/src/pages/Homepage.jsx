@@ -60,9 +60,10 @@ export default function Homepage() {
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
                 <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "10px" }}>
                     <h1 className="display-4">Bool B&B</h1>
-                    <p className="lead">Trova l'appartamento perfetto per te con un solo click.</p>
+                    <p className="lead">
+                        Find the perfect apartment for you with just one click.</p>
                 </div>
-                <Link className="btn custum-button mt-5 link-btn" to={"/advanced-research"} >Scopri di più </Link>
+                <Link className="btn custum-button mt-5 link-btn" to={"/advanced-research"} >Find out more </Link>
             </div>
             {isLoading && <Loader />}
             <div className="row container m-auto">
