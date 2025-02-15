@@ -10,7 +10,7 @@ export default function Card({ apartment, addLike }) {
 
 
     return (
-        <div className="card" key={id}>
+        <div className="card flex-grow-1 flex-shrink-0 h-100" key={id}>
             <NavLink to={`/apartment/${id}`} className="text-decoration-none text-dark">
                 <img className="card-img-top" src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className="card-body">
@@ -21,7 +21,7 @@ export default function Card({ apartment, addLike }) {
             <div className="d-flex flex-nowrap justify-content-between" >
                 <button className="btn btn-danger text-light mx-4 my-2" id={style.likeButton}
                     onClick={() => {
-                        addLike(id).then((newLikes)=>{
+                        addLike(id).then((newLikes) => {
                             setLikes(newLikes);
                         });
                     }}>
