@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { NavLink } from "react-router"
+import { FaMapMarkerAlt, FaCity } from "react-icons/fa";
 import style from "../styles/Card.module.css"
 
 const imgPath = import.meta.env.VITE_IMGPATH
@@ -10,15 +11,20 @@ export default function Card({ apartment, addLike }) {
 
 
     return (
-        <div className="card flex-grow-1 flex-shrink-0 h-100" key={id}>
+        <div className="card d-flex flex-column h-100 justify-content-between" key={id}>
             <NavLink to={`/apartment/${id}`} className="text-decoration-none text-dark">
-                <img className="card-img-top" src={`${imgPath}${apartment.img}`} alt={apartment.description} />
+                <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className="card-body">
                     <h5 className="card-title">{apartment.description}</h5>
-                    <p className="card-text">{apartment.address}<span>, {apartment.city}</span></p>
+                    <div className="d-flex align-items-center">
+                        <p className="card-text"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address},</p>
+                    </div>
+                    <div className="d-flex align-items-center">
+                        <p className="fw-bold"><FaCity fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.city}</p>
+                    </div>
                 </div>
             </NavLink>
-            <div className="d-flex flex-nowrap justify-content-between" >
+            <div className={`${style.cardFooter} position-relative`} >
                 <button className="btn btn-danger text-light mx-4 my-2" id={style.likeButton}
                     onClick={() => {
                         addLike(id).then((newLikes) => {
