@@ -1,8 +1,9 @@
 import { useGlobalContext } from "../contexts/GlobalContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SingleApartment from "../components/SingleApartment";
 import axios from "axios";
+
 // Api url ed endpoint per axiox
 const apiUrl = import.meta.env.VITE_APIURL;
 const endpoint = "/apartments/";
@@ -26,6 +27,8 @@ export default function ApartmentDetails() {
     const today = new Date().toISOString().split("T")[0];
     const minDate = new Date("2010-01-01").toISOString().split("T")[0];
     const navigate = useNavigate();
+    const { setAlertData } = useGlobalContext();
+
 
 
     const validateForm = (formData) => {
@@ -142,7 +145,14 @@ export default function ApartmentDetails() {
                     // setCommentId(res.data.results.insertId);
                     setFormData(initialForm);
                     getApartment();
+
+                    setAlertData({
+                        type: "success",
+                        message: `Your review has been added successfully`,
+                    });
+                    window.scrollTo(0, 0)
                 })
+
                 .catch((error) => {
                     console.log(error);
                 })
@@ -172,7 +182,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} />
+                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
                 </>
             )
                 : "Non trovata"}

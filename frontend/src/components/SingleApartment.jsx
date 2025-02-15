@@ -12,7 +12,8 @@ import style from "../styles/SingleApartment.module.css";
 import axios from "axios"
 
 
-export default function SingleApartment({ apartment, categories, ownerMail, addLike, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes }) {
+export default function SingleApartment({ apartment, categories, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes, show }) {
+    const { addLike } = useGlobalContext();
     const { id } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
@@ -65,7 +66,13 @@ export default function SingleApartment({ apartment, categories, ownerMail, addL
                                 <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm"
-                                        onClick={updateLikes}>
+                                        onClick={() => {
+                                            addLike(id).then(() => {
+                                                setLikes(likes + 1);
+                                                show();
+
+                                            });
+                                        }}>
                                         <span className="d-inline-block me-2">&#9829;</span>
                                         <span className="ml-3 d-inline-block align-self-center">{apartment.item.likes}</span>
                                     </button>

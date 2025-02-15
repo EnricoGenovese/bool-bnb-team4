@@ -64,7 +64,7 @@ function show(req, res) {
         const item = results[0];
 
         if (item.id == null) return res.status(404).json({ error: 'Appartamento non trovato', err });
-        const sqlreviews = "SELECT * FROM `reviews` WHERE `id_apartment` = ?";
+        const sqlreviews = "SELECT * FROM `reviews` WHERE `id_apartment` = ? ORDER BY update_date DESC";
         connection.query(sqlreviews, [id], (err, reviews) => {
             if (err) return res.status(500).json({ error: "Error server", err });
 
