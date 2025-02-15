@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext"
 import Card from "../components/Card.jsx"
-import { Link, NavLink} from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import Loader from "../components/Loader.jsx"
 export default function Homepage() {
     const { apartments, getApartments, addLike, isLoading } = useGlobalContext();
@@ -9,7 +9,7 @@ export default function Homepage() {
     useEffect(() => {
         getApartments()
     }, [])
-  
+
     return (
         <div>
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
