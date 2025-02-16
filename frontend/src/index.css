@@ -112,6 +112,10 @@ input[type="number"] {
     filter: drop-shadow(0 5px 2px var(--text-dark));
 } */
 
+.no-query {
+    height: 50vh;
+}
+
 @media screen and (max-width: 992px) {
 
     #navbarSupportedContent {

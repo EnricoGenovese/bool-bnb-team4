@@ -61,11 +61,15 @@ export default function AdevancedResearch() {
         <>
             <FilteredSearch />
             <div className="container m-auto row">
-                {filteredApi?.map((apartment) => (
-                    <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
-                        <Card apartment={apartment} addLike={addLike} />
-                    </div>
-                ))}
+                {filteredApi.length >= 1 ?
+                    filteredApi?.map((apartment) => (
+                        <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
+                            <Card apartment={apartment} addLike={addLike} />
+                        </div>
+                    )) :
+                    <div className="text-center py-5 no-query">
+                        <h3 className="display-5">No results found for this research</h3>
+                    </div>}
             </div>
         </>
     )
