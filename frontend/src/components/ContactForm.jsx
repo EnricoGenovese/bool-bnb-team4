@@ -116,7 +116,7 @@ export default function ContactForm({ ownerMail }) {
 
                 </div>
                 <div className="d-grid gap-2">
-                    <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                    <button type="submit" className="btn btn-send" disabled={isSubmitting}>
                         {isSubmitting ? 'Sending...' : 'Send'}
                     </button>
                 </div>
