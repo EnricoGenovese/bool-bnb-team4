@@ -4,8 +4,9 @@
 }
 
 #likeButton {
-    height: 40px;
-    width: 80px;
+    height: 30px;
+    width: 60px;
+    text-align: center;
 }
 
 .picture {

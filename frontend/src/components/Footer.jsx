@@ -37,9 +37,6 @@ export default function Footer() {
                             <li>
                                 <NavLink to={"/post-apartment"} className="text-light">Post your announcement</NavLink>
                             </li>
-                            <li>
-                                <NavLink to={"#"} className="text-light">Homepage</NavLink>
-                            </li>
                         </ul>
                     </div>
 

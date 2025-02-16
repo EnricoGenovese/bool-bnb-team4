@@ -16,7 +16,7 @@ export default function Card({ apartment, addLike }) {
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className="card-body">
                     <h5 className="card-title">{apartment.description}</h5>
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center my-2">
                         <p className="card-text"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address},</p>
                     </div>
                     <div className="d-flex align-items-center">
@@ -25,7 +25,7 @@ export default function Card({ apartment, addLike }) {
                 </div>
             </NavLink>
             <div className={`${style.cardFooter} position-relative`} >
-                <button className="btn btn-danger text-light mx-4 my-2" id={style.likeButton}
+                <button className="btn btn-danger text-light mx-4 my-2 d-flex align-items-center justify-content-center" id={style.likeButton}
                     onClick={() => {
                         addLike(id).then(() => {
                             setLikes(likes + 1);

@@ -57,7 +57,7 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             </div>
             <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
 
-            <button type="submit" className="btn btn-primary">Add comment</button>
+            <button type="submit" className="btn btn-send">Add comment</button>
             <p className="mt-3">* Fields marked with * are mandatory</p>
         </form>
     );

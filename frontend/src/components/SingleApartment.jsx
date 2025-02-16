@@ -43,7 +43,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                         src={imgPath + apartment.item.img}
                         alt={apartment.item.description}
                         className="w-100 d-md-none mb-3"
-                        style={{ height: "150px", objectFit: "cover" }}
+                        style={{ height: "250px", objectFit: "cover" }}
                     />
 
                     <div className="w-100 d-md-flex gap-3">
@@ -53,9 +53,9 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                             src={imgPath + apartment.item.img}
                             alt={apartment.item.description}
                             className="d-none d-md-block me-3"
-                            style={{ width: "33.33%", height: "100%", objectFit: "cover" }}
+                            style={{ width: "66.67%", height: "100%", objectFit: "cover" }}
                         />
-                        <Card.Body className="w-100" style={{ width: "66.67%" }}>
+                        <Card.Body className="w-50" style={{ width: "33.33%" }}>
                             <Card.Title>{apartment.item.description}</Card.Title>
                             <Card.Text as="div">
                                 <p><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
@@ -77,7 +77,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                         <span className="ml-3 d-inline-block align-self-center">{likes}</span>
                                     </button>
 
-                                    <button className="btn btn-primary text-light btn-sm"
+                                    <button className="btn btn-send text-light btn-sm"
                                         onClick={() => setIsOverlayOpen(true)}>
                                         <FaEnvelope className="me-2" />
                                         Send Email

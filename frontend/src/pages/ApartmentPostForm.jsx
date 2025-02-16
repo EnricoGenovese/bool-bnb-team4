@@ -311,6 +311,7 @@ export default function ApartmentPostForm() {
                             <label htmlFor="roomsNumber" className="form-label">Number of rooms:</label>
                             <input
                                 type="number"
+                                min="0"
                                 id="roomsNumber"
                                 name="roomsNumber"
                                 className="form-control"
@@ -329,6 +330,7 @@ export default function ApartmentPostForm() {
                             <label htmlFor="bedsNumber" className="form-label">Number of beds:</label>
                             <input
                                 type="number"
+                                min="0"
                                 id="bedsNumber"
                                 name="bedsNumber"
                                 className="form-control"
@@ -347,6 +349,7 @@ export default function ApartmentPostForm() {
                             <label htmlFor="bathroomsNumber" className="form-label">Number of bathrooms:</label>
                             <input
                                 type="number"
+                                min="0"
                                 id="bathroomsNumber"
                                 name="bathroomsNumber"
                                 className="form-control"
@@ -365,6 +368,7 @@ export default function ApartmentPostForm() {
                             <label htmlFor="squareMeters" className="form-label">Square meters:</label>
                             <input
                                 type="number"
+                                min="0"
                                 id="squareMeters"
                                 name="squareMeters"
                                 className="form-control"
@@ -403,7 +407,7 @@ export default function ApartmentPostForm() {
                         )}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100">Add apartment</button>
+                    <button type="submit" className="btn btn-send d-flex mx-auto">Add apartment</button>
                 </form>
             </div>
         </section>

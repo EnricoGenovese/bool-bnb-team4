@@ -37,7 +37,8 @@ function index(req, res) {
 }
 
 function indexHomePage(req, res) {
-    const sql = `SELECT * FROM apartments;`;
+    const sql = `SELECT * FROM apartments
+    ORDER BY apartments.likes DESC`;
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const response = {

@@ -3,53 +3,54 @@ import { NavLink } from "react-router";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const handleToggle = () => {
+    const handleToggle = (e) => {
+        e.preventDefault()
         setIsOpen(!isOpen);
     };
 
     return (
-        <div className="w-100 bg-dark text-uppercase" id="id-navbar">
-            <nav className="container navbar navbar-expand-lg d-navbar-dark bg-dark h-100 p-0">
-                <div className="container-fluid g-0 ">
+        <div className="w-100 text-uppercase" id="id-navbar">
+            <nav className="container-fluid navbar navbar-expand-lg d-navbar-dark h-100 p-0">
+                <div className="w-100 g-0">
                     <button
-                        className="navbar-toggler bg-light"
+                        className="navbar-toggler mx-3"
                         type="button"
                         aria-expanded={isOpen}
                         aria-label="Toggle navigation"
                         onClick={handleToggle}
                     >
-                        <span className="navbar-toggler-icon bg-light" style={{ backgroudColor: 'red' }}></span>
+                        <span className="navbar-toggler-icon" style={{ backgroudColor: 'red' }}></span>
                     </button>
                     <div
-                        className={`bg-dark w-100 collapse navbar-collapse ${isOpen ? "show" : ""}`}
+                        className={`w-100 collapse navbar-collapse my-2  ${isOpen ? "show" : ""}`}
                         id="navbarSupportedContent"
                     >
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold text-shadow-1">
+                            <li className="nav-item ms-3">
                                 <NavLink
                                     to="/"
-                                    className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
+                                    className="nav-link text-decoration-none navlink-hover custom-link"
+                                    style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
                                     end
                                 >
                                     Homepage
                                 </NavLink>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item ms-3">
                                 <NavLink
                                     to="/advanced-research"
-                                    className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
+                                    className="nav-link text-decoration-none navlink-hover custom-link"
+                                    style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
                                     end
                                 >
                                     Search an apartment
                                 </NavLink>
                             </li>
-                            <li className="nav-item ">
+                            <li className="nav-item ms-3">
                                 <NavLink
                                     to="/post-apartment"
-                                    className="nav-link text-decoration-none navlink-hover"
-                                    style={({ isActive }) => (isActive ? { color: "red" } : { color: "white" })}
+                                    className="nav-link text-decoration-none navlink-hover custom-link"
+                                    style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
                                     end
                                 >
                                     Post your announcement
