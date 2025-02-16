@@ -36,6 +36,21 @@ function index(req, res) {
     });
 }
 
+function indexHomePage(req, res) {
+    const sql = `SELECT * FROM apartments;`;
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+        const response = {
+            success: true,
+            count: results.length,
+            items: results
+        }
+
+        res.json(response);
+    })
+
+}
+
 function indexCategories(req, res) {
     const sql = `SELECT * FROM categories;`
 
@@ -194,4 +209,4 @@ function modify(req, res) {
     })
 }
 
-export { index, indexCategories, show, storereviews, store, upload, modify };
+export { index, indexCategories, indexHomePage, show, storereviews, store, upload, modify };

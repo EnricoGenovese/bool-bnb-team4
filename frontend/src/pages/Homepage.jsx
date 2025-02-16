@@ -5,55 +5,20 @@ import { Link, NavLink } from "react-router-dom"
 import Loader from "../components/Loader.jsx"
 import axios from "axios";
 export default function Homepage() {
-    const { addLike, isLoading, search, category, numRooms, numBeds } = useGlobalContext();
 
-    const [filteredApi, setFilteredApi] = useState([]);
-
+    const [homeApartments, setHomeApartments] = useState([]);
+    const { addLike, isLoading } = useGlobalContext();
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`
-
-    const filteredResearch = (obj) => {
-        let filteredObj = obj;
-
-        if (search !== "") {
-            const cleanSearch = search.replace(/\s+/g, '').toLowerCase();
-            filteredObj = filteredObj.filter((ele) =>
-                ele.address.replace(/\s+/g, '').toLowerCase().includes(cleanSearch) ||
-                ele.city.replace(/\s+/g, '').toLowerCase().includes(cleanSearch)
-            );
-        }
-
-        if (numRooms > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.rooms_number >= numRooms);
-        }
-
-        if (numBeds > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.beds_number >= numBeds);
-        }
-
-        if (category > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.id_category == category);
-        }
-
-        return filteredObj;
-    };
-    const boh = () => {
-        axios.get(`${apiURL}${endpoint}`)
-            .then((res) => {
-                const filtered = filteredResearch(res.data.items);
-                setFilteredApi(filtered);
-                console.log("Filtrato: " + JSON.stringify(filteredApi, null, 2));
-                return;
-            })
-            .catch((err) => {
-                //console.log(err);
-            })
+    function getHomeApartments() {
+        axios.get(`${apiURL}${endpoint}homepage`).then((res) => {
+            console.log(res.data);
+            setHomeApartments(res.data.items);
+        })
     }
-
-
     useEffect(() => {
-        boh();
-    }, [search, category, numRooms, numBeds])
+        getHomeApartments();
+    }, [])
 
     return (
         <div>
@@ -67,7 +32,7 @@ export default function Homepage() {
             </div>
             {isLoading && <Loader />}
             <div className="row container m-auto">
-                {filteredApi?.map((apartment) => (
+                {homeApartments?.map((apartment) => (
                     <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
                         <Card apartment={apartment} addLike={addLike} />
                     </div>
