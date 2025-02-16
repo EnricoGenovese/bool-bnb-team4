@@ -85,7 +85,7 @@ export default function Footer() {
                     <NavLink className="text-light" to={"/"}><p>Bool B&amp;B</p></NavLink>
                 </div>
                 <div className="w-50 align-self-center">
-                    <ul className="nav col-md-4 justify-content-around list-unstyled d-flex py-3 w-100">
+                    <ul className="nav col-md-4 justify-content-around list-unstyled d-flex py-3 w-100  flex-nowrap">
                         <li className="ms-3"><a href="#" ><FaFacebook style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
                         <li className="ms-3"><a href="#"><FaInstagram style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
                         <li className="ms-3"><a href="#"><FaTwitter style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
@@ -96,6 +96,6 @@ export default function Footer() {
                 </div>
             </div>
 
-        </footer>
+        </footer >
     )
 }

@@ -15,6 +15,10 @@ footer {
     background-image: url("../img/footer.jpg");
 }
 
+footer a {
+    text-decoration: none;
+}
+
 header {
     position: sticky;
     top: 0;
@@ -58,6 +62,7 @@ input[type="number"] {
     border: 2px solid var(--contrast);
     color: var(--text-dark);
     transform: scale(0.95);
+    background-color: #2E3532BB;
     transition: all 0.3s;
 }
 

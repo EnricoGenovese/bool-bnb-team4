@@ -1,12 +1,13 @@
 #likeButton:hover {
     transform: scale(1.1);
-    transition-duration: 0.4s;
+    transition: all 0.3s;
 }
 
 #likeButton {
     height: 30px;
     width: 60px;
     text-align: center;
+    transition: all 0.3s;
 }
 
 .picture {

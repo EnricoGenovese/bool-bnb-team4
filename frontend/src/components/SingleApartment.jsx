@@ -55,7 +55,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                             className="d-none d-md-block me-3"
                             style={{ width: "66.67%", height: "100%", objectFit: "cover" }}
                         />
-                        <Card.Body className="w-50" style={{ width: "33.33%" }}>
+                        <Card.Body className="w-100" style={{ width: "33.33%" }}>
                             <Card.Title>{apartment.item.description}</Card.Title>
                             <Card.Text as="div">
                                 <p><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
@@ -65,7 +65,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                 <p><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}</p>
                                 <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                 <div className="d-flex gap-2">
-                                    <button className="btn btn-danger text-light btn-sm"
+                                    <button className="btn btn-danger text-light btn-sm d-flex justify-content-around align-content-between align-self-center"
                                         onClick={() => {
                                             addLike(id).then(() => {
                                                 setLikes(likes + 1);
@@ -77,10 +77,10 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                         <span className="ml-3 d-inline-block align-self-center">{likes}</span>
                                     </button>
 
-                                    <button className="btn btn-send text-light btn-sm"
+                                    <button className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3"
                                         onClick={() => setIsOverlayOpen(true)}>
-                                        <FaEnvelope className="me-2" />
-                                        Send Email
+                                        <span><FaEnvelope className="mx-auto d-inline-block  me-md-2" /></span>
+                                        <span className="d-none d-md-inline-block">Send Email</span>
                                     </button>
                                 </div>
                             </Card.Text>

@@ -3,8 +3,7 @@ import { NavLink } from "react-router";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const handleToggle = (e) => {
-        e.preventDefault()
+    const handleToggle = () => {
         setIsOpen(!isOpen);
     };
 
@@ -31,6 +30,7 @@ export default function Navbar() {
                                     to="/"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
                                     style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
+                                    onClick={handleToggle}
                                     end
                                 >
                                     Homepage
@@ -41,6 +41,7 @@ export default function Navbar() {
                                     to="/advanced-research"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
                                     style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
+                                    onClick={handleToggle}
                                     end
                                 >
                                     Search an apartment
@@ -51,6 +52,7 @@ export default function Navbar() {
                                     to="/post-apartment"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
                                     style={({ isActive }) => (isActive ? { color: "#8B2635" } : { color: "white" })}
+                                    onClick={handleToggle}
                                     end
                                 >
                                     Post your announcement
