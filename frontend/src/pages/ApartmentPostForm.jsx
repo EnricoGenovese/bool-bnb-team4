@@ -297,6 +297,7 @@ export default function ApartmentPostForm() {
                             name="image"
                             className="form-control"
                             onChange={handleFileChange}
+                            accept="image/jpg, image/png, image/jpeg"
                         />
                         {errors.image && (
                             <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>

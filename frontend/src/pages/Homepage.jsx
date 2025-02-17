@@ -32,6 +32,7 @@ export default function Homepage() {
             </div>
             {isLoading && <Loader />}
             <div className="row container m-auto">
+                <h3 className="py-2">Our most loved apartments: </h3>
                 {homeApartments?.map((apartment) => (
                     <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
                         <Card apartment={apartment} addLike={addLike} />
