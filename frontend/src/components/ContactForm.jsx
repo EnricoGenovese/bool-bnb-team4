@@ -76,10 +76,10 @@ export default function ContactForm({ ownerMail }) {
 
     return (
         <div className={`container ${styles.contactFormContainer}`}>
-            <h2 className="text-center mb-4">Contact Us</h2>
+            <h2 className="w-100 mb-4 text-start">Contact Us</h2>
             <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Your Email</label>
+                    <label htmlFor="email" className="form-label w-100 text-start">Your Email</label>
                     <input
                         type="email"
                         id="email"
@@ -96,7 +96,7 @@ export default function ContactForm({ ownerMail }) {
 
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Your message</label>
+                    <label htmlFor="message" className="form-label w-100 text-start">Your message</label>
                     <textarea
                         id="message"
                         className="form-control"

@@ -6,13 +6,13 @@ import style from "../styles/Card.module.css"
 const imgPath = import.meta.env.VITE_IMGPATH
 
 export default function Card({ apartment, addLike }) {
-    const id = apartment.id
+    const slug = apartment.slug
     const [likes, setLikes] = useState(apartment.likes)
 
 
     return (
-        <div className="card d-flex flex-column h-100 justify-content-between" key={id}>
-            <NavLink to={`/apartment/${id}`} className="text-decoration-none text-dark">
+        <div className="card d-flex flex-column h-100 justify-content-between" key={slug}>
+            <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className="card-body">
                     <h5 className="card-title">{apartment.description}</h5>
@@ -27,7 +27,7 @@ export default function Card({ apartment, addLike }) {
             <div className={`${style.cardFooter} position-relative`} >
                 <button className="btn btn-danger text-light mx-4 my-2 d-flex align-items-center justify-content-center" id={style.likeButton}
                     onClick={() => {
-                        addLike(id).then(() => {
+                        addLike(slug).then(() => {
                             setLikes(likes + 1);
                         });
                     }}>

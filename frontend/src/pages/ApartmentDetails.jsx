@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SingleApartment from "../components/SingleApartment";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 // Api url ed endpoint per axiox
 const apiUrl = import.meta.env.VITE_APIURL;
@@ -17,7 +18,9 @@ export default function ApartmentDetails() {
         vote: 0
     };
 
-    const { id } = useParams();     // Destrutturo useParames e ricavo l'id
+    const { slug } = useParams();
+    // Destrutturo useParames e ricavo l'id
+
     const [apartment, setApartment] = useState("");
     const [categories, setCategory] = useState([]);
     const [formData, setFormData] = useState(initialForm);
@@ -81,10 +84,10 @@ export default function ApartmentDetails() {
 
 
     function getApartment() {
-        console.log("id: ", id);        // prova funzionamento
-        // console.log(apiUrl + "/apartments/" + id);
+        console.log("id: ", slug);        // prova funzionamento
+        // console.log(apiUrl + "/apartments/" + slug);
 
-        axios.get(apiUrl + endpoint + id)
+        axios.get(apiUrl + endpoint + slug)
             .then((res) => {
                 console.log(res.data)
                 setApartment(res.data);
@@ -139,7 +142,7 @@ export default function ApartmentDetails() {
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
 
-            axios.post(`${apiUrl}${endpoint}${id}/reviews`, formData)
+            axios.post(`${apiUrl}${endpoint}${slug}/reviews`, formData)
                 .then((res) => {
                     console.log("Recensione inviata con successo!");
                     // setCommentId(res.data.results.insertId);
@@ -150,7 +153,17 @@ export default function ApartmentDetails() {
                         type: "success",
                         message: `Your review has been added successfully`,
                     });
-                    window.scrollTo(0, 0)
+                    window.scrollTo(0, 0);
+                    toast.success("Review added succesfully"), {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        rtl: false,
+                    }
+
                 })
 
                 .catch((error) => {
@@ -163,7 +176,7 @@ export default function ApartmentDetails() {
     };
 
     function addLike() {
-        axios.patch(apiUrl + endpoint + id)
+        axios.patch(apiUrl + endpoint + slug)
             .then((res) => {
                 console.log(res.data);
                 getApartment();
@@ -176,7 +189,8 @@ export default function ApartmentDetails() {
     useEffect(() => {
         getApartment();
         getCategories();
-    }, [id]);
+        console.log(slug)
+    }, [slug]);
 
     return (
         <section className="container m-auto">
