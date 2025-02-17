@@ -3,12 +3,14 @@ import { RandomNum } from "../utilities/functions.js";
 import { upload } from "../utilities/functions.js"
 
 function index(req, res) {
-    let { search, category, minRooms, minBed } = req.query;
+    let { search, category, minRooms, minBeds } = req.query;
+
+    console.log("Query parameters:", req.query);
 
     search = search ? `%${search.trim()}%` : '%';
     category = category ? category : '0';
     minRooms = minRooms ? minRooms : '0';
-    minBed = minBed ? minBed : '0';
+    minBeds = minBeds ? minBeds : '0';
 
     const sql = `
         SELECT apartments.*, categories.name AS category_name, owners.email
@@ -24,7 +26,7 @@ function index(req, res) {
     ORDER BY apartments.likes DESC
         `
     // console.log("Query eseguita:", sql); // Per debug
-    connection.query(sql, [search, search, minRooms, minBed, category, category], (err, results) => {
+    connection.query(sql, [search, search, minRooms, minBeds, category, category], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const response = {
             status: "success",
@@ -37,9 +39,15 @@ function index(req, res) {
 }
 
 function indexHomePage(req, res) {
-    const sql = `SELECT * FROM apartments
+    let {search} = req.query;
+    search = search ? `%${search.trim()}%` : '%';
+
+    const sql = `
+    SELECT * FROM apartments
+    WHERE
+        (address LIKE ? OR city LIKE ?)
     ORDER BY apartments.likes DESC`;
-    connection.query(sql, (err, results) => {
+    connection.query(sql,[search,search], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const response = {
             success: true,

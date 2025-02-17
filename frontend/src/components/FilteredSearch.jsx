@@ -1,35 +1,65 @@
+import { useEffect,useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 
 
 export default function FilteredSearch() {
 
-    const { search, setSearch, category, setCategory, numRooms, setNumRooms, numBeds, setNumBeds } = useGlobalContext();
+    const { searchFormData, setSearchFormData } = useGlobalContext();
+
+    //setSearchFormData(initialSearchFormData);
+
+    const [tempFormData, setTempFormData] = useState({
+        search: "",
+        category: "",
+        minRooms: "",
+        minBeds: ""
+    });
+    
+    
+
+    useEffect(()=>{
+        console.log("updated searchFormData: ", searchFormData);
+    },[searchFormData]);
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setTempFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        
+        setSearchFormData(tempFormData);
+    }
 
     return (
         <section style={{ marginTop: "50px" }}>
-            <form className="container m-auto p-4 shadow-lg rounded bg-light">
+            <form onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
                 <h2 className="text-center mb-4">Search for an accomodation</h2>
                 <div className="form-group">
-                    <label htmlFor="searchBar">Search here city or address</label>
+                    <label htmlFor="search">Search here city or address</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="searchBar"
-                        name="searchBar"
+                        id="search"
+                        name="search"
                         placeholder="Search.."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)} />
+                        value={tempFormData.search}
+                        onChange={handleOnChange} />
                 </div>
-                <div className="row">
+                <div className="row pb-3">
                     <div className="form-group col-12 col-lg-4">
                         <label htmlFor="category">Select a category</label>
                         <select
                             className="form-control"
                             id="category"
                             name="category"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
+                            value={tempFormData.category}
+                            onChange={handleOnChange}
                         >
                             <option value={"0"}>No category</option>
                             <option value={"1"}>Chalet</option>
@@ -41,30 +71,31 @@ export default function FilteredSearch() {
                         </select>
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="numRooms">Choose min number of rooms</label>
+                        <label htmlFor="minRooms">Choose min number of rooms</label>
                         <input
                             type="number"
                             className="form-control"
-                            id="numRooms"
-                            name="numRooms"
+                            id="minRooms"
+                            name="minRooms"
                             placeholder="0"
                             min="0"
-                            value={numRooms}
-                            onChange={(e) => setNumRooms(e.target.value)} />
+                            value={tempFormData.minRooms}
+                            onChange={handleOnChange} />
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="numBeds">Choose min number of beds</label>
+                        <label htmlFor="minBeds">Choose min number of beds</label>
                         <input
                             type="number"
                             className="form-control"
-                            id="numBeds"
-                            name="numBeds"
+                            id="minBeds"
+                            name="minBeds"
                             placeholder="0"
                             min="0"
-                            value={numBeds}
-                            onChange={(e) => setNumBeds(e.target.value)} />
+                            value={tempFormData.minBeds}
+                            onChange={handleOnChange} />
                     </div>
                 </div>
+                <button type="submit" className="btn btn-send">Search</button>
             </form>
         </section>
     );

@@ -6,56 +6,57 @@ import { useEffect, useState } from "react";
 
 export default function AdevancedResearch() {
 
-    const { search, category, numRooms, numBeds, addLike } = useGlobalContext();
+    const { search, category, minRooms, minBeds, addLike, searchFormData } = useGlobalContext();
     const [filteredApi, setFilteredApi] = useState([]);
 
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`
 
     useEffect(() => {
+        const params = {};
+
+        if (searchFormData.search) {
+            params.search = searchFormData.search;
+        }
+        if (searchFormData.minRooms > 0) {
+            params.minRooms = searchFormData.minRooms;
+        }
+        if (searchFormData.minBeds > 0) {
+            params.minBeds = searchFormData.minBeds;
+        }
+        if (searchFormData.category > 0) {
+            params.category = searchFormData.category;
+        }
+
+        const queryParams = new URLSearchParams(params).toString();
+
+        if (queryParams) {
+            window.history.pushState({}, '', `?${queryParams}`);
+        } else {
+            window.history.pushState({}, '', '/advanced-research');
+        }
+
         boh();
-    }, [search, numBeds, numRooms, category])
+    }, [searchFormData]);
+    
 
-    const filteredResearch = (obj) => {
-        let filteredObj = obj;
-
-        if (search !== "") {
-            const cleanSearch = search.replace(/\s+/g, '').toLowerCase();
-            filteredObj = filteredObj.filter((ele) =>
-                ele.address.replace(/\s+/g, '').toLowerCase().includes(cleanSearch) ||
-                ele.city.replace(/\s+/g, '').toLowerCase().includes(cleanSearch)
-            );
-        }
-
-        if (numRooms > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.rooms_number >= numRooms);
-        }
-
-        if (numBeds > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.beds_number >= numBeds);
-        }
-
-        if (category > 0) {
-            filteredObj = filteredObj.filter((ele) => ele.id_category == category);
-        }
-
-        return filteredObj;
-    };
     const boh = () => {
-        axios.get(`${apiURL}${endpoint}`)
-            .then((res) => {
-                const filtered = filteredResearch(res.data.items);
-                setFilteredApi(filtered);
-                console.log("Filtrato: " + JSON.stringify(filteredApi, null, 2));
-                return;
-            })
-            .catch((err) => {
-                //console.log(err);
-            })
-    }
-
-    // if(search!="" || numBeds>0 || numRooms > 0 || category != 0)
-    //     boh();
+        axios.get(`${apiURL}${endpoint}`, {
+            params: {
+                search: searchFormData.search || undefined, 
+                minRooms: searchFormData.minRooms > 0 ? searchFormData.minRooms : undefined,
+                minBeds: searchFormData.minBeds > 0 ? searchFormData.minBeds : undefined,
+                category: searchFormData.category > 0 ? searchFormData.category : undefined
+            }
+        })
+        .then((res) => {
+            
+            setFilteredApi(res.data.items);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    };
 
     return (
         <>
