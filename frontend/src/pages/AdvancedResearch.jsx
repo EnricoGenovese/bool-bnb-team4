@@ -3,7 +3,7 @@ import FilteredSearch from "../components/FilteredSearch";
 import Card from "../components/Card";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState } from "react";
-import Loader from "../components/Loader";
+import LoaderCard from "../components/LoaderCard";
 
 export default function AdevancedResearch() {
 
@@ -60,20 +60,25 @@ export default function AdevancedResearch() {
                 console.error(err);
             })
             .finally(() => {
-                setIsLoading(false);
+                setTimeout(()=>{
+                    setIsLoading(false);
+
+                }, 1000)
             });
     };
 
     return (
         <>
             <FilteredSearch />
-            {isLoading && <Loader />}
             <div className="container m-auto row mb-3">
                 <h3 className="pt-5">Results for your research: {filteredApi.length}</h3>
                 {filteredApi.length >= 1 ?
                     filteredApi?.map((apartment) => (
                         <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
-                            <Card apartment={apartment} addLike={addLike} />
+                            {
+                                isLoading ? <LoaderCard />
+                                    : <Card apartment={apartment} addLike={addLike} />
+                            }
                         </div>
                     )) :
                     <div className="text-center py-5 no-query">
