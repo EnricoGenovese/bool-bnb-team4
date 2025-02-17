@@ -21,7 +21,7 @@ export default function Homepage() {
     }, [])
 
     return (
-        <div>
+        <div className="mb-3">
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
                 <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}>
                     <h1 className="display-4 jumbo-text">Bool B&B</h1>

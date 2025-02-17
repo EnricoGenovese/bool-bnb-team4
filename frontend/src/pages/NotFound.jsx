@@ -6,13 +6,13 @@ export default function NotFound() {
 
 
 
-        <div>
-            <div className={`container-fluid  p-5 mb-4 bg-light text-center ${styles.jumbotron}`}>
+        <div className=''>
+            <div className={`container-fluid  p-5  bg-light text-center ${styles.jumbotron}`}>
                 <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "10px" }}>
                     <h1 className="display-4">Oops! Something went wrong.</h1>
                     <p className="lead">We couldn't find the page you're looking for. Please try again later or return to the homepage.</p>
                 </div>
-                <Link className="btn custum-button mt-5 link-btn" to={"/"}>Back to Homepage</Link>
+                <Link className="btn custom-button mt-5 link-btn" to={"/"}>Back to Homepage</Link>
             </div>
 
             {/* <div className="row container m-auto">

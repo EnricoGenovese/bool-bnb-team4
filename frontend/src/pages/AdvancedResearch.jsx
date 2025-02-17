@@ -60,7 +60,7 @@ export default function AdevancedResearch() {
     return (
         <>
             <FilteredSearch />
-            <div className="container m-auto row">
+            <div className="container m-auto row mb-3">
                 {filteredApi.length >= 1 ?
                     filteredApi?.map((apartment) => (
                         <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >

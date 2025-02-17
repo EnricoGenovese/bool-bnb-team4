@@ -5,6 +5,10 @@
     --sunlight: #C6A664;
 }
 
+.debug {
+    border: 1px, solid, red;
+}
+
 body {
     font-family: "Simonetta", serif;
     font-weight: 400;
@@ -119,6 +123,16 @@ input[type="number"] {
 
 .no-query {
     height: 50vh;
+}
+
+.btn-close:hover {
+    background-color: transparent !important;
+}
+
+.btn-close:focus {
+    --bs-btn-close-focus-shadow: none;
+    box-shadow: none !important;
+    /* Aggiungi per rimuovere l'ombra */
 }
 
 @media screen and (max-width: 992px) {
