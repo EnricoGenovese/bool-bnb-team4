@@ -35,6 +35,19 @@ export default function Homepage() {
 
 
     useEffect(() => {
+        const params = {};
+
+        if (search.search) {
+            params.search = search.search;
+        }
+
+        const queryParams = new URLSearchParams(params).toString();
+
+        if (queryParams) {
+            window.history.pushState({}, '', `?${queryParams}`);
+        } else {
+            window.history.pushState({}, '', '/advanced-research');
+        }
         setIsLoading(true);
 
         getHomeApartments();
@@ -42,7 +55,6 @@ export default function Homepage() {
 
     return (
         <div className="mb-3">
-            {isLoading && <Loader />}
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
                 <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}>
                     <h1 className="display-4 jumbo-text">Bool B&B</h1>
@@ -52,6 +64,7 @@ export default function Homepage() {
                 <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"} >Find out more </Link>
             </div>
             
+            {isLoading && <Loader />}
             <SearchHomePage />
             <div className="row container m-auto">
                 {homeApartments.length >= 1

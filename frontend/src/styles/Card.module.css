@@ -1,7 +1,7 @@
 #likeButton:hover {
     box-shadow: rgb(220, 53, 69);
     transform: scale(1);
-    animation: pulse 2s infinite;
+    animation: pulse 1s infinite;
 }
 
 #likeButton {

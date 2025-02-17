@@ -3,16 +3,19 @@ import FilteredSearch from "../components/FilteredSearch";
 import Card from "../components/Card";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
 export default function AdevancedResearch() {
 
-    const { search, category, minRooms, minBeds, addLike, searchFormData } = useGlobalContext();
+    const { search, category, minRooms, minBeds, addLike, searchFormData, isLoading, setIsLoading } = useGlobalContext();
     const [filteredApi, setFilteredApi] = useState([]);
 
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`
 
     useEffect(() => {
+
+        setIsLoading(true);
         const params = {};
 
         if (searchFormData.search) {
@@ -38,29 +41,33 @@ export default function AdevancedResearch() {
 
         boh();
     }, [searchFormData]);
-    
+
 
     const boh = () => {
         axios.get(`${apiURL}${endpoint}`, {
             params: {
-                search: searchFormData.search || undefined, 
+                search: searchFormData.search || undefined,
                 minRooms: searchFormData.minRooms > 0 ? searchFormData.minRooms : undefined,
                 minBeds: searchFormData.minBeds > 0 ? searchFormData.minBeds : undefined,
                 category: searchFormData.category > 0 ? searchFormData.category : undefined
             }
         })
-        .then((res) => {
-            
-            setFilteredApi(res.data.items);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+            .then((res) => {
+
+                setFilteredApi(res.data.items);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     return (
         <>
             <FilteredSearch />
+            {isLoading && <Loader />}
             <div className="container m-auto row mb-3">
                 <h3 className="pt-5">Results for your research: {filteredApi.length}</h3>
                 {filteredApi.length >= 1 ?
