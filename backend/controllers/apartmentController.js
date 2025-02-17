@@ -1,6 +1,7 @@
 import connection from "../connection.js";
 import { RandomNum } from "../utilities/functions.js";
-import { upload } from "../utilities/functions.js"
+import { upload } from "../utilities/functions.js";
+import slugify from "slugify";
 
 function index(req, res) {
     let { search, category, minRooms, minBed } = req.query;
@@ -68,20 +69,19 @@ function indexCategories(req, res) {
 }
 
 function show(req, res) {
-
-    const id = +(req.params.id);
+    const slug = req.params.slug
 
     const sql = `SELECT apartments.*, owners.email FROM apartments
     JOIN owners ON apartments.id_owner = owners.id
-    WHERE apartments.id = ?`
-    connection.query(sql, [id], (err, results) => {
+    WHERE apartments.slug = ?`
+    connection.query(sql, [slug], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         if (results.length == 0) return res.status(404).json({ error: 'Appartamento non trovato', err });
         const item = results[0];
 
-        if (item.id == null) return res.status(404).json({ error: 'Appartamento non trovato', err });
-        const sqlreviews = "SELECT * FROM `reviews` WHERE `id_apartment` = ? ORDER BY update_date DESC";
-        connection.query(sqlreviews, [id], (err, reviews) => {
+        if (item.slug == null) return res.status(404).json({ error: 'Appartamento non trovato', err });
+        const sqlreviews = "SELECT * FROM `reviews` WHERE `apartment_slug` = ? ORDER BY update_date DESC";
+        connection.query(sqlreviews, [item.slug], (err, reviews) => {
             if (err) return res.status(500).json({ error: "Error server", err });
 
             item.reviews = reviews;
@@ -104,6 +104,7 @@ function show(req, res) {
 function store(req, res) {
     const errors = {};
 
+
     // Controllo se c'è un file
     if (!req.file) {
         errors.image = 'No file uploaded';
@@ -118,6 +119,7 @@ function store(req, res) {
 
     // Validazione descrizione
     let { description, address, city, category, roomsNumber, bedsNumber, bathroomsNumber, squareMeters } = req.body;
+
 
     if (!description.trim()) {
         errors.description = "The `Summary Title` field cannot be empty";
@@ -175,10 +177,27 @@ function store(req, res) {
     const { path } = req.file;
     const imageUrl = `${path.slice(11)}`;
     let likes = req.body.likes || 0;
+    let slug = description
+        .toLowerCase()                // Trasforma in minuscolo
+        .trim()                        // Rimuove gli spazi prima e dopo
+        .replace(/[^\w\s-]/g, '')      // Rimuove caratteri speciali
+        .replace(/[\s_-]+/g, '-')      // Sostituisce spazi e trattini con un singolo trattino
+        .replace(/^-+|-+$/g, '');
+
+    console.log(slug)
+
+    // function createSlug() {
+    //     return description
+    //         .toLowerCase()                // Trasforma in minuscolo
+    //         .trim()                        // Rimuove gli spazi prima e dopo
+    //         .replace(/[^\w\s-]/g, '')      // Rimuove caratteri speciali
+    //         .replace(/[\s_-]+/g, '-')      // Sostituisce spazi e trattini con un singolo trattino
+    //         .replace(/^-+|-+$/g, '');      // Rimuove eventuali trattini all'inizio e alla fine
+    // }
 
     // Query per inserire nel database
-    const sql = `INSERT INTO apartments (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img, likes)
-                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO apartments (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img, likes, slug)
+                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     connection.query(sql, [
         RandomNum(),
@@ -192,6 +211,8 @@ function store(req, res) {
         squareMeters,
         imageUrl,
         likes,
+        slug
+
     ], (err, results) => {
         if (err) {
             console.error('Errore durante il salvataggio nel database:', err);
@@ -203,13 +224,15 @@ function store(req, res) {
             id: results.insertId,
             file: req.file,
             imageUrl: imageUrl,
+            slug
         });
     });
 }
 
 
 function storereviews(req, res) {
-    const { id } = req.params;
+    const { slug } = req.params;
+    console.log(slug)
     const { text, name, entryDate, daysOfStay, vote } = req.body;
     const errors = {};
 
@@ -283,10 +306,10 @@ function storereviews(req, res) {
     }
 
     // Se non ci sono errori, inserisci i dati nel database
-    const sql = `INSERT INTO bool_bnb.reviews (id_apartment, text, name, entry_date, days_of_stay, vote)
+    const sql = `INSERT INTO bool_bnb.reviews (apartment_slug, text, name, entry_date, days_of_stay, vote)
                  VALUES (?, ?, ?, ?, ?, ?)`;
 
-    connection.query(sql, [id, text, name, entryDate, daysOfStay, vote], (err, results) => {
+    connection.query(sql, [slug, text, name, entryDate, daysOfStay, vote], (err, results) => {
         if (err) return res.status(500).json({ error: err });
         res.status(201).json({ message: "Review added", results });
     });
@@ -294,19 +317,19 @@ function storereviews(req, res) {
 
 
 function modify(req, res) {
-    const { id } = req.params;
+    const { slug } = req.params;
     const likeCountSql = `SELECT apartments.likes FROM apartments
-    WHERE apartments.id = ?`;
+    WHERE apartments.slug = ?`;
 
-    connection.query(likeCountSql, [id], (err, results) => {
+    connection.query(likeCountSql, [slug], (err, results) => {
         if (err) return results.status(500).json({ error: err });
-        // console.log(results[0].likes);
+
 
         let like = results[0].likes;
         (like === 0 || like === "undefined" || like === null) ? 0 : like = +(like) + 1;
 
-        const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.id = ?)`;
-        connection.query(sql, [like, id], (err, result) => {
+        const sql = `UPDATE bool_bnb.apartments SET likes = ? WHERE (apartments.slug = ?)`;
+        connection.query(sql, [like, slug], (err, result) => {
             if (err) return res.status(500).json({ error: err });
             res.status(201).json({
                 success: true,
