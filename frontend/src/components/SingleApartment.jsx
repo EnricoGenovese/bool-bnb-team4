@@ -65,7 +65,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                 <p><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}</p>
                                 <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                 <div className="d-flex gap-2">
-                                    <button className="btn btn-danger text-light btn-sm d-flex justify-content-around align-content-between align-self-center"
+                                    <button className="btn btn-danger text-light btn-sm d-flex align-items-center justify-content-center align-self-center" id={style.likeButton}
                                         onClick={() => {
                                             addLike(id).then(() => {
                                                 setLikes(likes + 1);
@@ -79,7 +79,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
 
                                     <button className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3"
                                         onClick={() => setIsOverlayOpen(true)}>
-                                        <span><FaEnvelope className="mx-auto d-inline-block  me-md-2" /></span>
+                                        <span><FaEnvelope className="mx-auto d-inline-block me-md-2" /></span>
                                         <span className="d-none d-md-inline-block">Send Email</span>
                                     </button>
                                 </div>

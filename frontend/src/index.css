@@ -62,7 +62,8 @@ input[type="number"] {
     border: 2px solid var(--contrast);
     color: var(--text-dark);
     transform: scale(0.95);
-    background-color: #2E3532BB;
+    background-color: #c6a56475;
+    box-shadow: 1px 1px 1px var(--text-dark);
     transition: all 0.3s;
 }
 

@@ -1,13 +1,13 @@
 #likeButton:hover {
-    transform: scale(1.1);
-    transition: all 0.3s;
+    box-shadow: rgb(220, 53, 69);
+    transform: scale(1);
+    animation: pulse 2s infinite;
 }
 
 #likeButton {
     height: 30px;
     width: 60px;
     text-align: center;
-    transition: all 0.3s;
 }
 
 .picture {
@@ -19,4 +19,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+
+    70% {
+        transform: scale(1.15);
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
 }
