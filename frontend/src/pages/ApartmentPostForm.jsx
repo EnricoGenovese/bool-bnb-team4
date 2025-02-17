@@ -113,9 +113,8 @@ export default function ApartmentPostForm() {
         // City (Full city)
         if (!formData.city.trim()) {
             errors.city = "The `City` field cannot be empty";
-        } else if (formData.city.length < 5) {
-            errors.city = "`City` field must be at least 5 characters long";
-        } else if (formData.city.length > 100) {
+        }
+        else if (formData.city.length > 100) {
             errors.city = "The `City` field must be to the utmost 100 characters long";
         } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.city)) {
             errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
@@ -230,7 +229,7 @@ export default function ApartmentPostForm() {
 
     return (
         <section className={StyleApartmentPostForm.formContainer}>
-            <div className="container">
+            <div className="container mb-3">
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
@@ -273,7 +272,7 @@ export default function ApartmentPostForm() {
 
                     <div className="mb-3">
                         <label htmlFor="city" className="form-label">City:</label>
-                        <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
+                        <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Max 100 characters</div>
                         <input
                             type="text"
                             id="city"

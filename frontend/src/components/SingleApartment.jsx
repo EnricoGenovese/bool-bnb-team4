@@ -58,6 +58,8 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                         <Card.Body className="w-100" style={{ width: "33.33%" }}>
                             <Card.Title>{apartment.item.description}</Card.Title>
                             <Card.Text as="div">
+
+
                                 <p><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
                                 <p><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
                                 <p><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
@@ -92,9 +94,9 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
             {/* Overlay che compare quando si clicca sul pulsante "Send Email */}
             {isOverlayOpen && (
                 <div className={`card-text ${style.overlay}`}>
-                    <div className={`${style["overlay-content"]}`}>
-                        <button className={`${style["overlay-close"]}`} onClick={() => setIsOverlayOpen(false)}>
-                            <FaTimes size={20} />
+                    <div className={`${style["overlay-content"]} d-flex flex-column `}>
+                        <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
+                            {/* <FaTimes size={20} /> */}
                         </button>
                         <ContactForm ownerMail={ownerMail} />
                     </div>

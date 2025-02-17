@@ -86,6 +86,7 @@ export default function ApartmentDetails() {
 
         axios.get(apiUrl + endpoint + id)
             .then((res) => {
+                console.log(res.data)
                 setApartment(res.data);
                 setMail(res.data.item.email)
             })

@@ -2,7 +2,7 @@ import { NavLink } from "react-router"
 import { FaFacebook, FaTwitter, FaInstagram, FaGlobe, FaYoutube, FaLinkedin } from "react-icons/fa"
 export default function Footer() {
     return (
-        <footer className="bg-dark text-light text-center text-lg-start mt-3">
+        <footer className="bg-dark text-light text-center text-lg-start ">
             <div className="container p-4 d-flex flex-column">
                 <div className="row text-center">
                     <div className="col-6 col-lg-3 mb-4 mb-md-0">
@@ -84,8 +84,8 @@ export default function Footer() {
                     <p>© 2025 Copyright:&nbsp;</p>
                     <NavLink className="text-light" to={"/"}><p>Bool B&amp;B</p></NavLink>
                 </div>
-                <div className="w-50 align-self-center">
-                    <ul className="nav col-md-4 justify-content-around list-unstyled d-flex py-3 w-100  flex-nowrap">
+                <div className="w-50 w-sm-100 align-self-center ">
+                    <ul className="nav col-md-4 justify-content-around list-unstyled d-flex py-3 w-100 flex-wrap gap-3">
                         <li className="ms-3"><a href="#" ><FaFacebook style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
                         <li className="ms-3"><a href="#"><FaInstagram style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
                         <li className="ms-3"><a href="#"><FaTwitter style={{ width: "25px", height: "25px", fill: "white" }} /></a></li>
