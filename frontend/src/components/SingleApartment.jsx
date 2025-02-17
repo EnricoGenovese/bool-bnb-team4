@@ -14,7 +14,7 @@ import axios from "axios"
 
 export default function SingleApartment({ apartment, categories, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes, show }) {
     const { addLike } = useGlobalContext();
-    const { id } = useParams();
+    const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
     let category = "";
     const [likes, setLikes] = useState(apartment.item.likes);
@@ -69,7 +69,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                 <div className="d-flex gap-2">
                                     <button className="btn btn-danger text-light btn-sm d-flex align-items-center justify-content-center align-self-center" id={style.likeButton}
                                         onClick={() => {
-                                            addLike(id).then(() => {
+                                            addLike(slug).then(() => {
                                                 setLikes(likes + 1);
                                                 // show();
 
@@ -124,7 +124,7 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
             </section>
 
             <section>
-                <ReviewForm apartment_id={id} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
             </section>
         </>
     );
