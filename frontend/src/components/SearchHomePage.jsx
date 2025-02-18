@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 export default function SearchHomePage() {
-    const { search,setSearch } = useGlobalContext();
+    const { search, setSearch } = useGlobalContext();
 
     //setSearchFormData(initialSearchFormData);
 
@@ -31,21 +31,24 @@ export default function SearchHomePage() {
     }
     return (
 
-        <section style={{ marginTop: "50px" }}>
+        <section className="pb-3" style={{ marginTop: "50px" }}>
             <form onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
+
                 <h2 className="text-center mb-4">Search for an accomodation</h2>
-                <div className="form-group">
-                    <label htmlFor="search">Search here city or address</label>
+                <label className="w-100" htmlFor="search">Search here city or address</label>
+                <div className="form-group pb-3 d-flex gap-2 justify-content-center">
+
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control w-100"
                         id="search"
                         name="search"
-                        placeholder="Search.."
+                        placeholder="Insert city or address"
                         value={tempFormData.search}
                         onChange={handleOnChange} />
+
+                    <button type="submit" className="btn btn-send">Search</button>
                 </div>
-                <button type="submit" className="btn btn-send">Search</button>
             </form>
         </section>
     );

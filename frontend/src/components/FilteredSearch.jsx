@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 
 
@@ -15,12 +15,12 @@ export default function FilteredSearch() {
         minRooms: "",
         minBeds: ""
     });
-    
-    
 
-    useEffect(()=>{
+
+
+    useEffect(() => {
         console.log("updated searchFormData: ", searchFormData);
-    },[searchFormData]);
+    }, [searchFormData]);
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -32,7 +32,7 @@ export default function FilteredSearch() {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        
+
         setSearchFormData(tempFormData);
     }
 
@@ -40,14 +40,14 @@ export default function FilteredSearch() {
         <section style={{ marginTop: "50px" }}>
             <form onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
                 <h2 className="text-center mb-4">Search for an accomodation</h2>
-                <div className="form-group">
+                <div className="form-group pb-3">
                     <label htmlFor="search">Search here city or address</label>
                     <input
                         type="text"
                         className="form-control"
                         id="search"
                         name="search"
-                        placeholder="Search.."
+                        placeholder="Enter city or address"
                         value={tempFormData.search}
                         onChange={handleOnChange} />
                 </div>
@@ -61,7 +61,7 @@ export default function FilteredSearch() {
                             value={tempFormData.category}
                             onChange={handleOnChange}
                         >
-                            <option value={"0"}>No category</option>
+                            <option value={"0"}>Select apartment category</option>
                             <option value={"1"}>Chalet</option>
                             <option value={"2"}>Apartment</option>
                             <option value={"3"}>Villa</option>
@@ -71,25 +71,25 @@ export default function FilteredSearch() {
                         </select>
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minRooms">Choose min number of rooms</label>
+                        <label htmlFor="minRooms">Choose min. number of rooms</label>
                         <input
                             type="number"
                             className="form-control"
                             id="minRooms"
                             name="minRooms"
-                            placeholder="0"
+                            placeholder="Enter min. number of rooms"
                             min="0"
                             value={tempFormData.minRooms}
                             onChange={handleOnChange} />
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minBeds">Choose min number of beds</label>
+                        <label htmlFor="minBeds">Choose min. number of beds</label>
                         <input
                             type="number"
                             className="form-control"
                             id="minBeds"
                             name="minBeds"
-                            placeholder="0"
+                            placeholder="Enter min. number of rooms"
                             min="0"
                             value={tempFormData.minBeds}
                             onChange={handleOnChange} />

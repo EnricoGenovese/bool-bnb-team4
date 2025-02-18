@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import React from "react";
@@ -9,10 +9,10 @@ import ContactForm from "./ContactForm";     // componente di prova dell'overlay
 import Star from "./Star";
 // Importo lo style del module.css SingleApartment.module.css
 import style from "../styles/SingleApartment.module.css";
-import axios from "axios"
+import { Link, Element } from 'react-scroll';
 
 
-export default function SingleApartment({ apartment, categories, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes, show }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);  //useState dell'overlay
@@ -26,8 +26,10 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
 
 
     function findCategory() {
-        return category = categories.find(element => element.id == apartment.item["id_category"])
 
+        category = categories.find(element => element.id == apartment.item["id_category"])
+
+        return category
     }
     findCategory();
 
@@ -98,12 +100,16 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                         <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
                             {/* <FaTimes size={20} /> */}
                         </button>
-                        <ContactForm ownerMail={ownerMail} />
+                        <ContactForm ownerMail={ownerMail} city={city} category={category} />
                     </div>
                 </div>
             )}
 
             <section className="container m-auto pt-5">
+                <Link to="destination">
+                    <button type="button" className="btn btn-send my-3">Add your review</button>
+                </Link>
+
                 {apartment.item.reviews.length > 0 ? apartment.item.reviews.map((review, index) => (
                     <div key={review.id}>
                         <div className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
@@ -124,7 +130,10 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
             </section>
 
             <section>
-                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                <Element name="destination">
+                    <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                </Element>
+
             </section>
         </>
     );

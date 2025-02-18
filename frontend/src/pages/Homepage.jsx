@@ -28,11 +28,11 @@ export default function Homepage() {
             })
             .finally(() => {
                 setTimeout(() => {
-                    setIsLoading(false);                
+                    setIsLoading(false);
                 }, 1000);
             });
     }
-    
+
 
     useEffect(() => {
         const params = {};
