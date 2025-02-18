@@ -52,45 +52,51 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                         />
                     </motion.div>
                     <div className="w-100 d-md-flex gap-3">
-                        <Card.Img
-                            variant="left"
-                            src={imgPath + apartment.item.img}
-                            alt={apartment.item.description}
-                            className="d-none d-md-block me-3"
-                            style={{ width: "66.67%", height: "100%", objectFit: "cover" }}
-                        />
-                        <Card.Body className="w-100" style={{ width: "33.33%" }}>
-                            <Card.Text as="div">
-                                <motion.div
-                                    initial={{ x: 100, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ duration: 0.8, ease: "easeOut" }}
-                                >
-                                    <p><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
-                                    <p><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
-                                    <p><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
-                                    <p><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
-                                    <p><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}</p>
-                                    <p><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
-                                    <div className="d-flex gap-2">
-                                        <button className="btn btn-danger text-light btn-sm d-flex align-items-center justify-content-center align-self-center" id={style.likeButton}
-                                            onClick={() => {
-                                                addLike(slug).then(() => {
-                                                    setLikes(likes + 1);
-                                                });
-                                            }}>
-                                            <span className="d-inline-block me-2">&#9829;</span>
-                                            <span className="ml-3 d-inline-block align-self-center">{likes}</span>
-                                        </button>
-                                        <button className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3"
-                                            onClick={() => setIsOverlayOpen(true)}>
-                                            <span><FaEnvelope className="mx-auto d-inline-block me-md-2" /></span>
-                                            <span className="d-none d-md-inline-block">Send Email</span>
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            </Card.Text>
-                        </Card.Body>
+                        <div style={{ width: "66.67%", height: "100%" }}>
+                            <Card.Img
+                                variant="left"
+                                src={imgPath + apartment.item.img}
+                                alt={apartment.item.description}
+                                className="d-none d-md-block me-3"
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                            />
+                        </div>
+                        <div style={{ width: "33.33%", height: "100%" }}>
+                            <Card.Body className="w-100" style={{ width: "33.33%" }}>
+                                <Card.Text as="div">
+                                    <motion.div
+                                        initial={{ x: 100, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ duration: 0.8, ease: "easeOut" }}
+                                    >
+                                        <p className="d-flex flex-nowrap align-items-center"><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
+                                        <p className="d-flex flex-nowrap align-items-center"><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
+                                        <p className="d-flex flex-nowrap align-items-center"><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
+                                        <p className="d-flex flex-nowrap align-items-center"><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
+                                        <p className="d-flex flex-nowrap align-items-center"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}, {apartment.item.city}</p>
+                                        <p className="d-flex flex-nowrap align-items-center"><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
+                                        <div className="d-flex gap-2">
+                                            <button className="btn btn-danger text-light btn-sm d-flex align-items-center justify-content-center align-self-center" id={style.likeButton}
+                                                onClick={() => {
+                                                    addLike(slug).then(() => {
+                                                        setLikes(likes + 1);
+                                                    });
+                                                }}>
+                                                <span className="d-inline-block me-2">&#9829;</span>
+                                                <span className="ml-3 d-inline-block align-self-center">{likes}</span>
+                                            </button>
+                                            <button className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3"
+                                                onClick={() => setIsOverlayOpen(true)}>
+                                                <span><FaEnvelope className="mx-auto d-inline-block me-md-2" /></span>
+                                                <span className="d-none d-md-inline-block">Send Email</span>
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                </Card.Text>
+                            </Card.Body>
+
+                        </div>
+
                     </div>
                 </Card>
             </div>
