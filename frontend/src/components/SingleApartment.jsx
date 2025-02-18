@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import React from "react";
@@ -8,11 +8,11 @@ import ReviewForm from "./ReviewForm";
 import ContactForm from "./ContactForm";
 import Star from "./Star";
 import style from "../styles/SingleApartment.module.css";
-import axios from "axios"
+import { Link, Element } from 'react-scroll';
 import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
-export default function SingleApartment({ apartment, categories, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes, show }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -131,12 +131,16 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                     <div className={`${style["overlay-content"]} d-flex flex-column `}>
                         <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
                         </button>
-                        <ContactForm ownerMail={ownerMail} />
+                        <ContactForm ownerMail={ownerMail} city={city} category={category} />
                     </div>
                 </div>
             )}
 
             <section className="container m-auto pt-5">
+                <Link to="destination">
+                    <button type="button" className="btn btn-send my-3">Add your review</button>
+                </Link>
+
                 <motion.h3
                     initial={{ x: -180, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -168,15 +172,18 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
             </section>
 
             <section>
-                <motion.h3
-                    initial={{ x: -180, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                <Element name="destination">
+                    <motion.h3
+                        initial={{ x: -180, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
 
-                    className="py-5">Add your review:
-                </motion.h3>
+                        className="py-5">Add your review:
+                    </motion.h3>
 
-                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                    <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                </Element>
+
             </section>
         </>
     );

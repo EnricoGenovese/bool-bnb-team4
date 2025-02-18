@@ -3,7 +3,7 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { motion } from "framer-motion";
 
 export default function SearchHomePage() {
-    const { search,setSearch } = useGlobalContext();
+    const { search, setSearch } = useGlobalContext();
 
     //setSearchFormData(initialSearchFormData);
 
@@ -33,23 +33,25 @@ export default function SearchHomePage() {
     return (
 
         <section style={{ marginTop: "50px" }}>
-            <motion.form 
+            <motion.form
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                
-            onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
+
+                onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
                 <h2 className="mb-4">Search for an accomodation</h2>
                 <div className="form-group">
                     <label htmlFor="search">Search here city or address</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control w-100"
                         id="search"
                         name="search"
-                        placeholder="Search.."
+                        placeholder="Insert city or address"
                         value={tempFormData.search}
                         onChange={handleOnChange} />
+
+                    <button type="submit" className="btn btn-send">Search</button>
                 </div>
                 <button type="submit" className="btn btn-send">Search</button>
             </motion.form>

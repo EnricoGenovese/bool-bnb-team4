@@ -4,17 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
 import { toast } from 'react-toastify'; // Importa il Toast
+import { FaHome, FaCity, FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined, FaBuilding, FaDoorClosed, FaGlobeEurope } from 'react-icons/fa';
 
 export default function ApartmentPostForm() {
     const initialNewApartment = {
         category: 0,
         city: "",
+        state: "",
         address: "",
         description: "",
-        roomsNumber: null,
-        bedsNumber: null,
-        bathroomsNumber: null,
-        squareMeters: null,
+        roomsNumber: "",
+        bedsNumber: "",
+        bathroomsNumber: "",
+        squareMeters: "",
         likes: 0
     };
 
@@ -121,6 +123,15 @@ export default function ApartmentPostForm() {
             errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
         }
 
+        if (!formData.state.trim()) {
+            errors.state = "The `State` field cannot be empty";
+        }
+        else if (formData.state.length > 100) {
+            errors.state = "The `State` field must be to the utmost 100 characters long";
+        } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.state)) {
+            errors.state = "The `State` can only contain letters, numbers, commas, periods, and spaces."
+        }
+
         // Image (Upload Image)
         if (!formData.image) {
             errors.image = "An image must be uploaded";
@@ -224,59 +235,98 @@ export default function ApartmentPostForm() {
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
+
                     <div className="mb-3">
-                        <div className={`pb-3 ps-2 ${StyleApartmentPostForm.fieldInfo}`}>All fields are mandatory</div>
+                        <div className={`pb-3 ps-2 ${StyleApartmentPostForm.fieldInfo}`}>All fields are required</div>
                         <label htmlFor="description" className="form-label">Summary Title describing the property:</label>
                         <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
-                        <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            className="form-control"
-                            value={apartmentData.description}
-                            onChange={handleInput}
-                        />
-                        {errors.description && (
-                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                {errors.description}
-                            </span>
-                        )}
+                        <div className="input-group">
+                            <span className="input-group-text"><FaBuilding /></span>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                className="form-control"
+                                value={apartmentData.description}
+                                placeholder={"Enter summary title describing the property"}
+                                onChange={handleInput}
+                            />
+                            {errors.description && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.description}
+                                </span>
+                            )}
+                        </div>
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="address" className="form-label">Full address:</label>
                         <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
-                        <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            className="form-control"
-                            value={apartmentData.address}
-                            onChange={handleInput}
-                        />
-                        {errors.address && (
-                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                {errors.address}
-                            </span>
-                        )}
+                        <div className="input-group">
+                            <span className="input-group-text"><FaMapMarkerAlt /></span>
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                className="form-control"
+                                value={apartmentData.address}
+                                placeholder={"Enter full address"}
+                                onChange={handleInput}
+                            />
+                            {errors.address && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.address}
+                                </span>
+                            )}
+                        </div>
                     </div>
+                    <div className="row">
 
-                    <div className="mb-3">
-                        <label htmlFor="city" className="form-label">City:</label>
-                        <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
-                        <input
-                            type="text"
-                            id="city"
-                            name="city"
-                            className="form-control"
-                            value={apartmentData.city}
-                            onChange={handleInput}
-                        />
-                        {errors.city && (
-                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                {errors.city}
-                            </span>
-                        )}
+                        <div className="mb-3 col-md-6">
+                            <label htmlFor="city" className="form-label">City:</label>
+                            <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Max 100 characters</div>
+                            <div className="input-group">
+                                <span className="input-group-text"><FaCity /></span>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    className="form-control"
+                                    value={apartmentData.city}
+                                    placeholder={"Enter city"}
+                                    onChange={handleInput}
+                                />
+                                {errors.city && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.city}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+
+                        <div className="mb-3 col-md-6">
+                            <label htmlFor="state" className="form-label">State:</label>
+                            <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Max 100 characters</div>
+                            <div className="input-group">
+                                <span className="input-group-text"><FaGlobeEurope /></span>
+                                <input
+                                    type="text"
+                                    id="state"
+                                    name="state"
+                                    className="form-control"
+                                    value={apartmentData.state}
+                                    placeholder={"Enter state"}
+                                    onChange={handleInput}
+                                />
+                                {errors.state && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.state}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
                     </div>
 
                     <div className="mb-3">
@@ -288,6 +338,7 @@ export default function ApartmentPostForm() {
                             name="image"
                             className="form-control"
                             onChange={handleFileChange}
+
                             accept="image/jpg, image/png, image/jpeg"
                         />
                         {errors.image && (
@@ -300,83 +351,95 @@ export default function ApartmentPostForm() {
                     <div className="row">
                         <div className="col-md-3 mb-3">
                             <label htmlFor="roomsNumber" className="form-label">Number of rooms:</label>
-                            <input
-                                type="number"
-                                id="roomsNumber"
-                                name="roomsNumber"
-                                className="form-control"
-                                value={apartmentData.roomsNumber}
-                                placeholder="0"
-                                onChange={handleInput}
+                            <div className="input-group">
+                                <span className="input-group-text"><FaDoorClosed /></span>
+                                <input
+                                    type="number"
+                                    id="roomsNumber"
+                                    name="roomsNumber"
+                                    className="form-control"
+                                    value={apartmentData.roomsNumber}
+                                    placeholder="Enter number of rooms"
+                                    onChange={handleInput}
 
-                            />
-                            {errors.roomsNumber && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.roomsNumber}
-                                </span>
-                            )}
+                                />
+                                {errors.roomsNumber && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.roomsNumber}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         <div className="col-md-3 mb-3">
                             <label htmlFor="bedsNumber" className="form-label">Number of beds:</label>
-                            <input
-                                type="number"
-                                id="bedsNumber"
-                                name="bedsNumber"
-                                className="form-control"
-                                value={apartmentData.bedsNumber}
-                                placeholder="0"
-                                onChange={handleInput}
+                            <div className="input-group">
+                                <span className="input-group-text"><FaBed /></span>
+                                <input
+                                    type="number"
+                                    id="bedsNumber"
+                                    name="bedsNumber"
+                                    className="form-control"
+                                    value={apartmentData.bedsNumber}
+                                    placeholder="Enter number of beds"
+                                    onChange={handleInput}
 
-                            />
-                            {errors.bedsNumber && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.bedsNumber}
-                                </span>
-                            )}
+                                />
+                                {errors.bedsNumber && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.bedsNumber}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         <div className="col-md-3 mb-3">
                             <label htmlFor="bathroomsNumber" className="form-label">Number of bathrooms:</label>
-                            <input
-                                type="number"
-                                id="bathroomsNumber"
-                                name="bathroomsNumber"
-                                className="form-control"
-                                value={apartmentData.bathroomsNumber}
-                                placeholder="0"
-                                onChange={handleInput}
-
-                            />
-                            {errors.bathroomsNumber && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.bathroomsNumber}
-                                </span>
-                            )}
+                            <div className="input-group">
+                                <span className="input-group-text"><FaBath /></span>
+                                <input
+                                    type="number"
+                                    id="bathroomsNumber"
+                                    name="bathroomsNumber"
+                                    className="form-control"
+                                    value={apartmentData.bathroomsNumber}
+                                    placeholder="Enter number of bathrooms"
+                                    onChange={handleInput}
+                                />
+                                {errors.bathroomsNumber && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.bathroomsNumber}
+                                    </span>
+                                )}
+                            </div>
                         </div>
 
                         <div className="col-md-3 mb-3">
                             <label htmlFor="squareMeters" className="form-label">Square meters:</label>
-                            <input
-                                type="number"
-                                id="squareMeters"
-                                name="squareMeters"
-                                className="form-control"
-                                value={apartmentData.squareMeters}
-                                placeholder="0"
-                                onChange={handleInput}
+                            <div className="input-group">
+                                <span className="input-group-text"><FaRulerCombined /></span>
+                                <input
+                                    type="number"
+                                    id="squareMeters"
+                                    name="squareMeters"
+                                    className="form-control"
+                                    value={apartmentData.squareMeters}
+                                    placeholder="Enter square meters"
+                                    onChange={handleInput}
 
-                            />
-                            {errors.squareMeters && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.squareMeters}
-                                </span>
-                            )}
+                                />
+                                {errors.squareMeters && (
+                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                        {errors.squareMeters}
+                                    </span>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="mb-3">
-                        <label htmlFor="category" className="form-label">Property category:</label>
+                    </div>
+                    <label htmlFor="category" className="form-label">Property category:</label>
+                    <div className="mb-3 input-group">
+                        <span className="input-group-text"><FaHome /></span>
                         <select
                             id="category"
                             name="category"
@@ -384,6 +447,7 @@ export default function ApartmentPostForm() {
                             value={apartmentData.category}
                             onChange={handleInput}
                         >
+
                             <option value={0}>Select apartment category</option>
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>
@@ -398,7 +462,7 @@ export default function ApartmentPostForm() {
                         )}
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100">Add apartment</button>
+                    <button type="submit" className="btn btn-send w-100">Add apartment</button>
                 </form>
             </div>
         </section>

@@ -51,7 +51,7 @@ export default function FilteredSearch() {
                         className="form-control"
                         id="search"
                         name="search"
-                        placeholder="Search.."
+                        placeholder="Enter city or address"
                         value={tempFormData.search}
                         onChange={handleOnChange} />
                 </div>
@@ -65,7 +65,7 @@ export default function FilteredSearch() {
                             value={tempFormData.category}
                             onChange={handleOnChange}
                         >
-                            <option value={"0"}>No category</option>
+                            <option value={"0"}>Select apartment category</option>
                             <option value={"1"}>Chalet</option>
                             <option value={"2"}>Apartment</option>
                             <option value={"3"}>Villa</option>
@@ -75,25 +75,25 @@ export default function FilteredSearch() {
                         </select>
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minRooms">Choose min number of rooms</label>
+                        <label htmlFor="minRooms">Choose min. number of rooms</label>
                         <input
                             type="number"
                             className="form-control"
                             id="minRooms"
                             name="minRooms"
-                            placeholder="0"
+                            placeholder="Enter min. number of rooms"
                             min="0"
                             value={tempFormData.minRooms}
                             onChange={handleOnChange} />
                     </div>
                     <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minBeds">Choose min number of beds</label>
+                        <label htmlFor="minBeds">Choose min. number of beds</label>
                         <input
                             type="number"
                             className="form-control"
                             id="minBeds"
                             name="minBeds"
-                            placeholder="0"
+                            placeholder="Enter min. number of rooms"
                             min="0"
                             value={tempFormData.minBeds}
                             onChange={handleOnChange} />
