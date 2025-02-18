@@ -7,10 +7,13 @@ import ApartmentDetails from "./pages/ApartmentDetails.jsx";
 import ApartmentPostForm from "./pages/ApartmentPostForm.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Toast from './components/Toast.jsx';
+
 
 
 
 function App() {
+
 
   return (
     <BrowserRouter>
@@ -19,7 +22,10 @@ function App() {
           <Route Component={DefaultLayout}>
             <Route index Component={Homepage} />
             <Route path="/apartment">
-              <Route path=":id" Component={ApartmentDetails} />
+              <Route index Component={Homepage} />
+
+              <Route path=":slug" Component={ApartmentDetails} />
+
             </Route>
             <Route path="/advanced-research" Component={AdvancedResearch} />
             <Route path="/post-apartment" Component={ApartmentPostForm} />

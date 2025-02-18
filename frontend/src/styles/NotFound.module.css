@@ -1,0 +1,19 @@
+.errorImageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.errorImageContainer img {
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.jumbotron {
+    background-image: url("https://img.freepik.com/free-psd/404-background-construction-concept_23-2150078627.jpg?t=st=1739746770~exp=1739750370~hmac=18fe920587f0ba99b85afc661cb8e719c54076e5f8e0df63230f65cb926910a2&w=996");
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    aspect-ratio: 16;
+}

@@ -7,6 +7,7 @@ import corsPolicy from "./middlewares/corsPolicy.js";
 // Routing 
 import apartmentsRouter from "./routes/apartmentRouter.js";
 
+
 // create a server instance
 const app = express();
 

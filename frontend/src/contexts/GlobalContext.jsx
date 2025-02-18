@@ -27,6 +27,8 @@ const initialNewComment = {
     vote: 0,
 }
 
+
+
 const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
@@ -40,11 +42,13 @@ const GlobalProvider = ({ children }) => {
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
-    const [numRooms, setNumRooms] = useState(0);
-    const [numBeds, setNumBeds] = useState(0);
+    const [minRooms, setNumRooms] = useState(0);
+    const [minBeds, setNumBeds] = useState(0);
     const [category, setCategory] = useState(0);
     const initialData = { type: "", message: "" };
     const [alertData, setAlertData] = useState(initialData);
+    const [searchFormData, setSearchFormData ] = useState({});
+
 
     const navigate = useNavigate();
     // useEffect(() => {
@@ -99,8 +103,8 @@ const GlobalProvider = ({ children }) => {
     }
 
 
-    async function addLike(id) {
-        return axios.patch(apiUrl + endpoint + id)
+    async function addLike(slug) {
+        return axios.patch(apiUrl + endpoint + slug)
             .then((res) => {
                 //console.log(res.data.likes);
                 return res.data.likes;
@@ -113,10 +117,10 @@ const GlobalProvider = ({ children }) => {
 
 
     const data = {
-        apartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
-        search, setSearch, numRooms, setNumRooms, numBeds, setNumBeds, category, setCategory,
+        apartments, setApartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
+        search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
-        isLoading, alertData, setAlertData
+        isLoading, alertData, setAlertData, setIsLoading
     }
 
     return <GlobalContext.Provider value={data}>

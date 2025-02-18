@@ -5,6 +5,7 @@ const router = express.Router();
 import {
   index,
   indexCategories,
+  indexHomePage,
   show,
   store,
   upload,
@@ -16,19 +17,20 @@ import {
 // Index - Read all
 router.get("/", index);
 router.get("/categories", indexCategories)
+router.get("/homepage", indexHomePage);
 
 
 // Show - Read one -
-router.get("/:id", show);
+router.get("/:slug", show);
 
 //Store - Create
 router.post("/", upload.single("file"), store);
 
 // Store - Create review
-router.post("/:id/reviews", storereviews);
+router.post("/:slug/reviews", storereviews);
 
 //Update - Update  totale
-router.patch("/:id", modify);
+router.patch("/:slug", modify);
 
 
 //export router

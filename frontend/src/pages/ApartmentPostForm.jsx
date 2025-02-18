@@ -1,33 +1,29 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
+import { toast } from 'react-toastify'; // Importa il Toast
+
 export default function ApartmentPostForm() {
-
-
     const initialNewApartment = {
         category: 0,
         city: "",
         address: "",
         description: "",
-        roomsNumber: 0,
-        bedsNumber: 0,
-        bathroomsNumber: 0,
-        squareMeters: 0,
+        roomsNumber: null,
+        bedsNumber: null,
+        bathroomsNumber: null,
+        squareMeters: null,
         likes: 0
-    }
-
+    };
 
     const [apartmentData, setApartmentData] = useState(initialNewApartment);
     const [apartments, setApartments] = useState([]);
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
-    const [id, setId] = useState(null);
+    const [slug, setSlug] = useState("");
     const navigate = useNavigate();
-
-    const { setAlertData } = useGlobalContext();
 
 
     const categoriesAPI = "http://localhost:3000/api/apartments/categories";
@@ -36,32 +32,38 @@ export default function ApartmentPostForm() {
     useEffect(() => {
         getCategories();
         getApartments();
-        if (id) {
-            navigate(`/apartment/${id}`);
-            setAlertData({
-                type: "success",
-                message: `Your apartment has been added successfully`,
-            });
+        if (slug) {
+            navigate(`/apartment/${slug}`);
+            toast.success("Apartment added succesfully"), {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                rtl: false,
+            }
         }
-    }, [id])
-
+    }, [slug]);
 
     function getCategories() {
-        axios.get(categoriesAPI).then((res) => {
-            console.log(res.data)
-            setCategories(res.data.items)
-        }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            console.log("Chiamata alle categorie effettuata")
-        }
-        )
+        axios
+            .get(categoriesAPI)
+            .then((res) => {
+                setCategories(res.data.items);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                console.log("Chiamata alle categorie effettuata");
+            });
     }
 
     function getApartments() {
-        axios.get(apartmentsAPI)
+        axios
+            .get(apartmentsAPI)
             .then((res) => {
-                console.log(res.data)
                 setApartments(res.data.items);
             })
             .catch((err) => {
@@ -69,12 +71,11 @@ export default function ApartmentPostForm() {
             })
             .finally(() => {
                 console.log("Chiamata agli appartamenti effettuata");
-            })
+            });
     }
 
     function handleInput(event) {
-        const { name, value } = event.target
-
+        const { name, value } = event.target;
         setApartmentData({ ...apartmentData, [name]: value });
     }
 
@@ -113,9 +114,8 @@ export default function ApartmentPostForm() {
         // City (Full city)
         if (!formData.city.trim()) {
             errors.city = "The `City` field cannot be empty";
-        } else if (formData.city.length < 5) {
-            errors.city = "`City` field must be at least 5 characters long";
-        } else if (formData.city.length > 100) {
+        }
+        else if (formData.city.length > 100) {
             errors.city = "The `City` field must be to the utmost 100 characters long";
         } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(formData.city)) {
             errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces."
@@ -187,12 +187,12 @@ export default function ApartmentPostForm() {
             ...apartmentData,
             description: apartmentData.description.trim(),
             address: apartmentData.address.trim(),
-            city: apartmentData.city.trim()
+            city: apartmentData.city.trim(),
         };
 
-        // setIsLoading(true);
         const newErrors = validateForm(trimmedApartmentData);
         setErrors(newErrors);
+
         if (Object.keys(newErrors).length === 0) {
             const formData = new FormData();
             for (const key in trimmedApartmentData) {
@@ -203,34 +203,24 @@ export default function ApartmentPostForm() {
             if (apartmentData.image) {
                 formData.append("file", apartmentData.image); // Assicurati che il nome del campo 'file' corrisponda a quello nel backend
             }
-            axios.post("http://localhost:3000/api/apartments", formData).then((res) => {
-                console.log(res.data);
-                console.log(res.data.id);
-                setId(res.data.id)
-                useEffect(() => {
+            axios
+                .post("http://localhost:3000/api/apartments", formData)
+                .then((res) => {
+                    setSlug(res.data.slug);
+                    setApartmentData(initialNewApartment);
 
-                }, [id]);
-
-                setApartmentData(initialNewApartment);
-
-            }).catch((err) => {
-                console.log(err)
-            }).finally(() => {
-                console.log("Tentativo di invio form effettuato");
-
-
-            })
-            console.log("Il form è stato inviato conb successo!");
-        } else {
-            console.log("L'invio del modulo non è riuscito a causa di errori di convalida");
+                })
+                .catch((err) => {
+                    setToastMessage("There was an error submitting your apartment");
+                    setToastType("error");
+                    setShowToast(true);
+                });
         }
-
-
     }
 
     return (
         <section className={StyleApartmentPostForm.formContainer}>
-            <div className="container">
+            <div className="container mb-3">
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
@@ -298,6 +288,7 @@ export default function ApartmentPostForm() {
                             name="image"
                             className="form-control"
                             onChange={handleFileChange}
+                            accept="image/jpg, image/png, image/jpeg"
                         />
                         {errors.image && (
                             <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
@@ -315,6 +306,7 @@ export default function ApartmentPostForm() {
                                 name="roomsNumber"
                                 className="form-control"
                                 value={apartmentData.roomsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -333,6 +325,7 @@ export default function ApartmentPostForm() {
                                 name="bedsNumber"
                                 className="form-control"
                                 value={apartmentData.bedsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -351,6 +344,7 @@ export default function ApartmentPostForm() {
                                 name="bathroomsNumber"
                                 className="form-control"
                                 value={apartmentData.bathroomsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -369,6 +363,7 @@ export default function ApartmentPostForm() {
                                 name="squareMeters"
                                 className="form-control"
                                 value={apartmentData.squareMeters}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -407,9 +402,5 @@ export default function ApartmentPostForm() {
                 </form>
             </div>
         </section>
-
-
     );
-
 }
-
