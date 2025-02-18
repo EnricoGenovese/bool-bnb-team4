@@ -89,7 +89,7 @@ export default function Homepage() {
             <div className="row container m-auto">
                 {homeApartments.length >= 1 ? (
                     <>
-                        <h3 className="py-2">Our most {homeApartments.length} loved apartments
+                        <h3 className="py-2 my-5">Our most {homeApartments.length} loved apartments
                             {search?.search ?
                                 <>
                                     &nbsp;for: <strong>{search?.search}</strong>
@@ -114,7 +114,7 @@ export default function Homepage() {
                         ))}
                     </>
                 ) : (
-                    <h3 className="display-5">No results found for this research</h3>
+                    <h3 className="my-5">No results found for this research</h3>
                 )}
             </div>
         </div>
