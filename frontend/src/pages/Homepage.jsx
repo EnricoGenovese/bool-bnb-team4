@@ -21,7 +21,6 @@ export default function Homepage() {
             params: searchValue ? { search: searchValue } : {}
         })
             .then((res) => {
-                console.log(res.data);
                 setHomeApartments(res.data.items);
             })
             .catch((err) => {
@@ -60,7 +59,7 @@ export default function Homepage() {
         <div className="mb-3">
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
                 {/* Testo animato da destra */}
-                <motion.p
+                <motion.div
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -71,7 +70,7 @@ export default function Homepage() {
                     <p className="lead jumbo-text">
                         Find the perfect apartment for you with just one click.
                     </p>
-                </motion.p>
+                </motion.div>
 
                 {/* Pulsante animato da destra con ritardo */}
                 <motion.div
