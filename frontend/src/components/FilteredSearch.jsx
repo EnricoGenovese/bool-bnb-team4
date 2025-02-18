@@ -1,6 +1,6 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-
+import { motion } from "framer-motion";
 
 
 export default function FilteredSearch() {
@@ -15,12 +15,12 @@ export default function FilteredSearch() {
         minRooms: "",
         minBeds: ""
     });
-    
-    
 
-    useEffect(()=>{
+
+
+    useEffect(() => {
         console.log("updated searchFormData: ", searchFormData);
-    },[searchFormData]);
+    }, [searchFormData]);
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -32,14 +32,18 @@ export default function FilteredSearch() {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        
+
         setSearchFormData(tempFormData);
     }
 
     return (
         <section style={{ marginTop: "50px" }}>
-            <form onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
-                <h2 className="text-center mb-4">Search for an accomodation</h2>
+            <motion.form onSubmit={handleOnSubmit}
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="container m-auto p-4 shadow-lg rounded bg-light">
+                <h2 className="mb-4">Search for an accomodation</h2>
                 <div className="form-group">
                     <label htmlFor="search">Search here city or address</label>
                     <input
@@ -96,7 +100,7 @@ export default function FilteredSearch() {
                     </div>
                 </div>
                 <button type="submit" className="btn btn-send">Search</button>
-            </form>
+            </motion.form>
         </section>
     );
 }

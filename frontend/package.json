@@ -13,7 +13,11 @@
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "emailjs-com": "^3.2.0",
+<<<<<<< HEAD
     "maplibre-gl": "^5.1.0",
+=======
+    "motion": "^12.4.3",
+>>>>>>> e20875b6ffe5d0054a61a656e55c0a27df8ea8ad
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-content-loader": "^7.0.2",

@@ -11,10 +11,10 @@ export default function ApartmentPostForm() {
         city: "",
         address: "",
         description: "",
-        roomsNumber: 0,
-        bedsNumber: 0,
-        bathroomsNumber: 0,
-        squareMeters: 0,
+        roomsNumber: null,
+        bedsNumber: null,
+        bathroomsNumber: null,
+        squareMeters: null,
         likes: 0
     };
 
@@ -220,7 +220,7 @@ export default function ApartmentPostForm() {
 
     return (
         <section className={StyleApartmentPostForm.formContainer}>
-            <div className="container">
+            <div className="container mb-3">
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
                     <h2 className="text-center mb-4">Add a New Property</h2>
 
@@ -306,6 +306,7 @@ export default function ApartmentPostForm() {
                                 name="roomsNumber"
                                 className="form-control"
                                 value={apartmentData.roomsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -324,6 +325,7 @@ export default function ApartmentPostForm() {
                                 name="bedsNumber"
                                 className="form-control"
                                 value={apartmentData.bedsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -342,6 +344,7 @@ export default function ApartmentPostForm() {
                                 name="bathroomsNumber"
                                 className="form-control"
                                 value={apartmentData.bathroomsNumber}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
@@ -360,6 +363,7 @@ export default function ApartmentPostForm() {
                                 name="squareMeters"
                                 className="form-control"
                                 value={apartmentData.squareMeters}
+                                placeholder="0"
                                 onChange={handleInput}
 
                             />
