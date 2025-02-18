@@ -233,7 +233,7 @@ export default function ApartmentPostForm() {
         <section className={StyleApartmentPostForm.formContainer}>
             <div className="container mb-3">
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
-                    <h2 className="text-center mb-4">Add a New Property</h2>
+                    <h2 className=" mb-4">Add a New Property</h2>
 
 
                     <div className="mb-3">
