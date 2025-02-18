@@ -61,7 +61,7 @@ export default function AdevancedResearch() {
                 console.error(err);
             })
             .finally(() => {
-                setTimeout(()=>{
+                setTimeout(() => {
                     setIsLoading(false);
 
                 }, 1000)
@@ -72,20 +72,25 @@ export default function AdevancedResearch() {
         <>
             <FilteredSearch />
             <div className="container m-auto row mb-3">
-                <h3 className="pt-5">Results for your research: {filteredApi.length}</h3>
+                <h3 className="pt-5">Results for your research: {filteredApi.length} {searchFormData?.search ?
+                    <>for <strong>{searchFormData.search}</strong></>
+                    : ""}
+                </h3>
+
                 {filteredApi.length >= 1 ?
                     filteredApi?.map((apartment, index) => (
                         <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
                             {
                                 isLoading ? <LoaderCard />
-                                    : 
+                                    :
                                     (
                                         <motion.div
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
+                                            whileHover={{ scale: 1.02 }}
                                         >
-                                    <Card apartment={apartment} addLike={addLike} />
+                                            <Card apartment={apartment} addLike={addLike} />
                                         </motion.div>
                                     )
                             }
