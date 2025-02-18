@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import React from "react";
@@ -8,18 +8,40 @@ import ReviewForm from "./ReviewForm";
 import ContactForm from "./ContactForm";
 import Star from "./Star";
 import style from "../styles/SingleApartment.module.css";
-import axios from "axios"
+import { Link, Element } from 'react-scroll';
 import { motion } from "framer-motion";
+import MapComponent from "./MapComponent";
 
-export default function SingleApartment({ apartment, categories, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, updateLikes, show }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [longitude, setLongitude] = useState(0);
+    const [latitude, setLatitude] = useState(0);
+
     let category = "";
     const [likes, setLikes] = useState(apartment.item.likes);
     const imgPath = import.meta.env.VITE_IMGPATH;
     const apiUrl = import.meta.env.VITE_APIURL;
     const endpoint = "/apartments/";
+
+    useEffect(() => {
+        async function fetchCoordinates() {
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${apartment.item.address}, ${apartment.item.city}`);
+                const data = await response.json();
+                if (data.length > 0) {
+                    setLatitude(parseFloat(data[0].lat));
+                    setLongitude(parseFloat(data[0].lon));
+                } else {
+                    console.error("Indirizzo non trovato");
+                }
+            } catch (error) {
+                console.error("Errore nel recupero delle coordinate:", error);
+            }
+        }
+        fetchCoordinates();
+    }, [apartment.item.address, apartment.item.city]);
 
     function findCategory() {
         return category = categories.find(element => element.id == apartment.item["id_category"])
@@ -52,30 +74,32 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                         />
                     </motion.div>
                     <div className="w-100 d-md-flex gap-3">
-                        <div style={{ width: "66.67%", height: "100%" }}>
+                        <div style={{ width: "66.67%", height: "100%" }} className="d-none d-md-block ">
                             <Card.Img
                                 variant="left"
                                 src={imgPath + apartment.item.img}
                                 alt={apartment.item.description}
-                                className="d-none d-md-block me-3"
+                                className="me-3"
                                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                             />
                         </div>
-                        <div style={{ width: "33.33%", height: "100%" }}>
-                            <Card.Body className="w-100" style={{ width: "33.33%" }}>
-                                <Card.Text as="div">
+                        <div style={{ height: "100%" }} className="flex-grow-1">
+                            <Card.Body className="w-100">
+                                <Card.Text as="div" className="d-flex">
                                     <motion.div
                                         initial={{ x: 100, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
                                         transition={{ duration: 0.8, ease: "easeOut" }}
                                     >
-                                        <p className="d-flex flex-nowrap align-items-center"><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
-                                        <p className="d-flex flex-nowrap align-items-center"><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
-                                        <p className="d-flex flex-nowrap align-items-center"><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
-                                        <p className="d-flex flex-nowrap align-items-center"><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
-                                        <p className="d-flex flex-nowrap align-items-center"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}, {apartment.item.city}</p>
-                                        <p className="d-flex flex-nowrap align-items-center"><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
-                                        <div className="d-flex gap-2">
+                                        <p className="d-flex flex-nowrap"><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
+                                        <p className="d-flex flex-nowrap"><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
+                                        <p className="d-flex flex-nowrap"><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
+                                        <p className="d-flex flex-nowrap"><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
+                                        <p className="d-flex flex-nowrap"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}, {apartment.item.city}</p>
+                                        <p className="d-flex flex-nowrap"><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
+
+
+                                        <div className="d-flex gap-2 pt-3">
                                             <button className="btn btn-danger text-light btn-sm d-flex align-items-center justify-content-center align-self-center" id={style.likeButton}
                                                 onClick={() => {
                                                     addLike(slug).then(() => {
@@ -93,10 +117,11 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                                         </div>
                                     </motion.div>
                                 </Card.Text>
+                                <div className="w-100 d-flex justify-content-center align-content-center mt-3" style={{ border: "1px solid  #2E3532", borderRadius: "10px", overflow: "hidden" }}>
+                                    <MapComponent longitude={longitude} latitude={latitude} />
+                                </div>
                             </Card.Body>
-
                         </div>
-
                     </div>
                 </Card>
             </div>
@@ -106,12 +131,16 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
                     <div className={`${style["overlay-content"]} d-flex flex-column `}>
                         <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
                         </button>
-                        <ContactForm ownerMail={ownerMail} />
+                        <ContactForm ownerMail={ownerMail} city={city} category={category} />
                     </div>
                 </div>
             )}
 
             <section className="container m-auto pt-5">
+                <Link to="destination">
+                    <button type="button" className="btn btn-send my-3">Add your review</button>
+                </Link>
+
                 <motion.h3
                     initial={{ x: -180, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -143,15 +172,18 @@ export default function SingleApartment({ apartment, categories, ownerMail, subm
             </section>
 
             <section>
-                <motion.h3
-                    initial={{ x: -180, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                <Element name="destination">
+                    <motion.h3
+                        initial={{ x: -180, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
 
-                    className="py-5">Add your review:
-                </motion.h3>
+                        className="py-5">Add your review:
+                    </motion.h3>
 
-                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                    <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                </Element>
+
             </section>
         </>
     );

@@ -2,7 +2,7 @@ import emailjs from 'emailjs-com';
 import { useState } from "react";
 import styles from '../styles/ContactForm.module.css';
 
-export default function ContactForm({ ownerMail }) {
+export default function ContactForm({ ownerMail, city, category }) {
 
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -55,13 +55,13 @@ export default function ContactForm({ ownerMail }) {
                 .then(
                     (result) => {
                         console.log(result.text);
-                        setStatusMessage('Email inviata con successo!');
+                        setStatusMessage('Email sent successfully!');
                         setEmail('');
                         setMessage('');
                     },
                     (error) => {
                         console.log(error.text);
-                        setStatusMessage('Si è verificato un errore. Riprova.');
+                        setStatusMessage('An error occurred. Try again.');
                     }
                 )
                 .finally(() => {
@@ -76,7 +76,7 @@ export default function ContactForm({ ownerMail }) {
 
     return (
         <div className={`container ${styles.contactFormContainer}`}>
-            <h2 className="w-100 mb-4 text-start">Contact Us</h2>
+            <h2 className="w-100 mb-4 text-start">Send mail for {city}'s {category.name}</h2>
             <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label w-100 text-start">Your Email</label>
@@ -86,6 +86,7 @@ export default function ContactForm({ ownerMail }) {
                         className="form-control"
                         value={email}
                         onChange={handleEmailChange}
+                        placeholder="Insert your email"
                         required
                     />
                     {errors.user_email && (
@@ -103,6 +104,7 @@ export default function ContactForm({ ownerMail }) {
                         rows="4"
                         value={message}
                         onChange={handleMessageChange}
+                        placeholder="Insert your message"
                         required
                     />
                     {errors.message && (

@@ -126,7 +126,7 @@ function store(req, res) {
     }
 
     // Validazione descrizione
-    let { description, address, city, category, roomsNumber, bedsNumber, bathroomsNumber, squareMeters } = req.body;
+    let { description, address, city, state, category, roomsNumber, bedsNumber, bathroomsNumber, squareMeters } = req.body;
 
 
     if (!description.trim()) {
@@ -152,11 +152,19 @@ function store(req, res) {
 
     // Validazione città
     if (!city.trim()) {
-        errors.city = "The `City` field cannot be empty";
+        errors.city = "The `State` field cannot be empty";
     } else if (city.length > 100) {
-        errors.city = "The `City` field must be at most 100 characters long";
+        errors.city = "The `State` field must be at most 100 characters long";
     } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(city)) {
-        errors.city = "The `City` can only contain letters, numbers, commas, periods, and spaces.";
+        errors.city = "The `State` can only contain letters, numbers, commas, periods, and spaces.";
+    }
+
+    if (!state.trim()) {
+        errors.state = "The `City` field cannot be empty";
+    } else if (state.length > 100) {
+        errors.state = "The `City` field must be at most 100 characters long";
+    } else if (!/^[a-zA-Z0-9,.'\sàèéìòù]*$/.test(state)) {
+        errors.state = "The `City` can only contain letters, numbers, commas, periods, and spaces.";
     }
 
     // Validazione campi numerici
@@ -187,6 +195,7 @@ function store(req, res) {
     let likes = req.body.likes || 0;
     let slug = [
         formattingSlug(description),
+        formattingSlug(state),
         formattingSlug(city),
         formattingSlug(address),
         formattingSlug(category)
@@ -194,18 +203,10 @@ function store(req, res) {
 
     console.log(slug)
 
-    // function createSlug() {
-    //     return description
-    //         .toLowerCase()                // Trasforma in minuscolo
-    //         .trim()                        // Rimuove gli spazi prima e dopo
-    //         .replace(/[^\w\s-]/g, '')      // Rimuove caratteri speciali
-    //         .replace(/[\s_-]+/g, '-')      // Sostituisce spazi e trattini con un singolo trattino
-    //         .replace(/^-+|-+$/g, '');      // Rimuove eventuali trattini all'inizio e alla fine
-    // }
 
     // Query per inserire nel database
-    const sql = `INSERT INTO apartments (id_owner, id_category, description, address, city, rooms_number, beds_number, bathrooms_number, square_meters, img, likes, slug)
-                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO apartments (id_owner, id_category, description, address, city, state, rooms_number, beds_number, bathrooms_number, square_meters, img, likes, slug)
+                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     connection.query(sql, [
         RandomNum(),
@@ -213,6 +214,7 @@ function store(req, res) {
         description,
         address,
         city,
+        state,
         roomsNumber,
         bedsNumber,
         bathroomsNumber,

@@ -25,6 +25,7 @@ export default function ApartmentDetails() {
     const [categories, setCategory] = useState([]);
     const [formData, setFormData] = useState(initialForm);
     const [mail, setMail] = useState("");
+    const [city, setCity] = useState("")
     const [hoverVote, setHoverVote] = useState(0);
     const [errors, setErrors] = useState({});
     const today = new Date().toISOString().split("T")[0];
@@ -92,6 +93,7 @@ export default function ApartmentDetails() {
                 console.log(res.data)
                 setApartment(res.data);
                 setMail(res.data.item.email)
+                setCity(res.data.item.city)
             })
             .catch((err) => {
                 console.log(err);
@@ -196,7 +198,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
+                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
                 </>
             )
                 : "Non trovata"}
