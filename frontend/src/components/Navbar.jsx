@@ -24,7 +24,14 @@ export default function Navbar() {
                         className={`w-100 collapse navbar-collapse my-2  ${isOpen ? "show" : ""}`}
                         id="navbarSupportedContent"
                     >
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold text-shadow-1">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
+
+                            <li className="nav-item ms-3">
+                                <NavLink to="/" className="nav-link text-decoration-none navlink-hover custom-link">
+                                    <img style={{ width: "40px", height: "40px"}} src="/img/logoMenu.png" alt="Logo" className="logo" />
+                                </NavLink>
+                            </li>
+
                             <li className="nav-item ms-3">
                                 <NavLink
                                     to="/"

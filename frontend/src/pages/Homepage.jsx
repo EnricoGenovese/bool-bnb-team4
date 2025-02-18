@@ -29,11 +29,11 @@ export default function Homepage() {
             })
             .finally(() => {
                 setTimeout(() => {
-                    setIsLoading(false);                
+                    setIsLoading(false);
                 }, 1000);
             });
     }
-    
+
 
     useEffect(() => {
         const params = {};
@@ -89,7 +89,13 @@ export default function Homepage() {
             <div className="row container m-auto">
                 {homeApartments.length >= 1 ? (
                     <>
-                        <h3 className="py-2">Our most {homeApartments.length} loved apartments: </h3>
+                        <h3 className="py-2">Our most {homeApartments.length} loved apartments
+                            {search?.search ?
+                                <>
+                                    &nbsp;for: <strong>{search?.search}</strong>
+                                </>
+                                :
+                                ''}</h3>
                         {homeApartments.map((apartment, index) => (
                             <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id}>
                                 {isLoading ? (
@@ -99,6 +105,7 @@ export default function Homepage() {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
+                                        whileHover={{ scale: 1.02 }}
                                     >
                                         <Card apartment={apartment} addLike={addLike} />
                                     </motion.div>
