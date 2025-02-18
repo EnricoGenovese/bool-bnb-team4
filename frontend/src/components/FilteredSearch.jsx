@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 
 export default function FilteredSearch() {
+
+    const [categories, setCategories] = useState([]);
+    const categoriesAPI = "http://localhost:3000/api/apartments/categories";
 
     const { searchFormData, setSearchFormData } = useGlobalContext();
 
@@ -16,11 +20,26 @@ export default function FilteredSearch() {
         minBeds: ""
     });
 
-
-
     useEffect(() => {
         console.log("updated searchFormData: ", searchFormData);
+        getCategories();
+
     }, [searchFormData]);
+
+    function getCategories() {
+        axios
+            .get(categoriesAPI)
+            .then((res) => {
+                setCategories(res.data.items);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                console.log("Chiamata alle categorie effettuata");
+            });
+    }
+
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -65,13 +84,12 @@ export default function FilteredSearch() {
                             value={tempFormData.category}
                             onChange={handleOnChange}
                         >
-                            <option value={"0"}>No category</option>
-                            <option value={"1"}>Chalet</option>
-                            <option value={"2"}>Apartment</option>
-                            <option value={"3"}>Villa</option>
-                            <option value={"4"}>Loft</option>
-                            <option value={"5"}>Studio</option>
-                            <option value={"6"}>Penthouse</option>
+                            <option value={0}>Select apartment category</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="form-group col-6 col-lg-4">
