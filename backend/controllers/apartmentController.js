@@ -1,6 +1,6 @@
 import connection from "../connection.js";
 import { RandomNum } from "../utilities/functions.js";
-import { upload } from "../utilities/functions.js";
+import { upload, formattingSlug } from "../utilities/functions.js";
 import slugify from "slugify";
 
 function index(req, res) {
@@ -40,7 +40,7 @@ function index(req, res) {
 }
 
 function indexHomePage(req, res) {
-    let {search} = req.query;
+    let { search } = req.query;
     search = search ? `%${search.trim()}%` : '%';
 
     const sql = `
@@ -48,7 +48,7 @@ function indexHomePage(req, res) {
     WHERE
         (address LIKE ? OR city LIKE ?)
     ORDER BY apartments.likes DESC`;
-    connection.query(sql,[search,search], (err, results) => {
+    connection.query(sql, [search, search], (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         const response = {
             success: true,
@@ -185,12 +185,12 @@ function store(req, res) {
     const { path } = req.file;
     const imageUrl = `${path.slice(11)}`;
     let likes = req.body.likes || 0;
-    let slug = description
-        .toLowerCase()                // Trasforma in minuscolo
-        .trim()                        // Rimuove gli spazi prima e dopo
-        .replace(/[^\w\s-]/g, '')      // Rimuove caratteri speciali
-        .replace(/[\s_-]+/g, '-')      // Sostituisce spazi e trattini con un singolo trattino
-        .replace(/^-+|-+$/g, '');
+    let slug = [
+        formattingSlug(description),
+        formattingSlug(city),
+        formattingSlug(address),
+        formattingSlug(category)
+    ].join('-');
 
     console.log(slug)
 
