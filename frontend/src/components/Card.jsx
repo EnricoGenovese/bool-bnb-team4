@@ -14,7 +14,7 @@ export default function Card({ apartment, addLike }) {
         <div className="card d-flex flex-column h-100 justify-content-between" key={slug}>
             <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
-                <div className="card-body">
+                <div className={`card-body ${style.altezza}`}>
                     <h5 className="card-title">{apartment.description}</h5>
                     <div className="d-flex align-items-center my-2">
                         <p className="card-text"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address},</p>

@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import LoaderCard from "../components/LoaderCard.jsx";
 import axios from "axios";
 import SearchHomePage from "../components/SearchHomePage.jsx";
+import { motion } from "framer-motion";
 
 export default function Homepage() {
 
@@ -58,31 +59,56 @@ export default function Homepage() {
     return (
         <div className="mb-3">
             <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
-                <div className="text-white" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}>
+                {/* Testo animato da destra */}
+                <motion.p
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-white"
+                    style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}
+                >
                     <h1 className="display-4 jumbo-text">Bool B&B</h1>
                     <p className="lead jumbo-text">
                         Find the perfect apartment for you with just one click.
                     </p>
-                </div>
-                <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"} >
-                    Find out more
-                </Link>
+                </motion.p>
+
+                {/* Pulsante animato da destra con ritardo */}
+                <motion.div
+                    initial={{ x: -180, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                >
+                    <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"}>
+                        Find out more
+                    </Link>
+                </motion.div>
             </div>
 
             <SearchHomePage />
             <div className="row container m-auto">
-                {homeApartments.length >= 1
-                    ? <>
+                {homeApartments.length >= 1 ? (
+                    <>
                         <h3 className="py-2">Our most {homeApartments.length} loved apartments: </h3>
-                        {
-                            homeApartments?.map((apartment) => (
-                                <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id}>
-                                    {isLoading ? <LoaderCard /> : <Card apartment={apartment} addLike={addLike} />}
-                                </div>
-                            ))}
+                        {homeApartments.map((apartment, index) => (
+                            <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id}>
+                                {isLoading ? (
+                                    <LoaderCard />
+                                ) : (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
+                                    >
+                                        <Card apartment={apartment} addLike={addLike} />
+                                    </motion.div>
+                                )}
+                            </div>
+                        ))}
                     </>
-                    : <h3 className="display-5">No results found for this research</h3>
-                }
+                ) : (
+                    <h3 className="display-5">No results found for this research</h3>
+                )}
             </div>
         </div>
     );
