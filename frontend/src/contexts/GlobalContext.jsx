@@ -47,7 +47,7 @@ const GlobalProvider = ({ children }) => {
     const [category, setCategory] = useState(0);
     const initialData = { type: "", message: "" };
     const [alertData, setAlertData] = useState(initialData);
-    const [searchFormData, setSearchFormData ] = useState({});
+    const [searchFormData, setSearchFormData] = useState({});
 
 
     const navigate = useNavigate();
@@ -115,12 +115,19 @@ const GlobalProvider = ({ children }) => {
             })
     }
 
+    function handlePageChange(page) {
+        console.log(page);
+        setPage(page);
+    }
+
 
     const data = {
         apartments, setApartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
-        isLoading, alertData, setAlertData, setIsLoading
+        isLoading, alertData, setAlertData, setIsLoading, page, numPages, setNumPages,
+        handlePageChange
+
     }
 
     return <GlobalContext.Provider value={data}>

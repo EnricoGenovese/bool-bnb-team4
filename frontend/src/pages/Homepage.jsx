@@ -6,22 +6,28 @@ import LoaderCard from "../components/LoaderCard.jsx";
 import axios from "axios";
 import SearchHomePage from "../components/SearchHomePage.jsx";
 import { motion } from "framer-motion";
+import Pagination from "../components/Pagination"
 
 export default function Homepage() {
 
     const [homeApartments, setHomeApartments] = useState([]);
-    const { addLike, isLoading, setIsLoading, search, setSearch } = useGlobalContext();
+    const [apartmentsCount, setApartmentsCount] = useState(0)
+    const { addLike, isLoading, setIsLoading, search, setSearch, page, setNumPages } = useGlobalContext();
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
 
     function getHomeApartments() {
         const searchValue = typeof search?.search === "string" ? search.search.trim() : "";
 
-        axios.get(`${apiURL}${endpoint}homepage`, {
+        axios.get(`${apiURL}${endpoint}homepage`, { params: { page } }, {
             params: searchValue ? { search: searchValue } : {}
         })
             .then((res) => {
+
+                console.log(res.data)
+                setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setHomeApartments(res.data.items);
+                setApartmentsCount(res.data.count)
             })
             .catch((err) => {
                 console.log(err);
@@ -36,10 +42,14 @@ export default function Homepage() {
 
     useEffect(() => {
         const params = {};
+        console.log(page)
 
         // Verifica se il search esiste e se contiene una stringa di ricerca valida
         if (search?.search && typeof search.search === "string" && search.search.trim() !== "") {
             params.search = search.search.trim();
+        }
+        if (page && typeof page === 'number') {
+            params.page = page;
         }
 
         const queryParams = new URLSearchParams(params).toString();
@@ -53,7 +63,7 @@ export default function Homepage() {
 
         getHomeApartments();
         setIsLoading(true);
-    }, [search]); // Si attiva quando la ricerca cambia
+    }, [search, page]); // Si attiva quando la ricerca cambia
 
     return (
         <div className="mb-3">
@@ -88,7 +98,7 @@ export default function Homepage() {
             <div className="row container m-auto">
                 {homeApartments.length >= 1 ? (
                     <>
-                        <h3 className="py-2 my-5">Our most {homeApartments.length} loved apartments
+                        <h3 className="py-2 my-5">Our most {apartmentsCount} loved apartments
                             {search?.search ?
                                 <>
                                     &nbsp;for: <strong>{search?.search}</strong>
@@ -111,7 +121,9 @@ export default function Homepage() {
                                 )}
                             </div>
                         ))}
+                        <Pagination />
                     </>
+
                 ) : (
                     <h3 className="my-5">No results found for this research</h3>
                 )}
