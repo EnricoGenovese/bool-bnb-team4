@@ -12,6 +12,7 @@ export default function Homepage() {
 
     const [homeApartments, setHomeApartments] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0)
+    const [isPaginationFlag, setIsPaginationFlag] = useState(false)
     const { addLike, isLoading, setIsLoading, search, setSearch, page, setNumPages } = useGlobalContext();
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
@@ -19,15 +20,21 @@ export default function Homepage() {
     function getHomeApartments() {
         const searchValue = typeof search?.search === "string" ? search.search.trim() : "";
 
-        axios.get(`${apiURL}${endpoint}homepage`, { params: { page } }, {
-            params: searchValue ? { search: searchValue } : {}
-        })
-            .then((res) => {
+        // Crea un oggetto params che contiene sia la ricerca che la pagina
+        const params = {
+            page,
+            ...(searchValue && { search: searchValue }), // Aggiungi il parametro 'search' solo se ha un valore
+        };
 
-                console.log(res.data)
+        axios.get(`${apiURL}${endpoint}homepage`, { params })
+            .then((res) => {
+                console.log(res.data);
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setHomeApartments(res.data.items);
-                setApartmentsCount(res.data.count)
+                setApartmentsCount(res.data.count);
+                res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
+                console.log(isPaginationFlag, "pagination")
+
             })
             .catch((err) => {
                 console.log(err);
@@ -40,6 +47,7 @@ export default function Homepage() {
     }
 
 
+
     useEffect(() => {
         const params = {};
         console.log(page)
@@ -48,7 +56,7 @@ export default function Homepage() {
         if (search?.search && typeof search.search === "string" && search.search.trim() !== "") {
             params.search = search.search.trim();
         }
-        if (page && typeof page === 'number') {
+        if (page?.page && typeof page === 'number') {
             params.page = page;
         }
 
@@ -113,7 +121,7 @@ export default function Homepage() {
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.5, delay: index * 0.05 }} // Ritardo progressivo
+                                        transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
                                         whileHover={{ scale: 1.02 }}
                                     >
                                         <Card apartment={apartment} addLike={addLike} />
@@ -121,7 +129,11 @@ export default function Homepage() {
                                 )}
                             </div>
                         ))}
-                        <Pagination />
+
+                        {!isPaginationFlag &&
+                            <div>
+                                <Pagination />
+                            </div>}
                     </>
 
                 ) : (

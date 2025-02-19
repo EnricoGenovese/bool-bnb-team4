@@ -43,15 +43,15 @@ function indexHomePage(req, res) {
     let { search, page } = req.query;
     search = search ? `%${search.trim()}%` : '%';
     page = page && page !== "0" ? parseInt(page) : 1;  // Imposta il numero di pagina come intero e se non è valido, impostalo su 1.
-    const limit = 1;
+    const limit = 20;
     const offset = limit * (page - 1);
 
     const sqlCount = `
-    SELECT COUNT(*) AS count FROM apartments
-    
+    SELECT COUNT(*) AS count FROM apartments WHERE
+    (address LIKE ? OR city LIKE ?)
     `;
 
-    connection.query(sqlCount, (err, resultss) => {
+    connection.query(sqlCount, [search, search], (err, resultss) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
         console.log(resultss[0])
         const count = resultss[0].count;
@@ -59,7 +59,7 @@ function indexHomePage(req, res) {
         const sql = `SELECT * FROM apartments WHERE
         (address LIKE ? OR city LIKE ?)
          ORDER BY apartments.likes DESC
-         LIMIT ? OFFSET ?`;
+         LIMIT ? OFFSET ?`
 
 
         connection.query(sql, [search, search, limit, offset], (err, results) => {
