@@ -103,7 +103,7 @@ export default function Homepage() {
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
+                                        transition={{ duration: 0.5, delay: index * 0.05 }} // Ritardo progressivo
                                         whileHover={{ scale: 1.02 }}
                                     >
                                         <Card apartment={apartment} addLike={addLike} />

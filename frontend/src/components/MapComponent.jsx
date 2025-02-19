@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+
 import "maplibre-gl/dist/maplibre-gl.css";
 import maplibregl from "maplibre-gl";
 
@@ -10,9 +11,10 @@ export default function MapComponent({ longitude, latitude }) {
         if (mapContainerRef.current) {
             const newMap = new maplibregl.Map({
                 container: mapContainerRef.current, // ID del contenitore
-                style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json", // Stile della mappa
+                // style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json", // Stile della mappa
+                style: "https://tiles.openfreemap.org/styles/liberty",
                 center: [longitude, latitude], // Posizione iniziale
-                zoom: 12, // Livello di zoom
+                zoom: 14, // Livello di zoom
             });
 
             // Aggiungere un marker alla mappa
