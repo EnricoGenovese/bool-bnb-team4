@@ -25,7 +25,7 @@ export default function Pagination() {
                 pages = [1, '...', numPages - 2, numPages - 1, numPages];
             } else if (page === numPages) {
                 // Da ultima pagina-1 a ultima pagina: Mostra 1, ... pagina-1, pagina
-                pages = [1, '...', numPages - 1, numPages];
+                pages = [1, '...', numPages-2,numPages - 1, numPages];
             } else if (page >= 3 && page < numPages - 1) {
                 // Da pagina 3 a penultima pagina: Mostra 1, ... pagina-1, pagina, pagina+1, ... ultima pagina
                 pages = [1, '...', page - 1, page, page + 1, '...', numPages];
