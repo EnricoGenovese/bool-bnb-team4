@@ -40,26 +40,44 @@ function index(req, res) {
 }
 
 function indexHomePage(req, res) {
-    let { search } = req.query;
+    let { search, page } = req.query;
     search = search ? `%${search.trim()}%` : '%';
+    page = page && page !== "0" ? parseInt(page) : 1;  // Imposta il numero di pagina come intero e se non è valido, impostalo su 1.
+    const limit = 1;
+    const offset = limit * (page - 1);
 
-    const sql = `
-    SELECT * FROM apartments
-    WHERE
-        (address LIKE ? OR city LIKE ?)
-    ORDER BY apartments.likes DESC`;
-    connection.query(sql, [search, search], (err, results) => {
+    const sqlCount = `
+    SELECT COUNT(*) AS count FROM apartments
+    
+    `;
+
+    connection.query(sqlCount, (err, resultss) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
-        const response = {
-            success: true,
-            count: results.length,
-            items: results
-        }
+        console.log(resultss[0])
+        const count = resultss[0].count;
 
-        res.json(response);
+        const sql = `SELECT * FROM apartments WHERE
+        (address LIKE ? OR city LIKE ?)
+         ORDER BY apartments.likes DESC
+         LIMIT ? OFFSET ?`;
+
+
+        connection.query(sql, [search, search, limit, offset], (err, results) => {
+            if (err) res.status(500).json({ error: 'Errore del server' });
+
+
+            const response = {
+                success: true,
+                count,
+                limit,
+                items: results
+            };
+
+            res.json(response);
+        });
     })
-
 }
+
 
 function indexCategories(req, res) {
     const sql = `SELECT * FROM categories;`

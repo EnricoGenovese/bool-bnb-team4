@@ -251,12 +251,13 @@ export default function ApartmentPostForm() {
                                 placeholder={"Enter summary title describing the property"}
                                 onChange={handleInput}
                             />
-                            {errors.description && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.description}
-                                </span>
-                            )}
+
                         </div>
+                        {errors.description && (
+                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                {errors.description}
+                            </span>
+                        )}
                     </div>
 
                     <div className="mb-3">
@@ -273,12 +274,13 @@ export default function ApartmentPostForm() {
                                 placeholder={"Enter full address"}
                                 onChange={handleInput}
                             />
-                            {errors.address && (
-                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                    {errors.address}
-                                </span>
-                            )}
+
                         </div>
+                        {errors.address && (
+                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                {errors.address}
+                            </span>
+                        )}
                     </div>
                     <div className="row">
 
@@ -296,12 +298,13 @@ export default function ApartmentPostForm() {
                                     placeholder={"Enter city"}
                                     onChange={handleInput}
                                 />
-                                {errors.city && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.city}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.city && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.city}
+                                </span>
+                            )}
                         </div>
 
 
@@ -319,12 +322,13 @@ export default function ApartmentPostForm() {
                                     placeholder={"Enter state"}
                                     onChange={handleInput}
                                 />
-                                {errors.state && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.state}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.state && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.state}
+                                </span>
+                            )}
                         </div>
 
                     </div>
@@ -363,12 +367,13 @@ export default function ApartmentPostForm() {
                                     onChange={handleInput}
 
                                 />
-                                {errors.roomsNumber && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.roomsNumber}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.roomsNumber && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.roomsNumber}
+                                </span>
+                            )}
                         </div>
 
                         <div className="col-md-3 mb-3">
@@ -385,16 +390,17 @@ export default function ApartmentPostForm() {
                                     onChange={handleInput}
 
                                 />
-                                {errors.bedsNumber && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.bedsNumber}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.bedsNumber && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.bedsNumber}
+                                </span>
+                            )}
                         </div>
 
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="bathroomsNumber" className="form-label">Number of bathrooms:</label>
+                            <label htmlFor="bathroomsNumber" className="form-label">Number of bath<span className="d-inline d-md-none d-lg-inline">rooms</span>:</label>
                             <div className="input-group">
                                 <span className="input-group-text"><FaBath /></span>
                                 <input
@@ -406,12 +412,13 @@ export default function ApartmentPostForm() {
                                     placeholder="Enter number of bathrooms"
                                     onChange={handleInput}
                                 />
-                                {errors.bathroomsNumber && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.bathroomsNumber}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.bathroomsNumber && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.bathroomsNumber}
+                                </span>
+                            )}
                         </div>
 
                         <div className="col-md-3 mb-3">
@@ -427,18 +434,20 @@ export default function ApartmentPostForm() {
                                     placeholder="Enter square meters"
                                     onChange={handleInput}
 
+
                                 />
-                                {errors.squareMeters && (
-                                    <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                        {errors.squareMeters}
-                                    </span>
-                                )}
+
                             </div>
+                            {errors.squareMeters && (
+                                <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                                    {errors.squareMeters}
+                                </span>
+                            )}
                         </div>
 
                     </div>
                     <label htmlFor="category" className="form-label">Property category:</label>
-                    <div className="mb-3 input-group">
+                    <div className=" input-group">
                         <span className="input-group-text"><FaHome /></span>
                         <select
                             id="category"
@@ -454,15 +463,17 @@ export default function ApartmentPostForm() {
                                     {category.name}
                                 </option>
                             ))}
-                        </select>
-                        {errors.category && (
-                            <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
-                                {errors.category}
-                            </span>
-                        )}
-                    </div>
 
-                    <button type="submit" className="btn btn-send w-100">Add apartment</button>
+                        </select>
+
+                    </div>
+                    {errors.category && (
+                        <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
+                            {errors.category}
+                        </span>
+                    )}
+
+                    <button type="submit" className="btn btn-send w-100 mt-3">Add apartment</button>
                 </form>
             </div>
         </section>
