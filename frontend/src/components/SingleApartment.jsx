@@ -12,12 +12,13 @@ import { Link, Element } from 'react-scroll';
 import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
-export default function SingleApartment({ apartment, categories, city, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [longitude, setLongitude] = useState(0);
     const [latitude, setLatitude] = useState(0);
+    const [limitReviews, setLimitReviews] = useState(2);            // useState per il limite di recensioni visualizzate
 
     let category = "";
     const [likes, setLikes] = useState(apartment.item.likes);
@@ -47,6 +48,30 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
         return category = categories.find(element => element.id == apartment.item["id_category"])
     }
     findCategory();
+
+    function clickedShowMoreRewiews() {
+        setLimitReviews(limitReviews + 3);
+    }
+
+    // visualizzo le recensioni a 3 a 3
+    function showReviews() {
+        return apartment.item.reviews.map((review, index) => (
+            index <= limitReviews && (
+            <div key={review.id}>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
+                    <div className="card-body">
+                        <p className="card-text">{review.text}</p>
+                        <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
+                        <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
+                    </div>
+                </motion.div>
+            </div>)
+        ))
+    }
 
     return (
         <>
@@ -131,7 +156,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     <div className={`${style["overlay-content"]} d-flex flex-column `}>
                         <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
                         </button>
-                        <ContactForm ownerMail={ownerMail} city={city} category={category} />
+                        <ContactForm ownerMail={ownerMail} city={city} category={category} info={info} name={name} />
                     </div>
                 </div>
             )}
@@ -148,28 +173,14 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     className="pb-5">List of reviews:
                 </motion.h3>
 
-                {apartment.item.reviews.length > 0 ? apartment.item.reviews.map((review, index) => (
-                    <div key={review.id}>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: index * 0.2 }}
-                            className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
-                            <div className="card-body">
-                                <p className="card-text">{review.text}</p>
-                                <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
-                                <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
-                            </div>
-                        </motion.div>
-                    </div>
-                ))
+                {apartment.item.reviews.length > 0 ? showReviews()
                     : <motion.h4
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
 
                         className="py-5 text-center fw-bold">There are no reviews for this apartment: add yours!</motion.h4>}
-                <button type="button" className="btn btn-send my-3">Show other comments</button>
+                <button type="button" className="btn btn-send my-3" onClick={clickedShowMoreRewiews}>Show other comments</button>
             </section>
 
             <section>
