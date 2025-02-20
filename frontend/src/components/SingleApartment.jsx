@@ -68,7 +68,8 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: index * delayAnim }}
-                        className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
+                        // Alterno i colori del container delle recensioni in base al pari o dispari
+                        className={`card d-flex flex-column mb-3 ${index % 2 === 0 && `${style["review-alternate-color"]}`}`}>
                         <div className="card-body">
                             <p className="card-text">{review.text}</p>
                             <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
