@@ -24,8 +24,10 @@ export default function ApartmentDetails() {
     const [apartment, setApartment] = useState("");
     const [categories, setCategory] = useState([]);
     const [formData, setFormData] = useState(initialForm);
+    const [name, setName] = useState("");
     const [mail, setMail] = useState("");
-    const [city, setCity] = useState("")
+    const [city, setCity] = useState("");
+    const [info, setInfo] = useState("");
     const [hoverVote, setHoverVote] = useState(0);
     const [errors, setErrors] = useState({});
     const today = new Date().toISOString().split("T")[0];
@@ -94,6 +96,14 @@ export default function ApartmentDetails() {
                 setApartment(res.data);
                 setMail(res.data.item.email)
                 setCity(res.data.item.city)
+                setName(res.data.item.name
+                    + " " +
+                    res.data.item.surname)
+                setInfo(res.data.item.description
+                    + ", " +
+                    res.data.item.address
+                    + ", " +
+                    res.data.item.city)
             })
             .catch((err) => {
                 console.log(err);
@@ -198,7 +208,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
+                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
                 </>
             )
                 : "Non trovata"}

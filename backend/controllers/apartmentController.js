@@ -117,7 +117,7 @@ function indexCategories(req, res) {
 function show(req, res) {
     const slug = req.params.slug
 
-    const sql = `SELECT apartments.*, owners.email FROM apartments
+    const sql = `SELECT apartments.*, owners.email,owners.name, owners.surname FROM apartments
     JOIN owners ON apartments.id_owner = owners.id
     WHERE apartments.slug = ?`
     connection.query(sql, [slug], (err, results) => {

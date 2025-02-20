@@ -12,7 +12,7 @@ import { Link, Element } from 'react-scroll';
 import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
-export default function SingleApartment({ apartment, categories, city, ownerMail, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -131,7 +131,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     <div className={`${style["overlay-content"]} d-flex flex-column `}>
                         <button className="btn-close align-self-end" onClick={() => setIsOverlayOpen(false)}>
                         </button>
-                        <ContactForm ownerMail={ownerMail} city={city} category={category} />
+                        <ContactForm ownerMail={ownerMail} city={city} category={category} info={info} name={name} />
                     </div>
                 </div>
             )}
