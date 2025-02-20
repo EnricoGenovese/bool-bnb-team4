@@ -56,9 +56,6 @@ export default function AdevancedResearch() {
         }
 
         fetchApi();
-        return () => {
-
-        }
     }, [searchFormData, page]);
 
     const params = {

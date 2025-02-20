@@ -132,7 +132,7 @@ export default function Homepage() {
                                 </>
                                 :
                                 ''}</h3>
-                        {homeApartments.map((apartment, index) => (
+                        {homeApartments?.map((apartment, index) => (
                             <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id}>
                                 {isLoading ? (
                                     <LoaderCard />
