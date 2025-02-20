@@ -1,3 +1,7 @@
+.card-background {
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+background-color: #F8F9FA;
+}
 #likeButton:hover {
     box-shadow: rgb(220, 53, 69);
     transform: scale(1);
