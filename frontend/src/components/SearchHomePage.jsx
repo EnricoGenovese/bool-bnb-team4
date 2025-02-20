@@ -2,34 +2,16 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { motion } from "framer-motion";
 
-export default function SearchHomePage() {
+export default function SearchHomePage({ submit, change, temp }) {
     const { search, setSearch } = useGlobalContext();
 
     //setSearchFormData(initialSearchFormData);
 
-    const [tempFormData, setTempFormData] = useState({
-        search: "",
-    });
+    // useEffect(() => {
+    //     console.log("updated searchFormData: ", search);
+    // }, [search]);
 
 
-
-    useEffect(() => {
-        console.log("updated searchFormData: ", search);
-    }, [search]);
-
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setTempFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-
-        setSearch(tempFormData);
-    }
     return (
 
         <section style={{ marginTop: "50px" }}>
@@ -38,7 +20,7 @@ export default function SearchHomePage() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
 
-                onSubmit={handleOnSubmit} className="container m-auto p-4 shadow-lg rounded bg-light">
+                onSubmit={submit} className="container m-auto p-4 shadow-lg rounded bg-light">
 
                 <h2 className="mb-4">Search for an accomodation</h2>
                 <label htmlFor="search">Search here city or address</label>
@@ -51,8 +33,8 @@ export default function SearchHomePage() {
                             id="search"
                             name="search"
                             placeholder="Insert city or address"
-                            value={tempFormData.search}
-                            onChange={handleOnChange} />
+                            value={temp.search}
+                            onChange={change} />
                     </div>
                     <div className="col-12 col-md-2 mt-3 mt-md-0">
                         <button type="submit" className="btn btn-send w-100 w-md-0">Search

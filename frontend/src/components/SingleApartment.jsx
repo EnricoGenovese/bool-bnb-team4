@@ -169,6 +169,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
 
                         className="py-5 text-center fw-bold">There are no reviews for this apartment: add yours!</motion.h4>}
+                <button type="button" className="btn btn-send my-3">Show other comments</button>
             </section>
 
             <section>

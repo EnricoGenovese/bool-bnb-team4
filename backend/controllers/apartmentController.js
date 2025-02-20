@@ -4,7 +4,7 @@ import { upload, formattingSlug } from "../utilities/functions.js";
 import slugify from "slugify";
 
 function index(req, res) {
-    let { search, category, minRooms, minBeds } = req.query;
+    let { search, category, minRooms, minBeds, page } = req.query;
 
     console.log("Query parameters:", req.query);
 
@@ -12,31 +12,51 @@ function index(req, res) {
     category = category ? category : '0';
     minRooms = minRooms ? minRooms : '0';
     minBeds = minBeds ? minBeds : '0';
+    page = page && page !== "0" ? parseInt(page) : 1;
+    const limit = 20;
+    const offset = limit * (page - 1);
 
-    const sql = `
-        SELECT apartments.*, categories.name AS category_name, owners.email
+    const sqlCount = `
+         SELECT COUNT(*) AS count 
         FROM apartments
-        JOIN categories ON apartments.id_category = categories.id
-        JOIN owners ON apartments.id_owner = owners.id 
-
     WHERE
         (address LIKE ? OR city LIKE ?)
     AND(rooms_number >= ?)
     AND(beds_number >= ?)
     AND(id_category = ? OR ? = '0')
-    ORDER BY apartments.likes DESC
-        `
-    // console.log("Query eseguita:", sql); // Per debug
-    connection.query(sql, [search, search, minRooms, minBeds, category, category], (err, results) => {
+    
+    `;
+
+    connection.query(sqlCount, [search, search, minRooms, minBeds, category, category], (err, resultss) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
-        const response = {
-            status: "success",
-            count: results.length,
-            items: results
-        }
-        // console.log(response)
-        res.json(response);
-    });
+        console.log(resultss[0])
+        const count = resultss[0].count;
+
+        const sql = `
+        SELECT apartments.*, categories.name AS category_name, owners.email
+        FROM apartments
+        JOIN categories ON apartments.id_category = categories.id
+        JOIN owners ON apartments.id_owner = owners.id 
+    WHERE
+        (address LIKE ? OR city LIKE ?)
+    AND(rooms_number >= ?)
+    AND(beds_number >= ?)
+    AND(id_category = ? OR ? = '0')
+     LIMIT ? OFFSET ?
+        `
+        // console.log("Query eseguita:", sql); // Per debug
+        connection.query(sql, [search, search, minRooms, minBeds, category, category, limit, offset], (err, results) => {
+            if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+            const response = {
+                status: "success",
+                count,
+                items: results,
+                limit
+            }
+            // console.log(response)
+            res.json(response);
+        })
+    })
 }
 
 function indexHomePage(req, res) {

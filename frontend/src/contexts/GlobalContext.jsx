@@ -121,7 +121,7 @@ const GlobalProvider = ({ children }) => {
         window.scrollTo(
             {
                 top: 550,
-                behavior: "auto"
+                behavior: "smooth"
             }
         )
     }
@@ -131,7 +131,7 @@ const GlobalProvider = ({ children }) => {
         apartments, setApartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
-        isLoading, alertData, setAlertData, setIsLoading, page, numPages, setNumPages,
+        isLoading, alertData, setAlertData, setIsLoading, page, setPage, numPages, setNumPages,
         handlePageChange
 
     }

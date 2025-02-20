@@ -8,7 +8,7 @@ export default function Navbar() {
         window.scrollTo(
             {
                 top: 0,
-                behavior: "auto"
+                behavior: "instant"
             }
         )
     };

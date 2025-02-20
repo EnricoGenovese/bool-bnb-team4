@@ -13,9 +13,12 @@ export default function Homepage() {
     const [homeApartments, setHomeApartments] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0)
     const [isPaginationFlag, setIsPaginationFlag] = useState(false)
-    const { addLike, isLoading, setIsLoading, search, setSearch, page, setNumPages } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, search, setSearch, page, setPage, setNumPages } = useGlobalContext();
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
+    const [tempFormData, setTempFormData] = useState({
+        search: "",
+    });
 
     function getHomeApartments() {
         const searchValue = typeof search?.search === "string" ? search.search.trim() : "";
@@ -33,7 +36,7 @@ export default function Homepage() {
                 setHomeApartments(res.data.items);
                 setApartmentsCount(res.data.count);
                 res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
-                console.log(isPaginationFlag, "pagination")
+
 
             })
             .catch((err) => {
@@ -46,7 +49,19 @@ export default function Homepage() {
             });
     }
 
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setTempFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
 
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        setSearch(tempFormData);
+        setPage(1);
+    }
 
     useEffect(() => {
         const params = {};
@@ -102,7 +117,7 @@ export default function Homepage() {
                 </motion.div>
             </div>
 
-            <SearchHomePage />
+            <SearchHomePage submit={handleOnSubmit} change={handleOnChange} temp={tempFormData} />
             <div className="row container m-auto">
                 {homeApartments.length >= 1 ? (
                     <>

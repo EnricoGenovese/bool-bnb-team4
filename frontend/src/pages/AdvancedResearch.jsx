@@ -5,14 +5,26 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState } from "react";
 import LoaderCard from "../components/LoaderCard";
 import { motion } from "framer-motion";
+import Pagination from "../components/Pagination"
 
 export default function AdevancedResearch() {
 
-    const { search, category, minRooms, minBeds, addLike, searchFormData, isLoading, setIsLoading } = useGlobalContext();
-    const [filteredApi, setFilteredApi] = useState([]);
+    const { search, category, minRooms, minBeds, addLike, searchFormData, isLoading, setIsLoading, page, setPage, numPages, setNumPages, setSearchFormData
+    } = useGlobalContext();
+
 
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`
+    const [isPaginationFlag, setIsPaginationFlag] = useState(false);
+    const [filteredApi, setFilteredApi] = useState([]);
+    const [apartmentsCount, setApartmentsCount] = useState(0);
+
+    const [tempFormData, setTempFormData] = useState({
+        search: "",
+        category: "",
+        minRooms: "",
+        minBeds: ""
+    });
 
     useEffect(() => {
 
@@ -41,21 +53,45 @@ export default function AdevancedResearch() {
         }
 
         boh();
-    }, [searchFormData]);
+    }, [searchFormData, page]);
+
+    const params = {
+        page,
+        search: searchFormData.search || undefined,
+        minRooms: searchFormData.minRooms > 0 ? searchFormData.minRooms : undefined,
+        minBeds: searchFormData.minBeds > 0 ? searchFormData.minBeds : undefined,
+        category: searchFormData.category > 0 ? searchFormData.category : undefined,
+
+    }
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setTempFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        setSearchFormData(tempFormData);
+        setPage(1);
+    }
+
 
 
     const boh = () => {
-        axios.get(`${apiURL}${endpoint}`, {
-            params: {
-                search: searchFormData.search || undefined,
-                minRooms: searchFormData.minRooms > 0 ? searchFormData.minRooms : undefined,
-                minBeds: searchFormData.minBeds > 0 ? searchFormData.minBeds : undefined,
-                category: searchFormData.category > 0 ? searchFormData.category : undefined
-            }
-        })
+        axios.get(`${apiURL}${endpoint}`, { params }
+
+        )
             .then((res) => {
 
                 setFilteredApi(res.data.items);
+                console.log(res.data);
+                setNumPages(Math.ceil(res.data.count / res.data.limit));
+                setApartmentsCount(res.data.count);
+                res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
             })
             .catch((err) => {
                 console.error(err);
@@ -70,9 +106,9 @@ export default function AdevancedResearch() {
 
     return (
         <>
-            <FilteredSearch />
+            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} />
             <div className="container m-auto row mb-3">
-                <h3 className="pt-5">Results for your research: {filteredApi.length} {searchFormData?.search ?
+                <h3 className="pt-5">Results for your research: {apartmentsCount} {searchFormData?.search ?
                     <>for <strong>{searchFormData.search}</strong></>
                     : ""}
                 </h3>
@@ -95,9 +131,14 @@ export default function AdevancedResearch() {
                                     )
                             }
                         </div>
-                    )) :
+                    ))
+                    :
                     <div className="text-center py-5 no-query">
                         <h3 className="display-5">No results found for this research</h3>
+                    </div>}
+                {!isPaginationFlag &&
+                    <div>
+                        <Pagination />
                     </div>}
             </div>
         </>
