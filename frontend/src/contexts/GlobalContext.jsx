@@ -118,6 +118,12 @@ const GlobalProvider = ({ children }) => {
     function handlePageChange(page) {
         console.log(page);
         setPage(page);
+        window.scrollTo(
+            {
+                top: 550,
+                behavior: "auto"
+            }
+        )
     }
 
 

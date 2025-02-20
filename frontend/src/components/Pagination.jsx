@@ -90,8 +90,8 @@ export default function Pagination() {
                             <button
                                 className={`page-link ${num === page ? `${style.active}` : `${style.dark}`} ${style.pageBtn}`}
                                 onClick={() => handlePageChange(num)}
-                            >
-                                {num}
+                            > {num}
+
                             </button>
                         )}
                     </li>

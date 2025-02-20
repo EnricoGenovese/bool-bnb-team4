@@ -5,7 +5,17 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const handleToggle = () => {
         setIsOpen(!isOpen);
+        window.scrollTo(
+            {
+                top: 0,
+                behavior: "auto"
+            }
+        )
     };
+
+    function handleMenu() {
+        setIsOpen(!isOpen);
+    }
 
     return (
         <div className="w-100 text-uppercase" id="id-navbar">
@@ -16,7 +26,7 @@ export default function Navbar() {
                         type="button"
                         aria-expanded={isOpen}
                         aria-label="Toggle navigation"
-                        onClick={handleToggle}
+                        onClick={handleMenu}
                     >
                         <span className="navbar-toggler-icon" style={{ backgroudColor: 'red' }}></span>
                     </button>
@@ -27,8 +37,8 @@ export default function Navbar() {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
 
                             <li className="nav-item ms-3">
-                                <NavLink to="/" className="nav-link text-decoration-none navlink-hover custom-link">
-                                    <img style={{ width: "40px", height: "40px"}} src="/img/logoMenu.png" alt="Logo" className="logo" />
+                                <NavLink to="/" className="nav-link text-decoration-none navlink-hover custom-link" onClick={handleToggle}>
+                                    <img style={{ width: "40px", height: "40px" }} src="/img/logoMenu.png" alt="Logo" className="logo" />
                                 </NavLink>
                             </li>
 
