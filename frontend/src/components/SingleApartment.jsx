@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import React from "react";
 import { Card } from "react-bootstrap";
@@ -8,9 +8,9 @@ import ReviewForm from "./ReviewForm";
 import ContactForm from "./ContactForm";
 import Star from "./Star";
 import style from "../styles/SingleApartment.module.css";
-import { Link, Element } from 'react-scroll';
 import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
+
 
 export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
@@ -18,7 +18,8 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [longitude, setLongitude] = useState(0);
     const [latitude, setLatitude] = useState(0);
-    const [limitReviews, setLimitReviews] = useState(2);            // useState per il limite di recensioni visualizzate
+    const [limitReviews, setLimitReviews] = useState(2); // useState per il limite di recensioni visualizzate
+    const reviewRef = useRef(null);
 
     let category = "";
     const [likes, setLikes] = useState(apartment.item.likes);
@@ -77,6 +78,47 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     </motion.div>
                 </div>)
         ))
+    }
+
+    function scrollToReview() {
+        if (reviewRef.current) {
+            const reviewTop = reviewRef.current.offsetTop;
+            window.scrollTo({
+                top: reviewTop - 95,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    function showHideButton() {
+
+
+        if (apartment.item.reviews.length > 3) {
+            if (apartment.item.reviews.length - 1 >= limitReviews) {
+                if (limitReviews > 3) {
+                    return (
+                        <div className="d-flex justify-content-between">
+                            <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
+                            <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+
+                        </div>
+                    )
+
+                } else {
+                    return <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
+                }
+            }
+            else if (apartment.item.reviews.length >= 3) {
+                return (
+                    <div className="d-flex justify-content-end w-100">
+                        <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+                    </div>
+                )
+            }
+            else {
+                "";
+            }
+        } else { ""; }
     }
 
     return (
@@ -168,9 +210,11 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
             )}
 
             <section className="container m-auto pt-5" >
-                <Link to="destination">
-                    <button type="button" className="btn btn-send my-3">Add your review</button>
-                </Link>
+
+                <button type="button" className="btn btn-send my-3" onClick={scrollToReview}
+                >Add your review
+                </button>
+
 
                 <motion.h3
                     initial={{ x: -180, opacity: 0 }}
@@ -186,54 +230,26 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
                         className="py-5 text-center fw-bold">There are no reviews for this apartment: add yours!</motion.h4>}
-                    {showHideButton()}
+                {showHideButton()}
+            </section >
+
+            <section ref={reviewRef}>
+
+                <motion.h3
+                    initial={{ x: -180, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
+
+                >Add your review:
+                </motion.h3>
+
+                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+
+
             </section>
 
-            <section>
-                <Element name="destination">
-                    <motion.h3
-                        initial={{ x: -180, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
-
-                        className="py-5">Add your review:
-                    </motion.h3>
-
-                    <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
-                </Element>
-
-            </section>
         </>
     );
 
-    function showHideButton() {
 
-
-        if (apartment.item.reviews.length > 3) {
-            if (apartment.item.reviews.length - 1 >= limitReviews) {
-                if (limitReviews > 3) {
-                    return (
-                        <div className="d-flex justify-content-between">
-                            <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
-                            <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
-
-                        </div>
-                    )
-
-                } else {
-                    return <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
-                }
-            }
-            else if (apartment.item.reviews.length >= 3) {
-                return (
-                    <div className="d-flex justify-content-end w-100">
-                        <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
-                    </div>
-                )
-            }
-            else {
-                "";
-            }
-        } else { ""; }
-    }
 }

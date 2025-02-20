@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { FaSearch, FaHome, FaBed, FaDoorClosed } from "react-icons/fa";
 
 
 export default function FilteredSearch({ submit, onChange, tempFormData }) {
@@ -49,59 +50,71 @@ export default function FilteredSearch({ submit, onChange, tempFormData }) {
                 <h2 className="mb-4">Search for an accomodation</h2>
                 <div className="form-group">
                     <label htmlFor="search">Search here city or address</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="search"
-                        name="search"
-                        placeholder="Enter city or address"
-                        value={tempFormData.search}
-                        onChange={onChange} />
+                    <div className="input-group mb-3">
+                        <span className="input-group-text"><FaSearch /></span>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="search"
+                            name="search"
+                            placeholder="Enter city or address"
+                            value={tempFormData.search}
+                            onChange={onChange} />
+                    </div>
                 </div>
-                <div className="row pb-3">
+                <div className="row mb-3">
                     <div className="form-group col-12 col-lg-4">
                         <label htmlFor="category">Select a category</label>
-                        <select
-                            className="form-control"
-                            id="category"
-                            name="category"
-                            value={tempFormData.category}
-                            onChange={onChange}
-                        >
-                            <option value={0}>Select apartment category</option>
-                            {categories.map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="form-group"> <div className=" input-group">
+                            <span className="input-group-text"><FaHome /></span>
+                            <select
+                                className="form-control"
+                                id="category"
+                                name="category"
+                                value={tempFormData.category}
+                                onChange={onChange}
+                            >
+                                <option value={0}>Select apartment category</option>
+                                {categories.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        </div>
                     </div>
                     <div className="form-group col-6 col-lg-4">
                         <label htmlFor="minRooms">Choose min. number of rooms</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="minRooms"
-                            name="minRooms"
-                            placeholder="Enter min. number of rooms"
-                            min="0"
-                            value={tempFormData.minRooms}
-                            onChange={onChange} />
-                    </div>
+                        <div className="input-group">
+                            <span className="input-group-text"><FaDoorClosed /></span>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="minRooms"
+                                name="minRooms"
+                                placeholder="Enter min. number of rooms"
+                                min="0"
+                                value={tempFormData.minRooms}
+                                onChange={onChange} />
+                        </div></div>
                     <div className="form-group col-6 col-lg-4">
                         <label htmlFor="minBeds">Choose min. number of beds</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="minBeds"
-                            name="minBeds"
-                            placeholder="Enter min. number of rooms"
-                            min="0"
-                            value={tempFormData.minBeds}
-                            onChange={onChange} />
+                        <div className="input-group">
+                            <span className="input-group-text"><FaBed /></span>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="minBeds"
+                                name="minBeds"
+                                placeholder="Enter min. number of rooms"
+                                min="0"
+                                value={tempFormData.minBeds}
+                                onChange={onChange} />
+                        </div>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-send">Search</button>
+                <button type="submit" className="btn btn-send"> Search </button>
             </motion.form>
         </section>
     );

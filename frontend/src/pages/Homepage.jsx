@@ -8,6 +8,7 @@ import SearchHomePage from "../components/SearchHomePage.jsx";
 import { motion } from "framer-motion";
 import Pagination from "../components/Pagination"
 
+
 export default function Homepage() {
 
     const [homeApartments, setHomeApartments] = useState([]);

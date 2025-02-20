@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { motion } from "framer-motion";
+import { FaSearch } from "react-icons/fa";
 
 export default function SearchHomePage({ submit, change, temp }) {
     const { search, setSearch } = useGlobalContext();
@@ -23,13 +24,14 @@ export default function SearchHomePage({ submit, change, temp }) {
                 onSubmit={submit} className="container m-auto p-4 shadow-lg rounded bg-light">
 
                 <h2 className="mb-4">Search for an accomodation</h2>
-                <label htmlFor="searchParam">Search here city or address</label>
-                <div className="form-group row mt-3">
-                    <div className="col-12 col-md-10">
 
+                <div className="form-group row mt-3">
+                    <label htmlFor="searchParam">Search here city or address</label>
+                    <div className="col-12 col-md-10 d-flex">
+                        <span className="input-group-text rounded-end-0"><FaSearch /></span>
                         <input
                             type="text"
-                            className="form-control w-100"
+                            className="form-control w-100 rounded-start-0"
                             id="searchParam"
                             name="searchParam"
                             placeholder="Insert city or address"
@@ -41,6 +43,21 @@ export default function SearchHomePage({ submit, change, temp }) {
 
                         </button>
                     </div>
+
+                    {/* <div className="form-group">
+                        <label htmlFor="search">Search here city or address</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text"><FaSearch /></span>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="search"
+                                name="search"
+                                placeholder="Enter city or address"
+                                value={tempFormData.search}
+                                onChange={onChange} />
+                        </div>
+                    </div> */}
 
 
                 </div>
