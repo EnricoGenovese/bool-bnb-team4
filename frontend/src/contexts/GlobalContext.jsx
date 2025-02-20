@@ -48,13 +48,17 @@ const GlobalProvider = ({ children }) => {
     const initialData = { type: "", message: "" };
     const [alertData, setAlertData] = useState(initialData);
     const [searchFormData, setSearchFormData] = useState({});
+    const [isHomePage, setIsHomePage] = useState(false);
 
 
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     getApartments()
-    // }, []);
 
+    useEffect(() => {
+        if (window.location.href.includes("advanced-research"))
+            setIsHomePage(false)
+        else
+            setIsHomePage(true);
+    },[window.location.href])
 
     function getApartments() {
         axios.get(apiUrl + endpoint)
@@ -116,11 +120,11 @@ const GlobalProvider = ({ children }) => {
     }
 
     function handlePageChange(page) {
-        console.log(page);
         setPage(page);
+        isHomePage ? 500 : 0;
         window.scrollTo(
             {
-                top: 550,
+                top: isHomePage,
                 behavior: "smooth"
             }
         )

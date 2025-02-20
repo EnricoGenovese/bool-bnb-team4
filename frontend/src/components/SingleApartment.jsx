@@ -26,6 +26,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
     const apiUrl = import.meta.env.VITE_APIURL;
     const endpoint = "/apartments/";
 
+    const delayAnim = 0.05;
     useEffect(() => {
         async function fetchCoordinates() {
             try {
@@ -53,23 +54,28 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
         setLimitReviews(limitReviews + 3);
     }
 
+    function clickedCollapseRewiews() {
+        setLimitReviews(2);
+
+
+    }
     // visualizzo le recensioni a 3 a 3
     function showReviews() {
         return apartment.item.reviews.map((review, index) => (
             index <= limitReviews && (
-            <div key={review.id}>
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                    className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
-                    <div className="card-body">
-                        <p className="card-text">{review.text}</p>
-                        <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
-                        <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
-                    </div>
-                </motion.div>
-            </div>)
+                <div key={review.id}>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: index * delayAnim }}
+                        className={`card d-flex flex-column mb-3 ${index % 2 === 0 && "bg-secondary-subtle"}`}>
+                        <div className="card-body">
+                            <p className="card-text">{review.text}</p>
+                            <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
+                            <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
+                        </div>
+                    </motion.div>
+                </div>)
         ))
     }
 
@@ -88,7 +94,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     <motion.div
                         initial={{ x: -180, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                        transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
                     >
                         <Card.Img
                             variant="top"
@@ -142,7 +148,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                                         </div>
                                     </motion.div>
                                 </Card.Text>
-                                <div className="w-100 d-flex justify-content-center align-content-center mt-3" style={{ border: "1px solid  #2E3532", borderRadius: "10px", overflow: "hidden" }}>
+                                <div id="reviewsCollapse" className="w-100 d-flex justify-content-center align-content-center mt-3" style={{ border: "1px solid  #2E3532", borderRadius: "10px", overflow: "hidden" }}>
                                     <MapComponent longitude={longitude} latitude={latitude} />
                                 </div>
                             </Card.Body>
@@ -161,7 +167,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 </div>
             )}
 
-            <section className="container m-auto pt-5">
+            <section className="container m-auto pt-5" >
                 <Link to="destination">
                     <button type="button" className="btn btn-send my-3">Add your review</button>
                 </Link>
@@ -169,18 +175,18 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 <motion.h3
                     initial={{ x: -180, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-                    className="pb-5">List of reviews:
+                    transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
+                    className="pb-5"
+                >List of reviews:
                 </motion.h3>
 
                 {apartment.item.reviews.length > 0 ? showReviews()
                     : <motion.h4
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-
+                        transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
                         className="py-5 text-center fw-bold">There are no reviews for this apartment: add yours!</motion.h4>}
-                <button type="button" className="btn btn-send my-3" onClick={clickedShowMoreRewiews}>Show other comments</button>
+                    {showHideButton()}
             </section>
 
             <section>
@@ -188,7 +194,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     <motion.h3
                         initial={{ x: -180, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                        transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
 
                         className="py-5">Add your review:
                     </motion.h3>
@@ -199,4 +205,35 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
             </section>
         </>
     );
+
+    function showHideButton() {
+
+
+        if (apartment.item.reviews.length > 3) {
+            if (apartment.item.reviews.length - 1 >= limitReviews) {
+                if (limitReviews > 3) {
+                    return (
+                        <div className="d-flex justify-content-between">
+                            <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
+                            <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+
+                        </div>
+                    )
+
+                } else {
+                    return <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
+                }
+            }
+            else if (apartment.item.reviews.length >= 3) {
+                return (
+                    <div className="d-flex justify-content-end w-100">
+                        <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+                    </div>
+                )
+            }
+            else {
+                "";
+            }
+        } else { ""; }
+    }
 }

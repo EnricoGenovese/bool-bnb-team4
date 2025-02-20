@@ -19,7 +19,7 @@ export default function Homepage() {
     const [tempFormData, setTempFormData] = useState({
         search: "",
     });
-
+    const delayAnim = 0.05;
     function getHomeApartments() {
         const searchValue = typeof search?.search === "string" ? search.search.trim() : "";
 
@@ -109,7 +109,7 @@ export default function Homepage() {
                 <motion.div
                     initial={{ x: -180, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                    transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
                 >
                     <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"}>
                         Find out more
@@ -136,8 +136,7 @@ export default function Homepage() {
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
-                                        whileHover={{ scale: 1.02 }}
+                                        transition={{ duration: 0.5, delay: index * delayAnim }} // Ritardo progressivo
                                     >
                                         <Card apartment={apartment} addLike={addLike} />
                                     </motion.div>

@@ -12,7 +12,7 @@ export default function AdevancedResearch() {
     const { search, category, minRooms, minBeds, addLike, searchFormData, isLoading, setIsLoading, page, setPage, numPages, setNumPages, setSearchFormData
     } = useGlobalContext();
 
-
+    const delayAnim = 0.05;
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`
     const [isPaginationFlag, setIsPaginationFlag] = useState(false);
@@ -123,8 +123,7 @@ export default function AdevancedResearch() {
                                         <motion.div
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
-                                            transition={{ duration: 0.5, delay: index * 0.2 }} // Ritardo progressivo
-                                            whileHover={{ scale: 1.02 }}
+                                            transition={{ duration: 0.5, delay: index * delayAnim }} // Ritardo progressivo
                                         >
                                             <Card apartment={apartment} addLike={addLike} />
                                         </motion.div>
