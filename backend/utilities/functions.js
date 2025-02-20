@@ -50,7 +50,8 @@ const formattingSlug = (string) => {
         .replace(/[^\w\s-]/g, '')
         .replace(/[\s_-]+/g, '-')
         .replace(/^-+|-+$/g, '')
-}
+        .replace(/\.\s/g, '.')
+};
 
 export { RandomNum, upload, formattingSlug };
 
