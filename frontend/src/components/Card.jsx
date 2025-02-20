@@ -11,7 +11,7 @@ export default function Card({ apartment, addLike }) {
 
 
     return (
-        <div className="card d-flex flex-column h-100 justify-content-between" key={slug}>
+        <div className={`card d-flex flex-column h-100 justify-content-between ${style["card-background"]}`} key={slug}>
             <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className={`card-body ${style["card-header"]}`}>
