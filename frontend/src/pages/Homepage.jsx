@@ -86,6 +86,7 @@ export default function Homepage() {
 
         getHomeApartments();
         setIsLoading(true);
+
     }, [search, page]); // Si attiva quando la ricerca cambia
 
     return (

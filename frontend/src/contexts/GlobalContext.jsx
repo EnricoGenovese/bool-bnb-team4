@@ -58,7 +58,10 @@ const GlobalProvider = ({ children }) => {
             setIsHomePage(false)
         else
             setIsHomePage(true);
-    },[window.location.href])
+        return () => {
+            setPage(1);
+        }
+    }, [window.location.href])
 
     function getApartments() {
         axios.get(apiUrl + endpoint)
@@ -106,6 +109,16 @@ const GlobalProvider = ({ children }) => {
             })
     }
 
+    function resetPageScroll() {
+        isHomePage ? 500 : 0;
+        window.scrollTo(
+            {
+                top: isHomePage,
+                behavior: "instant"
+            }
+        )
+    }
+
 
     async function addLike(slug) {
         return axios.patch(apiUrl + endpoint + slug)
@@ -136,7 +149,7 @@ const GlobalProvider = ({ children }) => {
         search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
         isLoading, alertData, setAlertData, setIsLoading, page, setPage, numPages, setNumPages,
-        handlePageChange
+        handlePageChange, resetPageScroll
 
     }
 
