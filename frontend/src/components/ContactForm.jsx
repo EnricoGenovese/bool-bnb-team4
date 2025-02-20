@@ -1,6 +1,7 @@
 import emailjs from 'emailjs-com';
 import { useState } from "react";
 import styles from '../styles/ContactForm.module.css';
+import { MdRateReview, MdMail } from "react-icons/md";
 
 export default function ContactForm({ ownerMail, city, category, info, name }) {
 
@@ -82,15 +83,17 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
             <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label w-100 text-start">Your Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        value={email}
-                        onChange={handleEmailChange}
-                        placeholder="Insert your email"
-                        required
-                    />
+                    <div className="input-group">
+                        <span className="input-group-text"><MdMail /></span>
+                        <input
+                            type="email"
+                            id="email"
+                            className="form-control"
+                            value={email}
+                            onChange={handleEmailChange}
+                            placeholder="Insert your email"
+                            required
+                        /></div>
                     {errors.user_email && (
                         <span className={`error-message ${styles.errorMessage}`}>
                             {errors.user_email}
@@ -100,15 +103,18 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="message" className="form-label w-100 text-start">Your message</label>
-                    <textarea
-                        id="message"
-                        className="form-control"
-                        rows="4"
-                        value={message}
-                        onChange={handleMessageChange}
-                        placeholder="Insert your message"
-                        required
-                    />
+                    <div className="input-group">
+                        <span className="input-group-text"><MdRateReview /></span>
+                        <textarea
+                            id="message"
+                            className="form-control"
+                            rows="4"
+                            value={message}
+                            onChange={handleMessageChange}
+                            placeholder="Insert your message"
+                            required
+                        /></div>
+
                     {errors.message && (
                         <span className={`error-message ${styles.errorMessage}`}>
                             {errors.message}
