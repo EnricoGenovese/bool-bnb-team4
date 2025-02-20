@@ -9,7 +9,7 @@ import Pagination from "../components/Pagination"
 
 export default function AdevancedResearch() {
 
-    const { addLike, isLoading, setIsLoading, searchFormData, setSearchFormData, isHomePage
+    const { addLike, isLoading, setIsLoading, isHomePage
     } = useGlobalContext();
 
     const delayAnim = 0.05;
@@ -20,6 +20,7 @@ export default function AdevancedResearch() {
     const [apartmentsCount, setApartmentsCount] = useState(0);
     const [page, setPage] = useState(1);
     const [numPages, setNumPages] = useState(0);
+    const [searchFormData, setSearchFormData] = useState({});
     const [tempFormData, setTempFormData] = useState({
         search: "",
         category: "",

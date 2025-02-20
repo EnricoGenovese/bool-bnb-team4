@@ -14,11 +14,12 @@ export default function Homepage() {
     const [homeApartments, setHomeApartments] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0)
     const [isPaginationFlag, setIsPaginationFlag] = useState(false)
-    const { addLike, isLoading, setIsLoading, search, setSearch, isHomePage } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, isHomePage } = useGlobalContext();
     const [page, setPage] = useState(1);
     const [numPages, setNumPages] = useState(0);
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
+    const [search, setSearch] = useState("")
     const [tempFormData, setTempFormData] = useState({
         searchParam: "",
     });
