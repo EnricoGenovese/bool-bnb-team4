@@ -43,23 +43,6 @@ export default function SearchHomePage({ submit, change, temp }) {
 
                         </button>
                     </div>
-
-                    {/* <div className="form-group">
-                        <label htmlFor="search">Search here city or address</label>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text"><FaSearch /></span>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="search"
-                                name="search"
-                                placeholder="Enter city or address"
-                                value={tempFormData.search}
-                                onChange={onChange} />
-                        </div>
-                    </div> */}
-
-
                 </div>
 
             </motion.form>

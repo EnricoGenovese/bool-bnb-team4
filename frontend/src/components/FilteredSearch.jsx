@@ -84,8 +84,8 @@ export default function FilteredSearch({ submit, onChange, tempFormData }) {
                         </div>
                         </div>
                     </div>
-                    <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minRooms">Choose min. number of rooms</label>
+                    <div className="form-group col-6 col-lg-4 mt-3 mt-md-0">
+                        <label htmlFor="minRooms">Min. number of rooms</label>
                         <div className="input-group">
                             <span className="input-group-text"><FaDoorClosed /></span>
                             <input
@@ -98,8 +98,8 @@ export default function FilteredSearch({ submit, onChange, tempFormData }) {
                                 value={tempFormData.minRooms}
                                 onChange={onChange} />
                         </div></div>
-                    <div className="form-group col-6 col-lg-4">
-                        <label htmlFor="minBeds">Choose min. number of beds</label>
+                    <div className="form-group col-6 col-lg-4 mt-3 mt-md-0">
+                        <label htmlFor="minBeds">Min. number of beds</label>
                         <div className="input-group">
                             <span className="input-group-text"><FaBed /></span>
                             <input

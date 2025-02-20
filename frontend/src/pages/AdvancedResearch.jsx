@@ -9,8 +9,8 @@ import Pagination from "../components/Pagination"
 
 export default function AdevancedResearch() {
 
-    const { addLike, isLoading, setIsLoading, page, setPage, numPages, setNumPages
-    } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, page, setPage, numPages, setNumPages, searchFormData, setSearchFormData,
+        searchHomePage } = useGlobalContext();
 
     const delayAnim = 0.05;
     const apiURL = `http://localhost:3000/api`;
@@ -18,11 +18,8 @@ export default function AdevancedResearch() {
     const [isPaginationFlag, setIsPaginationFlag] = useState(false);
     const [filteredApi, setFilteredApi] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0);
-    const [search, setSearch] = useState("");
-    const [minRooms, setNumRooms] = useState(0);
-    const [minBeds, setNumBeds] = useState(0);
-    const [category, setCategory] = useState(0);
-    const [searchFormData, setSearchFormData] = useState({});
+
+
 
 
     const [tempFormData, setTempFormData] = useState({
@@ -58,7 +55,7 @@ export default function AdevancedResearch() {
             window.history.pushState({}, '', '/advanced-research');
         }
 
-        boh();
+        fetchApi();
         return () => {
 
         }
@@ -90,7 +87,7 @@ export default function AdevancedResearch() {
 
 
 
-    const boh = () => {
+    const fetchApi = () => {
         axios.get(`${apiURL}${endpoint}`, { params }
 
         )

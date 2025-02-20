@@ -42,6 +42,7 @@ const GlobalProvider = ({ children }) => {
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
+    const [searchHomePage, setSearchHomePage] = useState("")
     const [minRooms, setNumRooms] = useState(0);
     const [minBeds, setNumBeds] = useState(0);
     const [category, setCategory] = useState(0);
@@ -149,7 +150,7 @@ const GlobalProvider = ({ children }) => {
         search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,
         initialNewComment, commentData, setCommentData, getApartments, addLike, likes, setLikes,
         isLoading, alertData, setAlertData, setIsLoading, page, setPage, numPages, setNumPages,
-        handlePageChange, resetPageScroll
+        handlePageChange, resetPageScroll, searchHomePage, setSearchHomePage
 
     }
 
