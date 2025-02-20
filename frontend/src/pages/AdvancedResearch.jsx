@@ -9,8 +9,8 @@ import Pagination from "../components/Pagination"
 
 export default function AdevancedResearch() {
 
-    const { addLike, isLoading, setIsLoading, page, setPage, numPages, setNumPages, searchFormData, setSearchFormData,
-        searchHomePage } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, searchFormData, setSearchFormData, isHomePage
+    } = useGlobalContext();
 
     const delayAnim = 0.05;
     const apiURL = `http://localhost:3000/api`;
@@ -18,16 +18,16 @@ export default function AdevancedResearch() {
     const [isPaginationFlag, setIsPaginationFlag] = useState(false);
     const [filteredApi, setFilteredApi] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0);
-
-
-
-
+    const [page, setPage] = useState(1);
+    const [numPages, setNumPages] = useState(0);
     const [tempFormData, setTempFormData] = useState({
         search: "",
         category: "",
         minRooms: "",
         minBeds: ""
     });
+
+
 
     useEffect(() => {
 
@@ -56,6 +56,7 @@ export default function AdevancedResearch() {
         }
 
         fetchApi();
+
     }, [searchFormData, page]);
 
     const params = {
@@ -65,6 +66,17 @@ export default function AdevancedResearch() {
         minBeds: searchFormData.minBeds > 0 ? searchFormData.minBeds : undefined,
         category: searchFormData.category > 0 ? searchFormData.category : undefined,
 
+    }
+
+    function handleFilteredPageChange(page) {
+        setPage(page);
+        isHomePage ? 500 : 0;
+        window.scrollTo(
+            {
+                top: isHomePage,
+                behavior: "smooth"
+            }
+        )
     }
 
     const handleOnChange = (e) => {
@@ -140,7 +152,7 @@ export default function AdevancedResearch() {
                     </div>}
                 {!isPaginationFlag &&
                     <div>
-                        <Pagination />
+                        <Pagination filteredPage={page} handleFilteredPageChange={handleFilteredPageChange} numFilteredPages={numPages} />
                     </div>}
             </div>
         </>

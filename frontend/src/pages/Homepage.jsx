@@ -6,7 +6,7 @@ import LoaderCard from "../components/LoaderCard.jsx";
 import axios from "axios";
 import SearchHomePage from "../components/SearchHomePage.jsx";
 import { motion } from "framer-motion";
-import Pagination from "../components/Pagination"
+import PaginationHome from "../components/PaginationHome.jsx"
 
 
 export default function Homepage() {
@@ -14,7 +14,9 @@ export default function Homepage() {
     const [homeApartments, setHomeApartments] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0)
     const [isPaginationFlag, setIsPaginationFlag] = useState(false)
-    const { addLike, isLoading, setIsLoading, page, setPage, setNumPages, search, setSearch } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, search, setSearch, isHomePage } = useGlobalContext();
+    const [page, setPage] = useState(1);
+    const [numPages, setNumPages] = useState(0);
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
     const [tempFormData, setTempFormData] = useState({
@@ -37,7 +39,6 @@ export default function Homepage() {
                 setHomeApartments(res.data.items);
                 setApartmentsCount(res.data.count);
                 res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
-
 
             })
             .catch((err) => {
@@ -62,6 +63,11 @@ export default function Homepage() {
         e.preventDefault();
         setSearch(tempFormData);
         setPage(1);
+    }
+    function handlePageChange(page) {
+        setPage(page);
+        isHomePage ? 500 : 0;
+
     }
 
     useEffect(() => {
@@ -150,7 +156,7 @@ export default function Homepage() {
 
                         {!isPaginationFlag &&
                             <div>
-                                <Pagination />
+                                <PaginationHome page={page} handlePageChange={handlePageChange} numPages={numPages} />
                             </div>}
                     </>
 

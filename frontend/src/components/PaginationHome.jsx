@@ -2,41 +2,32 @@ import { useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import style from "../styles/Pagination.module.css";
 
-export default function Pagination({ filteredPage, handleFilteredPageChange, numFilteredPages }) {
+export default function PaginationHome({ page, handlePageChange, numPages }) {
 
 
     const [pageInput, setPageInput] = useState(""); // Stato per l'input della pagina
     const [showInput, setShowInput] = useState(false); // Stato per mostrare/nascondere l'input
 
-    function scrollFiltered() {
-        window.scrollTo(
-            {
-                top: 0,
-                behavior: "smooth"
-            }
-        )
-    }
-
     // Funzione per generare i numeri di pagina in base alla logica richiesta
     const getPageNumbers = () => {
         let pages = [];
 
-        if (numFilteredPages <= 3) {
+        if (numPages <= 3) {
             // Se il numero di pagine è 3 o inferiore, mostra tutte le pagine
-            for (let i = 1; i <= numFilteredPages; i++) {
+            for (let i = 1; i <= numPages; i++) {
                 pages.push(i);
             }
         } else {
-            if (filteredPage === 1) {
-                pages = [1, 2, 3, '...', numFilteredPages];
-            } else if (filteredPage === 2) {
-                pages = [1, 2, 3, '...', numFilteredPages];
-            } else if (filteredPage === numFilteredPages - 1) {
-                pages = [1, '...', numFilteredPages - 2, numFilteredPages - 1, numFilteredPages];
-            } else if (filteredPage === numFilteredPages) {
-                pages = [1, '...', numFilteredPages - 2, numFilteredPages - 1, numFilteredPages];
-            } else if (filteredPage >= 3 && filteredPage < numFilteredPages - 1) {
-                pages = [1, '...', filteredPage - 1, page, filteredPage + 1, '...', numFilteredPages];
+            if (page === 1) {
+                pages = [1, 2, 3, '...', numPages];
+            } else if (page === 2) {
+                pages = [1, 2, 3, '...', numPages];
+            } else if (page === numPages - 1) {
+                pages = [1, '...', numPages - 2, numPages - 1, numPages];
+            } else if (page === numPages) {
+                pages = [1, '...', numPages - 2, numPages - 1, numPages];
+            } else if (page >= 3 && page < numPages - 1) {
+                pages = [1, '...', page - 1, page, page + 1, '...', numPages];
             }
         }
 
@@ -52,16 +43,16 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
     };
 
     const handlePageInputBlur = () => {
-        if (pageInput && Number(pageInput) >= 1 && Number(pageInput) <= numFilteredPages) {
-            handleFilteredPageChange(Number(pageInput));
+        if (pageInput && Number(pageInput) >= 1 && Number(pageInput) <= numPages) {
+            handlePageChange(Number(pageInput));
         }
         setShowInput(false); // Nascondiamo l'input quando perde il focus
     };
 
     const handlePageInputKeyDown = (e) => {
         if (e.key === "Enter" && pageInput) {
-            if (Number(pageInput) >= 1 && Number(pageInput) <= numFilteredPages) {
-                handleFilteredPageChange(Number(pageInput)); // Cambia pagina se l'input è valido
+            if (Number(pageInput) >= 1 && Number(pageInput) <= numPages) {
+                handlePageChange(Number(pageInput)); // Cambia pagina se l'input è valido
             }
             setShowInput(false); // Nascondiamo l'input al "Enter"
         }
@@ -71,10 +62,17 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
         <nav className="col-12 d-flex justify-content-center mt-5">
             <ul className="pagination">
                 {/* Pulsante per andare alla pagina precedente */}
-                <li className={`page-item ${filteredPage <= 1 ? "disabled" : ""} px-5`}>
+                <li className={`page-item ${page <= 1 ? "disabled" : ""} px-5`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
-                        onClick={() => { handleFilteredPageChange(filteredPage - 1), scrollFiltered() }}
+                        onClick={() => {
+                            handlePageChange(page - 1), window.scrollTo(
+                                {
+                                    top: 500,
+                                    behavior: "smooth"
+                                }
+                            )
+                        }}
                     >
                         Previous
                     </button>
@@ -83,7 +81,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                 {/* Mostra i numeri di pagina */}
                 {getPageNumbers().map((num, index) => (
                     <li
-                        className={`page-item ${num === filteredPage ? "" : `${style.dark}`} mx-2`}
+                        className={`page-item ${num === page ? "" : `${style.dark}`} mx-2`}
                         aria-current="page"
                         key={index}
                     >
@@ -97,8 +95,16 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                             </button>
                         ) : (
                             <button
-                                className={`page-link ${num === filteredPage ? `${style.active}` : `${style.dark}`} ${style.pageBtn}`}
-                                onClick={() => { handleFilteredPageChange(num), scrollFiltered() }}
+                                className={`page-link ${num === page ? `${style.active}` : `${style.dark}`} ${style.pageBtn}`}
+                                onClick={() => {
+                                    handlePageChange(num),
+                                        window.scrollTo(
+                                            {
+                                                top: 500,
+                                                behavior: "smooth"
+                                            }
+                                        )
+                                }}
                             > {num}
 
                             </button>
@@ -118,17 +124,25 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                             onKeyDown={handlePageInputKeyDown}
                             placeholder="Page"
                             min={1}
-                            max={numFilteredPages}
+                            max={numPages}
                             autoFocus
                         />
                     </li>
                 )}
 
                 {/* Pulsante per andare alla pagina successiva */}
-                <li className={`page-item ${filteredPage >= numFilteredPages ? "disabled" : ""} px-5`}>
+                <li className={`page-item ${page >= numPages ? "disabled" : ""} px-5`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
-                        onClick={() => { handleFilteredPageChange(filteredPage + 1), scrollFiltered() }}
+                        onClick={() => {
+                            handlePageChange(page + 1),
+                                window.scrollTo(
+                                    {
+                                        top: 500,
+                                        behavior: "smooth"
+                                    }
+                                )
+                        }}
                     >
                         Next
                     </button>

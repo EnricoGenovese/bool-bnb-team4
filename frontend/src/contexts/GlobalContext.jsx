@@ -59,9 +59,7 @@ const GlobalProvider = ({ children }) => {
             setIsHomePage(false)
         else
             setIsHomePage(true);
-        return () => {
-            setPage(1);
-        }
+
     }, [window.location.href])
 
     function getApartments() {
@@ -79,45 +77,15 @@ const GlobalProvider = ({ children }) => {
             })
     }
 
-    function getApartment(id) {
-        axios.get(apiUrl + endpoint + id)
-            .then((res) => {
-                console.log(res.data)
-                setApartment(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-                if (err.status === 404) {
-                    console.log("error")
-                    navigate("/notFound")
-                }
-            })
-            .finally(() => {
-                console.log("Single Done");
-            })
-    }
-
-    function addApartement() {
-        axios.post(apiUrl + endpoint, initialNewApartment)
-            .then((res) => {
-                console.log(initialNewApartment)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-            .finally(() => {
-                console.log("Posted!")
-            })
-    }
 
     function resetPageScroll() {
-        isHomePage ? 500 : 0;
-        window.scrollTo(
-            {
-                top: isHomePage,
-                behavior: "instant"
-            }
-        )
+        // isHomePage ? 500 : 0;
+        // window.scrollTo(
+        //     {
+        //         top: isHomePage,
+        //         behavior: "instant"
+        //     }
+        // )
     }
 
 

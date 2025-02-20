@@ -4,7 +4,17 @@ import { useGlobalContext } from "../contexts/GlobalContext"
 
 export default function Footer() {
 
-    const { resetPageScroll } = useGlobalContext();
+
+
+    function resetPageScroll() {
+
+        window.scrollTo(
+            {
+                top: 0,
+                behavior: "instant"
+            }
+        )
+    }
 
     return (
         <footer className="bg-dark text-light text-lg-start ">
@@ -34,13 +44,13 @@ export default function Footer() {
 
                         <ul className="list-unstyled">
                             <li>
-                                <NavLink to={"/"} onClick={resetPageScroll()} className="text-light">Homepage</NavLink>
+                                <NavLink to={"/"} onClick={resetPageScroll} className="text-light">Homepage</NavLink>
                             </li>
                             <li>
-                                <NavLink to={"advanced-research"} onClick={resetPageScroll()} className="text-light">Search an apartment</NavLink>
+                                <NavLink to={"advanced-research"} onClick={resetPageScroll} className="text-light">Search an apartment</NavLink>
                             </li>
                             <li>
-                                <NavLink to={"/post-apartment"} onClick={resetPageScroll()} className="text-light">Post your announcement</NavLink>
+                                <NavLink to={"/post-apartment"} onClick={resetPageScroll} className="text-light">Post your announcement</NavLink>
                             </li>
                         </ul>
                     </div>
