@@ -17,16 +17,16 @@ export default function Homepage() {
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
     const [tempFormData, setTempFormData] = useState({
-        search: "",
+        searchParam: "",
     });
     const delayAnim = 0.05;
     function getHomeApartments() {
-        const searchValue = typeof search?.search === "string" ? search.search.trim() : "";
+        const searchValue = typeof search?.searchParam === "string" ? search.searchParam.trim() : "";
 
         // Crea un oggetto params che contiene sia la ricerca che la pagina
         const params = {
             page,
-            ...(searchValue && { search: searchValue }), // Aggiungi il parametro 'search' solo se ha un valore
+            ...(searchValue && { searchParam: searchValue }), // Aggiungi il parametro 'searchParam dubai' solo se ha un valore
         };
 
         axios.get(`${apiURL}${endpoint}homepage`, { params })
@@ -66,10 +66,11 @@ export default function Homepage() {
     useEffect(() => {
         const params = {};
         console.log(page)
+        console.log(search.searchParam)
 
-        // Verifica se il search esiste e se contiene una stringa di ricerca valida
-        if (search?.search && typeof search.search === "string" && search.search.trim() !== "") {
-            params.search = search.search.trim();
+        // Verifica se il searchParam dubai esiste e se contiene una stringa di ricerca valida
+        if (search?.searchParam && typeof search.searchParam === "string" && search.searchParam.trim() !== "") {
+            params.searchParam = search.searchParam.trim();
         }
         if (page?.page && typeof page === 'number') {
             params.page = page;
@@ -122,9 +123,9 @@ export default function Homepage() {
                 {homeApartments.length >= 1 ? (
                     <>
                         <h3 className="py-2 my-5">Our most {apartmentsCount} loved apartments
-                            {search?.search ?
+                            {search?.searchParam ?
                                 <>
-                                    &nbsp;for: <strong>{search?.search}</strong>
+                                    &nbsp;for: <strong>{search?.searchParam}</strong>
                                 </>
                                 :
                                 ''}</h3>

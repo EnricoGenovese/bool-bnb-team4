@@ -23,17 +23,17 @@ export default function SearchHomePage({ submit, change, temp }) {
                 onSubmit={submit} className="container m-auto p-4 shadow-lg rounded bg-light">
 
                 <h2 className="mb-4">Search for an accomodation</h2>
-                <label htmlFor="search">Search here city or address</label>
+                <label htmlFor="searchParam">Search here city or address</label>
                 <div className="form-group row mt-3">
                     <div className="col-12 col-md-10">
 
                         <input
                             type="text"
                             className="form-control w-100"
-                            id="search"
-                            name="search"
+                            id="searchParam"
+                            name="searchParam"
                             placeholder="Insert city or address"
-                            value={temp.search}
+                            value={temp.searchParam}
                             onChange={change} />
                     </div>
                     <div className="col-12 col-md-2 mt-3 mt-md-0">
