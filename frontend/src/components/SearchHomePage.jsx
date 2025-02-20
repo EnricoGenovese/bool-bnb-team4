@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaSearch } from "react-icons/fa";
 
 export default function SearchHomePage({ submit, change, temp }) {
-    const { search, setSearch } = useGlobalContext();
+    // const { search, setSearch } = useGlobalContext();
 
     //setSearchFormData(initialSearchFormData);
 

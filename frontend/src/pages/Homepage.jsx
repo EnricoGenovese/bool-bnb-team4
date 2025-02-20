@@ -14,7 +14,8 @@ export default function Homepage() {
     const [homeApartments, setHomeApartments] = useState([]);
     const [apartmentsCount, setApartmentsCount] = useState(0)
     const [isPaginationFlag, setIsPaginationFlag] = useState(false)
-    const { addLike, isLoading, setIsLoading, search, setSearch, page, setPage, setNumPages } = useGlobalContext();
+    const [search, setSearch] = useState("");
+    const { addLike, isLoading, setIsLoading, page, setPage, setNumPages } = useGlobalContext();
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
     const [tempFormData, setTempFormData] = useState({
@@ -88,7 +89,8 @@ export default function Homepage() {
 
         getHomeApartments();
         setIsLoading(true);
-
+        return () => {
+        }
     }, [search, page]); // Si attiva quando la ricerca cambia
 
     return (
