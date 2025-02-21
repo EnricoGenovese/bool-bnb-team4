@@ -7,9 +7,10 @@ import LoaderCard from "../components/LoaderCard";
 import { motion } from "framer-motion";
 import Pagination from "../components/Pagination"
 
+
 export default function AdevancedResearch() {
 
-    const { addLike, isLoading, setIsLoading, isHomePage
+    const { addLike, isLoading, setIsLoading, isHomePage, resetForm
     } = useGlobalContext();
 
     const delayAnim = 0.05;
@@ -27,6 +28,7 @@ export default function AdevancedResearch() {
         minRooms: "",
         minBeds: ""
     });
+
 
 
 
@@ -95,6 +97,17 @@ export default function AdevancedResearch() {
         setPage(1);
     }
 
+    function handleReset() {
+        setTempFormData(
+            {
+                search: "",
+                category: "",
+                minRooms: "",
+                minBeds: ""
+            }
+        )
+    }
+
 
 
     const fetchApi = () => {
@@ -120,9 +133,10 @@ export default function AdevancedResearch() {
             });
     };
 
+
     return (
         <>
-            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} />
+            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
             <div className="container m-auto row mb-3">
                 <h3 className="pt-5">Results for your research: {apartmentsCount} {searchFormData?.search ?
                     <>for <strong>{searchFormData.search}</strong></>

@@ -4,13 +4,36 @@ import { IoMdContact } from "react-icons/io";
 import { MdRateReview } from "react-icons/md";
 import { BsCalendarDateFill } from "react-icons/bs";
 import { PiListNumbersFill } from "react-icons/pi";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import FormStyle from "../styles/ReviewForm.module.css";
+import styles from "../styles/SearchHomePage.module.css";
+import stylesReset from "../styles/ResetButton.module.css";
 
 
 
-function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, onHandleInput, setHoverVote, hoverVote, errors }) {
+function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover, onHandleStarClick, onHandleInput, setHoverVote, hoverVote, errors }) {
+
+    const isFormEmpty = Object.values(formData).every(value => value === "" || value == 0);
+    const isVoteEmpty = formData.vote === 0;
+
+
+    const clearInput = (inputName) => {
+
+        onChange({ target: { name: inputName, value: "" } });
+    };
+
+    function handleReset() {
+        setFormData(
+            {
+                text: "",
+                name: "",
+                entryDate: "",
+                daysOfStay: "",
+                vote: 0
+            }
+        )
+    }
 
     return (
         <form id="reviewForm" className="container m-auto" onSubmit={submit} noValidate>
@@ -18,6 +41,14 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>
                 <input type="text" className="form-control" id="name" name="name" placeholder="Enter your name" value={formData.name} onChange={onHandleInput} />
+                {formData.name && (
+                    <span
+                        className="input-group-text cursor-pointer"
+                        onClick={() => { clearInput("name") }}
+                    >
+                        <FaTimes />
+                    </span>
+                )}
             </div>
             <p>{errors.name && <span className={`error-message  mb-3 ${FormStyle.errorMessage}`}>{errors.name}</span>}</p>
 
@@ -25,6 +56,14 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             <div className="input-group">
                 <span className="input-group-text"><MdRateReview /></span>
                 <textarea className="form-control" id="text" name="text" rows="3" placeholder="Enter your comment" value={formData.text} onChange={onHandleInput}></textarea>
+                {formData.text && (
+                    <span
+                        className="input-group-text cursor-pointer"
+                        onClick={() => { clearInput("text") }}
+                    >
+                        <FaTimes />
+                    </span>
+                )}
             </div>
             <p>{errors.text && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.text}</span>}</p>
 
@@ -32,6 +71,14 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             <div className="input-group">
                 <span className="input-group-text"><BsCalendarDateFill /></span>
                 <input type="date" className="form-control" id="entryDate" name="entryDate" value={formData.entryDate} onChange={onHandleInput} />
+                {formData.entryDate && (
+                    <span
+                        className="input-group-text cursor-pointer"
+                        onClick={() => { clearInput("entryDate") }}
+                    >
+                        <FaTimes />
+                    </span>
+                )}
             </div>
             <p>{errors.entryDate && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.entryDate}</span>}</p>
 
@@ -39,11 +86,19 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             <div className="input-group">
                 <span className="input-group-text"><PiListNumbersFill /></span>
                 <input type="number" className="form-control" id="daysOfStay" name="daysOfStay" placeholder="Insert days of stay" value={formData.daysOfStay} onChange={onHandleInput} />
+                {formData.daysOfStay && (
+                    <span
+                        className="input-group-text cursor-pointer"
+                        onClick={() => { clearInput("daysOfStay") }}
+                    >
+                        <FaTimes />
+                    </span>
+                )}
             </div>
             <p>{errors.daysOfStay && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.daysOfStay}</span>}</p>
 
             <label>Vote *</label>
-            <div className="input-group">
+            <div className="input-group ">
                 {[1, 2, 3, 4, 5].map((star) => (
                     <FaStar
                         key={star}
@@ -55,10 +110,23 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
                         style={{ cursor: "pointer", marginRight: "5px" }}
                     />
                 ))}
-            </div>
-            <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
 
-            <button type="submit" className="btn btn-send">Add comment</button>
+                <button type="button" className="btn btn-send ms-3 rounded-start-2" disabled={isVoteEmpty} onClick={() => { clearInput("vote") }}>I changed my mind about voting! <FaStar style={{ cursor: "pointer", marginBottom: "6px" }} /></button>
+            </div>
+
+            <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
+            <div className="mt-5">
+
+                <button type="submit" className="btn btn-send" disabled={isFormEmpty}>Add comment</button>
+                <button
+                    type="button"
+                    className={`btn ms-2 ${stylesReset.btnReset}`}
+                    onClick={handleReset}
+                    disabled={isFormEmpty}
+                >
+                    Reset
+                </button>
+            </div>
             <p className="mt-3">* Fields marked with * are required</p>
         </form>
     );

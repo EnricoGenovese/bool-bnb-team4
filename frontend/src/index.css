@@ -159,6 +159,12 @@ input[type="text"] {
 
 }
 
+.form-control:focus {
+
+    box-shadow: none !important;
+    border-color: var(--bs-border-color) !important;
+}
+
 @media screen and (max-width: 992px) {
 
     #navbarSupportedContent {

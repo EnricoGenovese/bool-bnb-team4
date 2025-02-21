@@ -150,6 +150,7 @@ export default function ApartmentDetails() {
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const newErrors = validateForm(formData);
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
@@ -208,7 +209,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
+                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} setFormData={setFormData} onChange={onHandleInput} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
                 </>
             )
                 : "Non trovata"}

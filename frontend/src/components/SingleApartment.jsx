@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
 
-export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, setFormData, onChange, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -244,7 +244,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 >Add your review:
                 </motion.h3>
 
-                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} setFormData={setFormData} onChange={onChange} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
 
 
             </section>
