@@ -1,7 +1,9 @@
 import emailjs from 'emailjs-com';
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import styles from '../styles/ContactForm.module.css';
 import { MdRateReview, MdMail } from "react-icons/md";
+import { FaTimes } from "react-icons/fa";
 
 export default function ContactForm({ ownerMail, city, category, info, name }) {
 
@@ -10,11 +12,27 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
     const [errors, setErrors] = useState({});
+    const [isTermsAccepted, setIsTermsAccepted] = useState(false);  // Stato per la checkbox
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Gestori per i cambiamenti nei campi del form
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleMessageChange = (e) => setMessage(e.target.value);
+    const handleTermsChange = (e) => setIsTermsAccepted(e.target.checked);  // Gestore per la checkbox
+
+    // Funzione per svuotare un input
+    const clearInput = (setField) => {
+        setField('');
+    };
+
+    // Funzione per resettare tutto il form
+    const handleReset = () => {
+        setEmail('');
+        setMessage('');
+        setIsTermsAccepted(false);
+        setErrors({});
+        setStatusMessage('');
+    };
 
     const validateForm = (formData) => {
         const errors = {};
@@ -29,9 +47,12 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
 
         if (!formData.message.trim()) {
             errors.message = 'Comments required';
-        }
-        else if (formData.message.length > 255) {
+        } else if (formData.message.length > 255) {
             errors.message = 'The comment must contain at most 255 characters';
+        }
+
+        if (!formData.isTermsAccepted) {  // Controllo sulla checkbox
+            errors.isTermsAccepted = 'You must accept the terms and conditions';
         }
 
         return errors;
@@ -45,7 +66,8 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
             message: message,
             to_email: ownerMail,
             owner_name: name,
-            apartment_info: info
+            apartment_info: info,
+            isTermsAccepted: isTermsAccepted  // Aggiungi l'informazione della checkbox
         };
         const newErrors = validateForm(templateParams);
         setErrors(newErrors);
@@ -59,8 +81,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                     (result) => {
                         console.log(result.text);
                         setStatusMessage('Email sent successfully!');
-                        setEmail('');
-                        setMessage('');
+                        handleReset();  // Reset del form dopo invio
                     },
                     (error) => {
                         console.log(error.text);
@@ -74,7 +95,11 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
         } else {
             console.log("L'invio del modulo non è riuscito a causa di errori di convalida");
         }
+    };
 
+    // Funzione per controllare se tutti i campi sono vuoti o non selezionati
+    const isFormValid = () => {
+        return email.trim() !== '' || message.trim() !== '' || isTermsAccepted;
     };
 
     return (
@@ -93,13 +118,21 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                             onChange={handleEmailChange}
                             placeholder="Insert your email"
                             required
-                        /></div>
+                        />
+                        {email && (
+                            <span
+                                className="input-group-text cursor-pointer"
+                                onClick={() => clearInput(setEmail)}
+                            >
+                                <FaTimes />
+                            </span>
+                        )}
+                    </div>
                     {errors.user_email && (
                         <span className={`error-message ${styles.errorMessage}`}>
                             {errors.user_email}
                         </span>
                     )}
-
                 </div>
                 <div className="mb-3">
                     <label htmlFor="message" className="form-label w-100 text-start">Your message</label>
@@ -113,21 +146,50 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                             onChange={handleMessageChange}
                             placeholder="Insert your message"
                             required
-                        /></div>
-
+                        />
+                        {message && (
+                            <span
+                                className="input-group-text cursor-pointer"
+                                onClick={() => clearInput(setMessage)}
+                            >
+                                <FaTimes />
+                            </span>
+                        )}
+                    </div>
                     {errors.message && (
                         <span className={`error-message ${styles.errorMessage}`}>
                             {errors.message}
                         </span>
                     )}
-
-
-
-
                 </div>
-                <div className="d-grid gap-2">
-                    <button type="submit" className="btn btn-send" disabled={isSubmitting}>
+                <div className="form-check mb-3 text-start">
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        className="form-check-input"
+                        checked={isTermsAccepted}
+                        onChange={handleTermsChange}
+                    />
+                    <label htmlFor="terms" className="form-check-label">
+                        I accept the <a href='/terms' target="_blank">terms and conditions</a>
+                    </label>
+                </div>
+                {errors.isTermsAccepted && (
+                    <span className={`error-message ${styles.errorMessage}`}>
+                        {errors.isTermsAccepted}
+                    </span>
+                )}
+                <div className="d-grid gap-2 mt-3">
+                    <button type="submit" className="btn btn-send" disabled={isSubmitting || !isFormValid()}>
                         {isSubmitting ? 'Sending...' : 'Send'}
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-secondary mt-2"
+                        onClick={handleReset}
+                        disabled={isSubmitting || !isFormValid()}
+                    >
+                        Reset
                     </button>
                 </div>
             </form>

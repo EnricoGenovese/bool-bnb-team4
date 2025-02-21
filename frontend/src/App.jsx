@@ -8,7 +8,7 @@ import ApartmentDetails from "./pages/ApartmentDetails.jsx";
 import ApartmentPostForm from "./pages/ApartmentPostForm.jsx";
 import Homepage from "./pages/Homepage.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import Toast from './components/Toast.jsx';
+import Terms from './components/Terms.jsx';
 
 
 
@@ -31,6 +31,7 @@ function App() {
               </Route>
               <Route path="/advanced-research" Component={AdvancedResearch} />
               <Route path="/post-apartment" Component={ApartmentPostForm} />
+              <Route path="/terms" Component={Terms} />
               <Route path="*" Component={NotFound} />
             </Route>
           </Routes>

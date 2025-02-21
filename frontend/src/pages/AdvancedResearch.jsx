@@ -8,19 +8,30 @@ import { motion } from "framer-motion";
 import Pagination from "../components/Pagination"
 import { useSearchContext } from "../contexts/SearchContext";
 
+
 export default function AdevancedResearch() {
 
-    const { addLike, isLoading } = useGlobalContext();
+    const { addLike, isLoading, setIsLoading, isHomePage, resetForm
+    } = useGlobalContext();
     const {
-        handleOnChange, handleOnSubmit, searchFormData, tempFormData,
+        handleOnChange, handleOnSubmit, searchFormData, tempFormData, setTempFormData
         isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange
     } = useSearchContext();
     const delayAnim = 0.05;
-
+    function handleReset() {
+        setTempFormData(
+            {
+                search: "",
+                category: "",
+                minRooms: "",
+                minBeds: ""
+            }
+        )
+    }
 
     return (
         <>
-            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} />
+            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
             <div className="container m-auto row mb-3">
                 <h3 className="pt-5">Results for your research: {apartmentsCount} {searchFormData?.search ?
                     <>for <strong>{searchFormData.search}</strong></>

@@ -116,6 +116,7 @@ function indexCategories(req, res) {
 
 function show(req, res) {
     const slug = req.params.slug
+    const limit = parseInt(req.query.limitReviews) + 1 || 3;
 
     const sql = `SELECT apartments.*, owners.email,owners.name, owners.surname FROM apartments
     JOIN owners ON apartments.id_owner = owners.id
@@ -126,8 +127,8 @@ function show(req, res) {
         const item = results[0];
 
         if (item.slug == null) return res.status(404).json({ error: 'Appartamento non trovato', err });
-        const sqlreviews = "SELECT * FROM `reviews` WHERE `apartment_slug` = ? ORDER BY update_date DESC";
-        connection.query(sqlreviews, [item.slug], (err, reviews) => {
+        const sqlreviews = "SELECT * FROM `reviews` WHERE `apartment_slug` = ? ORDER BY update_date DESC LIMIT ?";
+        connection.query(sqlreviews, [item.slug, limit], (err, reviews) => {
             if (err) return res.status(500).json({ error: "Error server", err });
 
             item.reviews = reviews;
@@ -137,15 +138,24 @@ function show(req, res) {
                 review.entry_date = tempString.slice(1, 11);
             });
 
-            const response = {
+            let response = {
                 status: "success",
-                reviewsCount: reviews.length,
                 item
             }
-            res.json(response)
-        });
+
+            const sqlReviewLenght = "SELECT * FROM `reviews` WHERE `apartment_slug` = ?";
+            connection.query(sqlReviewLenght, [item.slug], (err, reviews) => {
+                if (err) return res.status(500).json({ error: "Error server", err });
+                response = {
+                    ...response,
+                    reviewsCount: reviews.length,
+
+                }
+                res.json(response)
+            });
+        })
     })
-};
+}
 
 function store(req, res) {
     const errors = {};
@@ -340,8 +350,6 @@ function storereviews(req, res) {
         errors.daysOfStay = 'Days of stay required';
     } else if (daysOfStay < 1) {
         errors.daysOfStay = 'Days of stay must be at least 1';
-    } else if (daysOfStay > 365) {
-        errors.daysOfStay = 'daysOfStay You cannot enter a number of days greater than 365';
     } else if (daysOfStay.toString().includes('e') || daysOfStay.toString().includes('E')) {
         errors.daysOfStay = 'daysOfStay You must enter a number';
     } else if (!Number.isInteger(Number(daysOfStay)) || daysOfStay.startsWith("0")) {
