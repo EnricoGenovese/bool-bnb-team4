@@ -5,7 +5,8 @@ const router = express.Router();
 import {
   index,
   indexCategories,
-  indexHomePage,
+  indexMostLovedHomePage,
+  indexMostVisitedCityHomePage,
   show,
   store,
   upload,
@@ -17,8 +18,8 @@ import {
 // Index - Read all
 router.get("/", index);
 router.get("/categories", indexCategories)
-router.get("/homepage", indexHomePage);
-
+router.get("/mostlovedhomepage", indexMostLovedHomePage);
+router.get("/mostvisitedcityhomepage", indexMostVisitedCityHomePage);
 
 // Show - Read one -
 router.get("/:slug", show);
