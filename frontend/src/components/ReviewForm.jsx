@@ -11,9 +11,12 @@ import FormStyle from "../styles/ReviewForm.module.css";
 
 
 function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, onHandleInput, setHoverVote, hoverVote, errors }) {
-
+    
+    // mi creo una variabile di controllo per verificare se la data inserite è al massimo miore o uguale a quella odierna
+    const today = new Date().toISOString().split("T")[0];
+    
     return (
-        <form id="reviewForm" className="container m-auto mb-5 mt-2 p-3" onSubmit={submit} noValidate>
+        <form id="reviewForm" className="container m-auto" onSubmit={submit} noValidate>
             <label htmlFor="name">Name *</label>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>
@@ -31,7 +34,7 @@ function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, on
             <label htmlFor="entryDate">Entry date *</label>
             <div className="input-group">
                 <span className="input-group-text"><BsCalendarDateFill /></span>
-                <input type="date" className="form-control" id="entryDate" name="entryDate" value={formData.entryDate} onChange={onHandleInput} />
+                <input type="date" className="form-control" id="entryDate" name="entryDate" value={formData.entryDate} onChange={onHandleInput} max={today} />
             </div>
             <p>{errors.entryDate && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.entryDate}</span>}</p>
 
