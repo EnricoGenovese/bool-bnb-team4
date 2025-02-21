@@ -1,13 +1,34 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaTimes } from "react-icons/fa";
+import { NavLink,Link, useNavigate } from "react-router-dom"; // Assicurati che sia 'react-router-dom'
 import styles from '../styles/SearchHomePage.module.css';  // Usa CSS Modules, se preferisci
 
-export default function SearchHomePage({ submit, change, temp }) {
-    const isFormEmpty = Object.values(temp).every(value => value === "" || value == 0);
+export default function SearchHomePage() {
+    const [temp, setTemp] = useState(""); // Usa una stringa per 'searchParam'
+    const isFormEmpty = temp === "" || temp == 0; // Verifica se il campo è vuoto o uguale a 0
 
     const clearInput = () => {
-        change({ target: { name: "searchParam", value: "" } });
+        setTemp(""); // Svuota il campo di input
+    };
+    const navigate = useNavigate();
+    
+    const formattingSlug = (string) => {
+        // Prendi solo la parte prima della virgola
+        const cityName = string.split(',')[0];
+
+        return cityName
+            .toLowerCase()
+            .trim()
+            .normalize("NFD")
+            .replace(/[^\w\s-]/g, '') // Rimuove caratteri non alfanumerici tranne spazi e trattini
+            .replace(/[\s_-]+/g, '+') // Sostituisce spazi, trattini e underscore con '+'
+            .replace(/^-+|-+$/g, '') // Rimuove trattini iniziali e finali
+            .replace(/\.\s/g, '.'); // Mantiene il punto seguito da spazio
+    };
+
+    const handleChange = (e) => {
+        setTemp(e.target.value); // Aggiorna lo stato con il nuovo valore dell'input
     };
 
     return (
@@ -16,9 +37,9 @@ export default function SearchHomePage({ submit, change, temp }) {
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                onSubmit={submit} className="container m-auto p-4 shadow-lg rounded bg-light">
-
-                <h2 className="mb-4">Search for an accomodation</h2>
+                className="container m-auto p-4 shadow-lg rounded bg-light"
+            >
+                <h2 className="mb-4">Search for an accommodation</h2>
 
                 <div className="form-group row mt-3">
                     <label htmlFor="searchParam">Search here city or address</label>
@@ -30,10 +51,11 @@ export default function SearchHomePage({ submit, change, temp }) {
                             id="searchParam"
                             name="searchParam"
                             placeholder="Insert city or address"
-                            value={temp.searchParam}
-                            onChange={change} />
+                            value={temp}
+                            onChange={handleChange} // Usa onChange per aggiornare lo stato
+                        />
                         {/* La X appare solo se c'è qualcosa nell'input */}
-                        {temp.searchParam && (
+                        {temp && (
                             <span
                                 className="input-group-text cursor-pointer rounded-start-0"
                                 onClick={clearInput}
@@ -43,7 +65,13 @@ export default function SearchHomePage({ submit, change, temp }) {
                         )}
                     </div>
                     <div className="col-12 col-md-2 mt-3 mt-md-0">
-                        <button type="submit" className="btn btn-send w-100 w-md-0" disabled={isFormEmpty}>Search</button>
+                        <Link 
+                        className="btn btn-send w-100 w-md-0" 
+                        to={temp !== "" ? `/advanced-research?search=${formattingSlug(temp)}` : "#"} 
+                        disabled={isFormEmpty}                    
+                        >
+                        Search
+                        </Link>
                     </div>
                 </div>
 

@@ -195,147 +195,147 @@ export default function Homepage() {
     const apiURL = `http://localhost:3000/api`;
     const endpoint = `/apartments/`;
     const [search, setSearch] = useState("")
-    const [tempFormData, setTempFormData] = useState({
-        searchParam: "",
-    });
+    // const [tempFormData, setTempFormData] = useState({
+    //     searchParam: "",
+    // });
     const delayAnim = 0.05;
 
-    function getHomeApartments() {
         const searchValue = typeof search?.searchParam === "string" ? search.searchParam.trim() : "";
 
 
-    function getMostLovedApartments() {
+        function getMostLovedApartments() {
 
-        axios.get(`${apiURL}${endpoint}mostlovedhomepage`)
-            .then((res) => {
-                setMostLovedApartments(res.data.items);
-                setMostLovedApartmentsCount(res.data.count);
+            axios.get(`${apiURL}${endpoint}mostlovedhomepage`)
+                .then((res) => {
+                    setMostLovedApartments(res.data.items);
+                    setMostLovedApartmentsCount(res.data.count);
 
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 1000);
-            });
-    }
-    function getMostVisitedCity() {
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        setIsLoading(false);
+                    }, 1000);
+                });
+        }
+        function getMostVisitedCity() {
 
-        axios.get(`${apiURL}${endpoint}mostvisitedcityhomepage`)
-            .then((res) => {
-                console.log(res.data);
-                setMostVisitedCity(res.data.items);
-                setMostVisitedCityCount(res.data.count);
+            axios.get(`${apiURL}${endpoint}mostvisitedcityhomepage`)
+                .then((res) => {
+                    console.log(res.data);
+                    setMostVisitedCity(res.data.items);
+                    setMostVisitedCityCount(res.data.count);
 
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 1000);
-            });
-    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        setIsLoading(false);
+                    }, 1000);
+                });
+        }
 
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setTempFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
+        // const handleOnChange = (e) => {
+        //     const { name, value } = e.target;
+        //     setTempFormData((prevData) => ({
+        //         ...prevData,
+        //         [name]: value
+        //     }));
+        // };
 
-    const handleOnSubmit = (e) => {
-        e.preventDefault();
-        setSearch(tempFormData);
-    }
+        // const handleOnSubmit = (e) => {
+        //     e.preventDefault();
+        //     setSearch(tempFormData);
+        // }
 
-    useEffect(() => {
-        setIsLoading(true);
+        useEffect(() => {
+            setIsLoading(true);
 
-        getMostLovedApartments();
-        getMostVisitedCity();
-    }, []);
+            getMostLovedApartments();
+            getMostVisitedCity();
+        }, []);
 
-    return (
-        // JUMBOTRON
-        <div className="mb-3">
-            <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
-                {/* Testo animato da destra */}
-                <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-white"
-                    style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}
-                >
-                    <h1 className="display-4 jumbo-text">Bool B&B</h1>
-                    <p className="lead jumbo-text">
-                        Find the perfect apartment for you with just one click.
-                    </p>
-                </motion.div>
+        return (
+            // JUMBOTRON
+            <div className="mb-3">
+                <div className="container-fluid jumbotron p-5 mb-4 bg-light text-center">
+                    {/* Testo animato da destra */}
+                    <motion.div
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-white"
+                        style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", padding: "20px", borderRadius: "5px" }}
+                    >
+                        <h1 className="display-4 jumbo-text">Bool B&B</h1>
+                        <p className="lead jumbo-text">
+                            Find the perfect apartment for you with just one click.
+                        </p>
+                    </motion.div>
 
-                {/* Pulsante animato da destra con ritardo */}
-                <motion.div
-                    initial={{ x: -180, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
-                >
-                    <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"}>
-                        Find out more
-                    </Link>
-                </motion.div>
-            </div>
+                    {/* Pulsante animato da destra con ritardo */}
+                    <motion.div
+                        initial={{ x: -180, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
+                    >
+                        <Link className="btn custom-button mt-5 link-btn" to={"/advanced-research"}>
+                            Find out more
+                        </Link>
+                    </motion.div>
+                </div>
 
-            {/* SEARCH */}
+                {/* SEARCH */}
 
-            <SearchHomePage submit={handleOnSubmit} change={handleOnChange} temp={tempFormData} />
+                 <SearchHomePage />  {/* submit={handleOnSubmit} change={handleOnChange} temp={tempFormData}  */}
 
-            {/* MOST LOVED */}
+                {/* MOST LOVED */}
 
-            <div className="row container m-auto">
-                <>
-                    <h3 className="py-2 mt-5 fw-bold">Our most {mostLovedApartmentsCount} loved apartments</h3>
+                <div className="row container m-auto">
+                    <>
+                        <h3 className="py-2 mt-5 fw-bold">Our most {mostLovedApartmentsCount} loved apartments</h3>
 
-                    {mostLovedApartments?.map((apartment, index) => (
-                        <div className={`col-12 col-md-6 ${index < 2 ? "col-lg-6" : "col-lg-4"} g-4`} key={apartment.id}>
+                        {mostLovedApartments?.map((apartment, index) => (
+                            <div className={`col-12 col-md-6 ${index < 2 ? "col-lg-6" : "col-lg-4"} g-4`} key={apartment.id}>
+                                {isLoading ? (
+                                    <LoaderCard />
+                                ) : (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.5, delay: index * delayAnim }} // Ritardo progressivo
+                                    >
+                                        <Card apartment={apartment} addLike={addLike} />
+                                    </motion.div>
+                                )}
+                            </div>
+                        ))}
+                    </>
+                </div>
+                {/* MOST VISITED CITY */}
+                <div className="row container m-auto">
+                    <>
+                        <h3 className="py-2 mt-5 fw-bold">Our most {mostVisitedCityCount} visited city</h3>
+                        <div className="col-12">
                             {isLoading ? (
                                 <LoaderCard />
                             ) : (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.5, delay: index * delayAnim }} // Ritardo progressivo
+                                    transition={{ duration: 0.5, delay: delayAnim }} // Ritardo progressivo
                                 >
-                                    <Card apartment={apartment} addLike={addLike} />
+                                    <Carousel cardShow={4} data={mostVisitedCity} CardComponent={CardMostVisitedCity} cardProps={{ addLike }} />
                                 </motion.div>
                             )}
                         </div>
-                    ))}
-                </>
+                    </>
+                </div>
             </div>
-            {/* MOST VISITED CITY */}
-            <div className="row container m-auto">
-                <>
-                    <h3 className="py-2 mt-5 fw-bold">Our most {mostVisitedCityCount} visited city</h3>
-                    <div className="col-12">
-                        {isLoading ? (
-                            <LoaderCard />
-                        ) : (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, delay: delayAnim }} // Ritardo progressivo
-                            >
-                                <Carousel cardShow={4} data={mostVisitedCity} CardComponent={CardMostVisitedCity} cardProps={{ addLike }} />
-                            </motion.div>
-                        )}
-                    </div>
-                </>
-            </div>
-        </div>
-    );
+        );
+    
 }

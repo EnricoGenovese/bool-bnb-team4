@@ -58,6 +58,16 @@ const SearchProvider = ({ children }) => {
 
     }, [searchFormData, page]);
 
+    useEffect(() => {
+        const params = {
+            search: searchParams.get('search') || '',
+            category: searchParams.get('category') || '',
+            minRooms: searchParams.get('minRooms') || '',
+            minBeds: searchParams.get('minBeds') || ''
+        };
+        setSearchFormData(params);
+        fetchApi();
+    }, [searchParams]);
     const params = {
         page,
         search: searchFormData.search || undefined,
@@ -152,7 +162,8 @@ const SearchProvider = ({ children }) => {
 
     const searchData = {
         handleOnChange, fetchApi, handleOnSubmit, searchParams, setSearchParams, searchFormData, setSearchFormData, tempFormData, setTempFormData,
-        isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange, params, homeApartments, search, setSearch, getHomeApartments
+        isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange, params, homeApartments, search, setSearch, getHomeApartments,
+        useSearchParams
     }
     return <SearchContext.Provider value={searchData}>
         {children}

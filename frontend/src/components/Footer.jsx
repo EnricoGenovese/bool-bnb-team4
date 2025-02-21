@@ -21,7 +21,7 @@ export default function Footer() {
             <div className="container p-4 d-flex flex-column justify-content-center">
                 <div className="row container-small justify-content-center">
                     <div className="col-6 col-md-3 mb-4 mb-md-2 flex-grow-1">
-                        <h5 className="text-uppercase">Company</h5>
+                        <h5 className="text-uppercase text-white">Company</h5>
                         <ul className="list-unstyled">
                             <li>
                                 <a href="#" className="text-light">About</a>
@@ -40,7 +40,7 @@ export default function Footer() {
                     </div>
 
                     <div className="col-6 col-lg-3 mb-4 mb-md-2">
-                        <h5 className="text-uppercase">Navigation</h5>
+                        <h5 className="text-uppercase text-white">Navigation</h5>
 
                         <ul className="list-unstyled">
                             <li>
@@ -56,7 +56,7 @@ export default function Footer() {
                     </div>
 
                     <div className="col-6 col-lg-3 mb-4 mb-md-2">
-                        <h5 className="text-uppercase">Hosting</h5>
+                        <h5 className="text-uppercase text-white">Hosting</h5>
 
                         <ul className="list-unstyled mb-0">
                             <li>
@@ -75,7 +75,7 @@ export default function Footer() {
                     </div>
 
                     <div className="col-6 col-lg-3 mb-4 mb-md-2">
-                        <h5 className="text-uppercase mb-0">Support</h5>
+                        <h5 className="text-uppercase mb-0 text-white">Support</h5>
 
                         <ul className="list-unstyled">
                             <li>

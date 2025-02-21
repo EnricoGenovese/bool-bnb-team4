@@ -1,4 +1,5 @@
 import axios from "axios"
+import React from "react";
 import FilteredSearch from "../components/FilteredSearch";
 import Card from "../components/Card";
 import { useGlobalContext } from "../contexts/GlobalContext";
@@ -15,7 +16,8 @@ export default function AdevancedResearch() {
     } = useGlobalContext();
     const {
         handleOnChange, handleOnSubmit, searchFormData, tempFormData, setTempFormData,
-        isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange
+        isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange, fetchApi,
+        useSearchParams
     } = useSearchContext();
     const delayAnim = 0.05;
     function handleReset() {
@@ -28,7 +30,23 @@ export default function AdevancedResearch() {
             }
         )
     }
+    const [searchParams] = useSearchParams();
 
+    useEffect(() => {
+        const search = searchParams.get('search') || '';
+        const category = searchParams.get('category') || '';
+        const minRooms = searchParams.get('minRooms') || '';
+        const minBeds = searchParams.get('minBeds') || '';
+
+        setTempFormData({
+            search,
+            category,
+            minRooms,
+            minBeds
+        });
+
+        fetchApi();
+    }, [searchParams]);
     return (
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
