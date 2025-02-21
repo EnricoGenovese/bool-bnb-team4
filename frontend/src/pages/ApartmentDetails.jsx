@@ -90,7 +90,7 @@ export default function ApartmentDetails() {
     function getApartment() {
         // console.log("id: ", slug);        // prova funzionamento
         // console.log("limitReviews: ", limitReviews);        // prova funzionamento
-        
+
         axios.get(`${apiUrl}${endpoint}${slug}`, {
             params: { limitReviews }  // Passa limitReviews come query parameter
         })
@@ -153,6 +153,7 @@ export default function ApartmentDetails() {
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const newErrors = validateForm(formData);
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
@@ -224,7 +225,7 @@ export default function ApartmentDetails() {
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} limitReviews={limitReviews} setLimitReviews={setLimitReviews} clickedShowMoreRewiews={clickedShowMoreRewiews} clickedCollapseRewiews={clickedCollapseRewiews} />
+                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} limitReviews={limitReviews} setLimitReviews={setLimitReviews} clickedShowMoreRewiews={clickedShowMoreRewiews} clickedCollapseRewiews={clickedCollapseRewiews} setFormData={setFormData} onChange={onHandleInput} />
                 </>
             )
                 : "Non trovata"}

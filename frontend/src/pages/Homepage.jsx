@@ -24,6 +24,7 @@ export default function Homepage() {
         searchParam: "",
     });
     const delayAnim = 0.05;
+
     function getHomeApartments() {
         const searchValue = typeof search?.searchParam === "string" ? search.searchParam.trim() : "";
 

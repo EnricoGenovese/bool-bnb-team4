@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
 
-export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, limitReviews, clickedShowMoreRewiews, clickedCollapseRewiews }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, limitReviews, clickedShowMoreRewiews, setFormData, onChange, clickedCollapseRewiews }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -98,13 +98,13 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
 
     function showHideButton() {
         console.log("limitReviews: ", limitReviews);
-        console.log("apartment.reviewsCount: ", apartment.reviewsCount-1);
-        
+        console.log("apartment.reviewsCount: ", apartment.reviewsCount - 1);
+
         if ((apartment.reviewsCount - 1) == limitReviews) {
             return (
-            <div className="d-flex justify-content-end w-100">
-                <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
-            </div>
+                <div className="d-flex justify-content-end w-100">
+                    <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+                </div>
             )
         }
         if (apartment.reviewsCount > 3) {
@@ -117,12 +117,12 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
 
                         </div>
                     )
-                } 
+                }
                 else {
                     return <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
                 }
             }
-            
+
             else if (apartment.reviewsCount >= 3) {
                 return (
                     <div className="d-flex justify-content-end w-100">
@@ -239,7 +239,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     className="pb-2 mt-3"
                 >List of reviews:
                 </motion.h3>
-                
+
                 {apartment.reviewsCount > 0 ? showReviews()
                     : <motion.h4
                         initial={{ opacity: 0 }}
@@ -259,7 +259,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 >Add your review:
                 </motion.h3>
 
-                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
+                <ReviewForm apartment_slug={slug} singleApartment={apartment} submit={submit} formData={formData} setFormData={setFormData} onChange={onChange} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} validateForm={validateForm} errors={errors} />
 
 
             </section>
