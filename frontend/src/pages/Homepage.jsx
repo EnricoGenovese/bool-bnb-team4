@@ -200,6 +200,10 @@ export default function Homepage() {
     });
     const delayAnim = 0.05;
 
+    function getHomeApartments() {
+        const searchValue = typeof search?.searchParam === "string" ? search.searchParam.trim() : "";
+
+
     function getMostLovedApartments() {
 
         axios.get(`${apiURL}${endpoint}mostlovedhomepage`)

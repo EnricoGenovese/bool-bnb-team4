@@ -113,6 +113,8 @@ const GlobalProvider = ({ children }) => {
     }
 
 
+
+
     const data = {
         apartments, setApartments, setApartment, apartment, apartmentData, setApartmentData, initialNewApartment,
         search, setSearch, minRooms, setNumRooms, minBeds, setNumBeds, category, setCategory, searchFormData, setSearchFormData,

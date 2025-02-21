@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
 import { toast } from 'react-toastify'; // Importa il Toast
-import { FaHome, FaCity, FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined, FaBuilding, FaDoorClosed, FaGlobeEurope } from 'react-icons/fa';
+import { FaHome, FaCity, FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined, FaBuilding, FaDoorClosed, FaGlobeEurope, FaTimes } from 'react-icons/fa';
+import styles from "../styles/ResetButton.module.css";
 
 export default function ApartmentPostForm() {
     const initialNewApartment = {
@@ -20,16 +21,16 @@ export default function ApartmentPostForm() {
         likes: 0
     };
 
+
     const [apartmentData, setApartmentData] = useState(initialNewApartment);
     const [apartments, setApartments] = useState([]);
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
     const [slug, setSlug] = useState("");
     const navigate = useNavigate();
-
-
     const categoriesAPI = "http://localhost:3000/api/apartments/categories";
     const apartmentsAPI = "http://localhost:3000/api/apartments/";
+    const isFormEmpty = Object.values(apartmentData).every(value => value === "" || value == 0);
 
     useEffect(() => {
         getCategories();
@@ -47,6 +48,23 @@ export default function ApartmentPostForm() {
             }
         }
     }, [slug]);
+
+    function handleReset() {
+        setApartmentData(
+            {
+                category: 0,
+                city: "",
+                state: "",
+                address: "",
+                description: "",
+                roomsNumber: "",
+                bedsNumber: "",
+                bathroomsNumber: "",
+                squareMeters: "",
+                likes: 0
+            }
+        )
+    }
 
     function getCategories() {
         axios
@@ -229,6 +247,12 @@ export default function ApartmentPostForm() {
         }
     }
 
+
+    const clearInput = (inputName) => {
+
+        handleInput({ target: { name: inputName, value: "" } });
+    };
+
     return (
         <section className={StyleApartmentPostForm.formContainer}>
             <div className="container mb-5">
@@ -251,6 +275,14 @@ export default function ApartmentPostForm() {
                                 placeholder={"Enter summary title describing the property"}
                                 onChange={handleInput}
                             />
+                            {apartmentData.description && (
+                                <span
+                                    className="input-group-text cursor-pointer"
+                                    onClick={() => { clearInput("description") }}
+                                >
+                                    <FaTimes />
+                                </span>
+                            )}
 
                         </div>
                         {errors.description && (
@@ -274,6 +306,14 @@ export default function ApartmentPostForm() {
                                 placeholder={"Enter full address"}
                                 onChange={handleInput}
                             />
+                            {apartmentData.address && (
+                                <span
+                                    className="input-group-text cursor-pointer"
+                                    onClick={() => { clearInput("address") }}
+                                >
+                                    <FaTimes />
+                                </span>
+                            )}
 
                         </div>
                         {errors.address && (
@@ -298,6 +338,14 @@ export default function ApartmentPostForm() {
                                     placeholder={"Enter city"}
                                     onChange={handleInput}
                                 />
+                                {apartmentData.city && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("city") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.city && (
@@ -322,6 +370,14 @@ export default function ApartmentPostForm() {
                                     placeholder={"Enter state"}
                                     onChange={handleInput}
                                 />
+                                {apartmentData.state && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("state") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.state && (
@@ -345,6 +401,7 @@ export default function ApartmentPostForm() {
 
                             accept="image/jpg, image/png, image/jpeg"
                         />
+
                         {errors.image && (
                             <span className={`error-message ${StyleApartmentPostForm.errorMessage}`}>
                                 {errors.image}
@@ -367,6 +424,14 @@ export default function ApartmentPostForm() {
                                     onChange={handleInput}
 
                                 />
+                                {apartmentData.roomsNumber && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("roomsNumber") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.roomsNumber && (
@@ -390,6 +455,14 @@ export default function ApartmentPostForm() {
                                     onChange={handleInput}
 
                                 />
+                                {apartmentData.bedsNumber && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("bedsNumber") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.bedsNumber && (
@@ -412,6 +485,14 @@ export default function ApartmentPostForm() {
                                     placeholder="Enter number of bathrooms"
                                     onChange={handleInput}
                                 />
+                                {apartmentData.bathroomsNumber && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("bathroomsNumber") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.bathroomsNumber && (
@@ -436,6 +517,14 @@ export default function ApartmentPostForm() {
 
 
                                 />
+                                {apartmentData.squareMeters && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("squareMeters") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
 
                             </div>
                             {errors.squareMeters && (
@@ -473,7 +562,8 @@ export default function ApartmentPostForm() {
                         </span>
                     )}
 
-                    <button type="submit" className="btn btn-send w-100 mt-3">Add apartment</button>
+                    <button type="submit" className="btn btn-send w-100 mt-3" disabled={isFormEmpty}>Add apartment</button>
+                    <button type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</button >
                 </form>
             </div>
         </section>
