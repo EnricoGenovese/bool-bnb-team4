@@ -37,9 +37,10 @@ const Carousel = ({ cardShow, data, CardComponent, cardProps }) => {
                 ref={swiperRef}
                 loop={true}
                 autoplay={{
-                    delay: 3000,
+                    delay: 1000,
                     disableOnInteraction: false,
                 }}
+                speed={3000}
                 navigation={true}
                 pagination={{ clickable: true }}
                 spaceBetween={50}

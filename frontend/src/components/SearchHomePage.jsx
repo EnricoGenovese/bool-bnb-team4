@@ -31,6 +31,24 @@ export default function SearchHomePage() {
         setTemp(e.target.value); // Aggiorna lo stato con il nuovo valore dell'input
     };
 
+
+    const handleKeyDown = (event) => {
+        // Se il tasto premuto è "Enter" e il campo di input non è vuoto
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impediamo il comportamento di submit del form
+            if (temp !== "") {
+                // Naviga al link solo se l'input non è vuoto
+                window.location.href = `/advanced-research?search=${formattingSlug(temp)}`;
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Aggiungi l'evento di keydown solo se il form è attivo
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [temp]); // Assicurati che temp sia passato correttamente per evitare loop
+
     return (
         <section style={{ marginTop: "50px" }}>
             <motion.form
