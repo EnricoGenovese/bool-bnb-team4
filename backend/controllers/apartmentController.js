@@ -13,7 +13,7 @@ function index(req, res) {
     minRooms = minRooms ? minRooms : '0';
     minBeds = minBeds ? minBeds : '0';
     page = page && page !== "0" ? parseInt(page) : 1;
-    const limit = 20;
+    const limit = 8;
     const offset = limit * (page - 1);
 
     const sqlCount = `
@@ -63,7 +63,7 @@ function indexHomePage(req, res) {
     let { searchParam, page } = req.query;
     searchParam = searchParam ? `%${searchParam.trim()}%` : '%';
     page = page && page !== "0" ? parseInt(page) : 1;  // Imposta il numero di pagina come intero e se non è valido, impostalo su 1.
-    const limit = 20;
+    const limit = 8;
     const offset = limit * (page - 1);
 
     const sqlCount = `

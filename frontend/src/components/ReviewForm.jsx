@@ -13,7 +13,7 @@ import FormStyle from "../styles/ReviewForm.module.css";
 function ReviewForm({ submit, formData, onHandleStarHover, onHandleStarClick, onHandleInput, setHoverVote, hoverVote, errors }) {
 
     return (
-        <form id="reviewForm" className="container m-auto" onSubmit={submit} noValidate>
+        <form id="reviewForm" className="container m-auto mb-5 mt-2 p-3" onSubmit={submit} noValidate>
             <label htmlFor="name">Name *</label>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>

@@ -72,6 +72,18 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                         // Alterno i colori del container delle recensioni in base al pari o dispari
                         className={`card d-flex flex-column mb-3 ${index % 2 === 0 && `${style["review-alternate-color"]}`}`}>
                         <div className="card-body">
+                            {/* Inserisco la data con il formato americano: mese/giorno/anno ora:minuti:secondi */}
+                            <p className="card-text">
+                                {new Date(review.create_date).toLocaleString("en-US", {
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false, // Assicura il formato 24h
+                                }).replace(",", "")} {/* Rimuove la virgola tra data e ora */}
+                            </p>
                             <p className="card-text">{review.text}</p>
                             <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
                             <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
@@ -210,7 +222,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 </div>
             )}
 
-            <section className="container m-auto pt-5" >
+            <section className="container m-auto pt-5 my-5" >
 
                 <button type="button" className="btn btn-send my-3" onClick={scrollToReview}
                 >Add your review
@@ -221,7 +233,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     initial={{ x: -180, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: delayAnim, ease: "easeOut" }}
-                    className="pb-5"
+                    className="pb-2 mt-3"
                 >List of reviews:
                 </motion.h3>
 
