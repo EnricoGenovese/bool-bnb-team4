@@ -59,45 +59,61 @@ function index(req, res) {
     })
 }
 
-function indexHomePage(req, res) {
-    let { searchParam, page } = req.query;
-    searchParam = searchParam ? `%${searchParam.trim()}%` : '%';
-    page = page && page !== "0" ? parseInt(page) : 1;  // Imposta il numero di pagina come intero e se non è valido, impostalo su 1.
-    const limit = 8;
-    const offset = limit * (page - 1);
+function indexMostLovedHomePage(req, res) {
 
-    const sqlCount = `
-    SELECT COUNT(*) AS count FROM apartments WHERE
-    (address LIKE ? OR city LIKE ?)
-    `;
+    const sql = `SELECT apartments.* 
+    FROM apartments 
+    ORDER BY likes DESC
+    LIMIT 5`;
 
-    connection.query(sqlCount, [searchParam, searchParam], (err, resultss) => {
+    connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
-        console.log(resultss[0])
-        const count = resultss[0].count;
+        console.log(results[0])
 
-        const sql = `SELECT * FROM apartments WHERE
-        (address LIKE ? OR city LIKE ?)
-         ORDER BY apartments.likes DESC
-         LIMIT ? OFFSET ?`
+        const response = {
+            success: true,
+            count: results.length,
+            items: results
+        };
 
+        res.json(response);
+    });
 
-        connection.query(sql, [searchParam, searchParam, limit, offset], (err, results) => {
-            if (err) res.status(500).json({ error: 'Errore del server' });
-
-
-            const response = {
-                success: true,
-                count,
-                limit,
-                items: results
-            };
-
-            res.json(response);
-        });
-    })
 }
+function indexMostVisitedCityHomePage(req, res) {
 
+    const sql = `WITH city_counts AS (
+    SELECT city, COUNT(*) AS city_count
+    FROM apartments
+    GROUP BY city
+    ORDER BY city_count DESC
+    LIMIT 10
+)
+SELECT a.*, c.city_count
+FROM apartments a
+JOIN city_counts c ON a.city = c.city
+WHERE a.id IN (
+    SELECT MIN(id)
+    FROM apartments
+    WHERE city = a.city
+    GROUP BY city
+);
+`;
+
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+        console.log(results[0])
+
+        const response = {
+            success: true,
+            count: results.length,
+            items: results
+        };
+
+        res.json(response);
+    });
+
+}
 
 function indexCategories(req, res) {
     const sql = `SELECT * FROM categories;`
@@ -397,4 +413,4 @@ function modify(req, res) {
     })
 }
 
-export { index, indexCategories, indexHomePage, show, storereviews, store, upload, modify };
+export { index, indexCategories, indexMostLovedHomePage, indexMostVisitedCityHomePage, show, storereviews, store, upload, modify };
