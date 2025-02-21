@@ -14,7 +14,7 @@ export default function AdevancedResearch() {
     const { addLike, isLoading, setIsLoading, isHomePage, resetForm
     } = useGlobalContext();
     const {
-        handleOnChange, handleOnSubmit, searchFormData, tempFormData, setTempFormData
+        handleOnChange, handleOnSubmit, searchFormData, tempFormData, setTempFormData,
         isPaginationFlag, filteredApi, apartmentsCount, page, numPages, handleFilteredPageChange
     } = useSearchContext();
     const delayAnim = 0.05;
