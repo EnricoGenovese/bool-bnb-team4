@@ -12,13 +12,12 @@ import { motion } from "framer-motion";
 import MapComponent from "./MapComponent";
 
 
-export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors }) {
+export default function SingleApartment({ apartment, categories, city, ownerMail, info, name, submit, formData, onHandleInput, onHandleStarHover, onHandleStarClick, hoverVote, setHoverVote, validateForm, errors, limitReviews, clickedShowMoreRewiews, clickedCollapseRewiews }) {
     const { addLike } = useGlobalContext();
     const { slug } = useParams();
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [longitude, setLongitude] = useState(0);
     const [latitude, setLatitude] = useState(0);
-    const [limitReviews, setLimitReviews] = useState(2); // useState per il limite di recensioni visualizzate
     const reviewRef = useRef(null);
 
     let category = "";
@@ -51,49 +50,39 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
     }
     findCategory();
 
-    function clickedShowMoreRewiews() {
-        setLimitReviews(limitReviews + 3);
-    }
-
-    function clickedCollapseRewiews() {
-        setLimitReviews(2);
-
-
-    }
     // visualizzo le recensioni a 3 a 3
     function showReviews() {
         return apartment.item.reviews.map((review, index) => (
-            index <= limitReviews && (
-                <div key={review.id}>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: index * delayAnim }}
-                        // Alterno i colori del container delle recensioni in base al pari o dispari
-                        className={`card d-flex flex-column mb-3 ${index % 2 === 0 && `${style["review-alternate-color"]}`}`}>
-                        <div className="card-body">
+            <div key={review.id}>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: index * delayAnim }}
+                    // Alterno i colori del container delle recensioni in base al pari o dispari
+                    className={`card d-flex flex-column mb-3 ${index % 2 === 0 && `${style["review-alternate-color"]}`}`}>
+                    <div className="card-body">
 
-                            {/* Inserisco la data con il formato americano: mese/giorno/anno ora:minuti:secondi */}
-                            <p className="card-text">
-                                <strong>
-                                    {new Date(review["create_date"]).toLocaleString("en-US", {
-                                        month: "2-digit",
-                                        day: "2-digit",
-                                        year: "numeric",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                        second: "2-digit",
-                                        hour12: false, // Assicura il formato 24h
-                                    }).replace(",", "")} {/* Rimuove la virgola tra data e ora */}
-                                </strong>
-                            </p>
-                            <p className="card-text">{review.text}</p>
-                            <p className="card-text"><strong>Days of stay:</strong> {review["days_of_stay"]}</p>
-                            <h5 className="card-title"><strong>Vote:</strong> <Star num={review.vote} /></h5>
-                            <p className={`card-text pt-2 ${style["text-name"]}`}><strong>By</strong> {review.name}</p>
-                        </div>
-                    </motion.div>
-                </div>)
+                        {/* Inserisco la data con il formato americano: mese/giorno/anno ora:minuti:secondi */}
+                        <p className="card-text">
+                            <strong>
+                                {new Date(review["create_date"]).toLocaleString("en-US", {
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false, // Assicura il formato 24h
+                                }).replace(",", "")} {/* Rimuove la virgola tra data e ora */}
+                            </strong>
+                        </p>
+                        <p className="card-text">{review.text}</p>
+                        <p className="card-text"><strong>Days of stay:</strong> {review["days_of_stay"]}</p>
+                        <h5 className="card-title"><strong>Vote:</strong> <Star num={review.vote} /></h5>
+                        <p className={`card-text pt-2 ${style["text-name"]}`}><strong>By</strong> {review.name}</p>
+                    </div>
+                </motion.div>
+            </div>
         ))
     }
 
@@ -108,10 +97,18 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
     }
 
     function showHideButton() {
-
-
-        if (apartment.item.reviews.length > 3) {
-            if (apartment.item.reviews.length - 1 >= limitReviews) {
+        console.log("limitReviews: ", limitReviews);
+        console.log("apartment.reviewsCount: ", apartment.reviewsCount-1);
+        
+        if ((apartment.reviewsCount - 1) == limitReviews) {
+            return (
+            <div className="d-flex justify-content-end w-100">
+                <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+            </div>
+            )
+        }
+        if (apartment.reviewsCount > 3) {
+            if (apartment.reviewsCount - 1 >= limitReviews) {
                 if (limitReviews > 3) {
                     return (
                         <div className="d-flex justify-content-between">
@@ -120,12 +117,13 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
 
                         </div>
                     )
-
-                } else {
+                } 
+                else {
                     return <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
                 }
             }
-            else if (apartment.item.reviews.length >= 3) {
+            
+            else if (apartment.reviewsCount >= 3) {
                 return (
                     <div className="d-flex justify-content-end w-100">
                         <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
@@ -137,7 +135,8 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
             }
         } else { ""; }
     }
-
+    console.log("reviewsCount: ", apartment.reviewsCount);
+    console.log("apartment.reviewsCount: ", apartment.reviewsCount);
     return (
         <>
             <div className="pt-5 container m-auto">
@@ -240,8 +239,8 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                     className="pb-2 mt-3"
                 >List of reviews:
                 </motion.h3>
-
-                {apartment.item.reviews.length > 0 ? showReviews()
+                
+                {apartment.reviewsCount > 0 ? showReviews()
                     : <motion.h4
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}

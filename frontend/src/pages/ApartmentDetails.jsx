@@ -30,6 +30,7 @@ export default function ApartmentDetails() {
     const [info, setInfo] = useState("");
     const [hoverVote, setHoverVote] = useState(0);
     const [errors, setErrors] = useState({});
+    const [limitReviews, setLimitReviews] = useState(2); // useState per il limite di recensioni visualizzate
     const today = new Date().toISOString().split("T")[0];
     const minDate = new Date("2010-01-01").toISOString().split("T")[0];
     const navigate = useNavigate();
@@ -87,10 +88,12 @@ export default function ApartmentDetails() {
 
 
     function getApartment() {
-        console.log("id: ", slug);        // prova funzionamento
-        // console.log(apiUrl + "/apartments/" + slug);
-
-        axios.get(apiUrl + endpoint + slug)
+        // console.log("id: ", slug);        // prova funzionamento
+        // console.log("limitReviews: ", limitReviews);        // prova funzionamento
+        
+        axios.get(`${apiUrl}${endpoint}${slug}`, {
+            params: { limitReviews }  // Passa limitReviews come query parameter
+        })
             .then((res) => {
                 console.log(res.data)
                 setApartment(res.data);
@@ -202,13 +205,26 @@ export default function ApartmentDetails() {
         getApartment();
         getCategories();
         console.log(slug)
-    }, [slug]);
+    }, [slug, limitReviews]);
+
+
+    // Funzione per il pulsante "Show more"
+    function clickedShowMoreRewiews() {
+        setLimitReviews(limitReviews + 3);
+        getApartment();
+    }
+
+    // Funzione per il pulsante "Collapse"
+    function clickedCollapseRewiews() {
+        setLimitReviews(2);
+        getApartment();
+    }
 
     return (
         <section className="container m-auto">
             {apartment && categories ? (
                 <>
-                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} />
+                    <SingleApartment apartment={apartment} categories={categories} city={city} ownerMail={mail} info={info} name={name} submit={onHandleSubmit} formData={formData} onHandleStarHover={onHandleStarHover} onHandleStarClick={onHandleStarClick} onHandleInput={onHandleInput} hoverVote={hoverVote} setHoverVote={setHoverVote} errors={errors} updateLikes={addLike} show={getApartment} limitReviews={limitReviews} setLimitReviews={setLimitReviews} clickedShowMoreRewiews={clickedShowMoreRewiews} clickedCollapseRewiews={clickedCollapseRewiews} />
                 </>
             )
                 : "Non trovata"}
