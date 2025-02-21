@@ -90,7 +90,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                             <p className="card-text">{review.text}</p>
                             <p className="card-text"><strong>Days of stay:</strong> {review["days_of_stay"]}</p>
                             <h5 className="card-title"><strong>Vote:</strong> <Star num={review.vote} /></h5>
-                            <p className={`card-text ${style["text-name"]}`}><strong>By</strong> {review.name}</p>
+                            <p className={`card-text pt-2 ${style["text-name"]}`}><strong>By</strong> {review.name}</p>
                         </div>
                     </motion.div>
                 </div>)
