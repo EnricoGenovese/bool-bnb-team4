@@ -75,9 +75,9 @@ export default function ApartmentDetails() {
         else if (formData.daysOfStay < 1) {
             errors.daysOfStay = 'Days of stay must be at least 1';
         }
-        else if (formData.daysOfStay > 365) {
-            errors.daysOfStay = 'You cannot enter a number of days greater than 365';
-        }
+        // else if (formData.daysOfStay > 365) {
+        //     errors.daysOfStay = 'You cannot enter a number of days greater than 365';
+        // }
         else if (formData.daysOfStay.includes('e') || formData.daysOfStay.includes('E')) {
             errors.daysOfStay = 'You must enter a number';
         }

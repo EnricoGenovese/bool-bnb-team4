@@ -340,8 +340,6 @@ function storereviews(req, res) {
         errors.daysOfStay = 'Days of stay required';
     } else if (daysOfStay < 1) {
         errors.daysOfStay = 'Days of stay must be at least 1';
-    } else if (daysOfStay > 365) {
-        errors.daysOfStay = 'daysOfStay You cannot enter a number of days greater than 365';
     } else if (daysOfStay.toString().includes('e') || daysOfStay.toString().includes('E')) {
         errors.daysOfStay = 'daysOfStay You must enter a number';
     } else if (!Number.isInteger(Number(daysOfStay)) || daysOfStay.startsWith("0")) {
