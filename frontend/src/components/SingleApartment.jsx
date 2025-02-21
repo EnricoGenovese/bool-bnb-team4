@@ -72,21 +72,25 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                         // Alterno i colori del container delle recensioni in base al pari o dispari
                         className={`card d-flex flex-column mb-3 ${index % 2 === 0 && `${style["review-alternate-color"]}`}`}>
                         <div className="card-body">
+
                             {/* Inserisco la data con il formato americano: mese/giorno/anno ora:minuti:secondi */}
                             <p className="card-text">
-                                {new Date(review.create_date).toLocaleString("en-US", {
-                                    month: "2-digit",
-                                    day: "2-digit",
-                                    year: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    second: "2-digit",
-                                    hour12: false, // Assicura il formato 24h
-                                }).replace(",", "")} {/* Rimuove la virgola tra data e ora */}
+                                <strong>
+                                    {new Date(review["create_date"]).toLocaleString("en-US", {
+                                        month: "2-digit",
+                                        day: "2-digit",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit",
+                                        hour12: false, // Assicura il formato 24h
+                                    }).replace(",", "")} {/* Rimuove la virgola tra data e ora */}
+                                </strong>
                             </p>
                             <p className="card-text">{review.text}</p>
-                            <h5 className="card-title">Vote: <Star num={review.vote} /></h5>
-                            <p className={`card-text ${style["text-name"]}`}>By {review.name}</p>
+                            <p className="card-text"><strong>Days of stay:</strong> {review["days_of_stay"]}</p>
+                            <h5 className="card-title"><strong>Vote:</strong> <Star num={review.vote} /></h5>
+                            <p className={`card-text pt-2 ${style["text-name"]}`}><strong>By</strong> {review.name}</p>
                         </div>
                     </motion.div>
                 </div>)
