@@ -25,6 +25,7 @@ export default function Homepage() {
     const [categoriesApartments, setCategoriesApartments] = useState([]);
     const [categoriesApartmentsCount, setCategoriesApartmentsCount] = useState(0);
 
+    const [width, setWidth] = useState(window.innerWidth);
     const { addLike, isLoading, setIsLoading, isHomePage } = useGlobalContext();
     const [page, setPage] = useState(1);
     const apiURL = `http://localhost:3000/api`;
@@ -113,6 +114,18 @@ export default function Homepage() {
         getMostVisitedCity();
         getLastTimeChance();
         getCategoriesApartments();
+
+
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+        // Aggiungi l'evento resize
+        window.addEventListener('resize', handleResize);
+
+        // Rimuovi l'evento resize al dismount del componente
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     return (
@@ -153,10 +166,18 @@ export default function Homepage() {
 
             <div className="row container m-auto">
                 <>
-                    <h3 className="py-2 mt-5 fw-bold">Our most {mostLovedApartmentsCount} loved apartments</h3>
+                    <h3 className="py-2 mt-5 fw-bold">Our top {mostLovedApartmentsCount} loved apartments</h3>
 
                     {mostLovedApartments?.map((apartment, index) => (
-                        <div className={`col-12 col-md-6 ${index < 2 ? "col-lg-6" : "col-lg-4"} g-4`} key={apartment.id}>
+                        <div 
+                        className={`col-12 
+                          ${index === 0 ? "col-md-8" : 
+                            index === 1 ? "col-md-4" : 
+                          (index === 2 || index === 3) ? "col-md-6" : 
+                          (index === 4) ? "col-md-12" :""} 
+                          ${index < 2 ? "col-lg-6" : "col-lg-4"} g-4`} 
+                        key={apartment.id}
+                      >
                             {isLoading ? (
                                 <LoaderCard />
                             ) : (
@@ -175,7 +196,7 @@ export default function Homepage() {
             {/* MOST VISITED CITY */}
             <div className="row container m-auto">
                 <>
-                    <h3 className="py-2 mt-5 fw-bold">Our most {mostVisitedCityCount} visited city</h3>
+                    <h3 className="py-2 mt-5 fw-bold">The {mostVisitedCityCount} cities with the highest number of apartments to choose from!</h3>
                     <div className="col-12">
                         {isLoading ? (
                             <LoaderCard />
@@ -185,7 +206,7 @@ export default function Homepage() {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: delayAnim }} // Ritardo progressivo
                             >
-                                <Carousel cardShow={4} data={mostVisitedCity} CardComponent={CardMostVisitedCity} />
+                                <Carousel cardShow={width > 992 ? 4 : 1} data={mostVisitedCity} CardComponent={CardMostVisitedCity} />
                             </motion.div>
                         )}
                     </div>
@@ -195,10 +216,22 @@ export default function Homepage() {
 
             <div className="row container m-auto">
                 <>
-                    <h3 className="py-2 mt-5 fw-bold">Our last {lastTimeChanceCount} time chance</h3>
+                    <h3 className="py-2 mt-5 fw-bold">Check out these {lastTimeChanceCount} random suggestions!</h3>
 
                     {lastTimeChance?.map((apartment, index) => (
-                        <div className={`col-12 col-md-6 ${index < 1 || index > 3 && index == 4 ? "col-lg-6" : "col-lg-3"} g-4`} key={apartment.id}>
+                        <div 
+                        className={`col-12 
+                          ${index === 0 ? "col-md-8" : 
+                            index === 1 ? "col-md-4" : 
+                          (index === 2 || index === 3) ? "col-md-6" : 
+                          (index === 4) ? "col-md-4" : 
+                          (index === 5) ? "col-md-8" : "col-md-2"} 
+                          ${index < 1 || (index > 3 && index === 4) ? "col-lg-6" : "col-lg-3"} 
+                          g-4`} 
+                        key={apartment.id}
+                      >
+                      
+                        
                             {isLoading ? (
                                 <LoaderCard />
                             ) : (
@@ -217,7 +250,7 @@ export default function Homepage() {
             {/* All CATEGORY CITY */}
             <div className="row container m-auto mb-5">
                 <>
-                    <h3 className="py-2 mt-5 fw-bold">All our {categoriesApartmentsCount} apartment categories</h3>
+                    <h3 className="py-2 mt-5 fw-bold">Discover all our {categoriesApartmentsCount} apartment categories</h3>
                     <div className="col-12">
                         {isLoading ? (
                             <LoaderCard />
@@ -227,7 +260,7 @@ export default function Homepage() {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: delayAnim }} // Ritardo progressivo
                             >
-                                <Carousel cardShow={4} data={categoriesApartments} CardComponent={CardAllCategories} />
+                                <Carousel cardShow={width > 992 ? 4 : 1} data={categoriesApartments} CardComponent={CardAllCategories} />
                             </motion.div>
                         )}
                     </div>
