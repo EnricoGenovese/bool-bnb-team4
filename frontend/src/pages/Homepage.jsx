@@ -217,7 +217,7 @@ export default function Homepage() {
             {/* All CATEGORY CITY */}
             <div className="row container m-auto mb-5">
                 <>
-                    <h3 className="py-2 mt-5 fw-bold">Our most {categoriesApartmentsCount} visited city</h3>
+                    <h3 className="py-2 mt-5 fw-bold">All our {categoriesApartmentsCount} apartment categories</h3>
                     <div className="col-12">
                         {isLoading ? (
                             <LoaderCard />
