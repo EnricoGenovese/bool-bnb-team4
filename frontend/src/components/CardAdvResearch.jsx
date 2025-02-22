@@ -58,9 +58,9 @@ export default function CardAdvResearch({ apartment, addLike }) {
                         <div className={style.infoGrid}>
                             <InfoRow icon={FaMapMarkerAlt} text={apartment.address} />
                             <InfoRow icon={FaCity} text={apartment.city} />
-                            <InfoRow icon={FaDoorOpen} text={`${apartment.rooms_number} Rooms`} />
-                            <InfoRow icon={FaBed} text={`${apartment.beds_number} Beds`} />
-                            <InfoRow icon={FaBath} text={`${apartment.bathrooms_number} Bathrooms`} />
+                            <InfoRow icon={FaDoorOpen} text={`${apartment.rooms_number}`} />
+                            <InfoRow icon={FaBed} text={`${apartment.beds_number}`} />
+                            <InfoRow icon={FaBath} text={`${apartment.bathrooms_number}`} />
                             <InfoRow icon={FaRulerCombined} text={`${apartment.square_meters} m²`} />
                             <InfoRow icon={FaHome} text={category?.name || "N/A"} />
                         </div>
