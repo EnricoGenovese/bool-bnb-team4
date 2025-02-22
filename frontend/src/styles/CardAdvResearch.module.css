@@ -80,7 +80,7 @@
     }
 }
 
-@media (min-width: 991px) {
+@media (min-width: 769px) {
     .card-header {
         height: 400px;
         /* Altezza adattabile anche su schermi più grandi */
