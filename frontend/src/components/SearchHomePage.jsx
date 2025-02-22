@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaTimes } from "react-icons/fa";
-import { NavLink,Link, useNavigate } from "react-router-dom"; // Assicurati che sia 'react-router-dom'
+import { NavLink, Link, useNavigate } from "react-router-dom"; // Assicurati che sia 'react-router-dom'
 import styles from '../styles/SearchHomePage.module.css';  // Usa CSS Modules, se preferisci
 
 export default function SearchHomePage() {
     const [temp, setTemp] = useState(""); // Usa una stringa per 'searchParam'
     const isFormEmpty = temp === "" || temp == 0; // Verifica se il campo è vuoto o uguale a 0
+    const hasSpecialCharacters = /[^a-zA-Z0-9]/.test(temp);
 
     const clearInput = () => {
         setTemp(""); // Svuota il campo di input
     };
     const navigate = useNavigate();
-    
+
     const formattingSlug = (string) => {
         // Prendi solo la parte prima della virgola
         const cityName = string.split(',')[0];
@@ -32,11 +33,12 @@ export default function SearchHomePage() {
     };
 
 
+
     const handleKeyDown = (event) => {
         // Se il tasto premuto è "Enter" e il campo di input non è vuoto
         if (event.key === 'Enter') {
             event.preventDefault(); // Impediamo il comportamento di submit del form
-            if (temp !== "") {
+            if (temp.trim() !== "" && !hasSpecialCharacters) {
                 // Naviga al link solo se l'input non è vuoto
                 window.location.href = `/advanced-research?search=${formattingSlug(temp)}`;
             }
@@ -83,12 +85,12 @@ export default function SearchHomePage() {
                         )}
                     </div>
                     <div className="col-12 col-md-2 mt-3 mt-md-0">
-                        <Link 
-                        className="btn btn-send w-100 w-md-0" 
-                        to={temp !== "" ? `/advanced-research?search=${formattingSlug(temp)}` : "#"} 
-                        disabled={isFormEmpty}                    
+                        <Link
+                            className="btn btn-send w-100 w-md-0"
+                            to={temp.trim() !== "" && !hasSpecialCharacters ? `/advanced-research?search=${formattingSlug(temp)}` : "#"}
+                            disabled={isFormEmpty}
                         >
-                        Search
+                            Search
                         </Link>
                     </div>
                 </div>
