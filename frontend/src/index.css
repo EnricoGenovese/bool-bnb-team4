@@ -160,7 +160,6 @@ input[type="text"] {
 }
 
 .form-control:focus {
-
     box-shadow: none !important;
     border-color: var(--bs-border-color) !important;
 }

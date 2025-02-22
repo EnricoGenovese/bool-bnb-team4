@@ -34,15 +34,15 @@ export default function Navbar() {
                         className={`w-100 collapse navbar-collapse my-2  ${isOpen ? "show" : ""}`}
                         id="navbarSupportedContent"
                     >
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
+                        <ul className="navbar-nav me-3 mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
 
-                            <li className="nav-item ms-3">
+                            <li className="nav-item">
                                 <NavLink to="/" className="nav-link text-decoration-none navlink-hover custom-link" onClick={handleToggle}>
                                     <img style={{ width: "40px", height: "40px" }} src="/img/logoMenu.png" alt="Logo" className="logo" />
                                 </NavLink>
                             </li>
 
-                            <li className="nav-item ms-3">
+                            <li className="nav-item">
                                 <NavLink
                                     to="/"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
@@ -53,7 +53,7 @@ export default function Navbar() {
                                     Homepage
                                 </NavLink>
                             </li>
-                            <li className="nav-item ms-3">
+                            <li className="nav-item">
                                 <NavLink
                                     to="/advanced-research"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
@@ -64,7 +64,7 @@ export default function Navbar() {
                                     Search an apartment
                                 </NavLink>
                             </li>
-                            <li className="nav-item ms-3">
+                            <li className="nav-item">
                                 <NavLink
                                     to="/post-apartment"
                                     className="nav-link text-decoration-none navlink-hover custom-link"
