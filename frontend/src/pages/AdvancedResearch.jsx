@@ -44,8 +44,9 @@ export default function AdevancedResearch() {
             minRooms,
             minBeds
         });
-
+        console.log("prima", filteredApi);
         fetchApi();
+        console.log("bah",filteredApi);
         window.scrollTo({
             top: 0,
             behavior: "instant"

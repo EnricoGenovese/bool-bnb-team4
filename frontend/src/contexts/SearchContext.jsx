@@ -138,6 +138,7 @@ const SearchProvider = ({ children }) => {
         axios.get(`${apiURL}${endpoint}`, { params })
             .then((res) => {
                 setFilteredApi(res.data.items);
+                console.log("boh",filteredApi);
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setApartmentsCount(res.data.count);
                 res?.data?.count <= 8 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);

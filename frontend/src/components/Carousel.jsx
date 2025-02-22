@@ -40,7 +40,7 @@ const Carousel = ({ cardShow, data, CardComponent, cardProps }) => {
                     delay: 1000,
                     disableOnInteraction: false,
                 }}
-                speed={3000}
+                speed={1500}
                 navigation={true}
                 pagination={{ clickable: true }}
                 spaceBetween={50}
