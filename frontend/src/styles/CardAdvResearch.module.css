@@ -1,0 +1,88 @@
+.card-background {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #F8F9FA;
+}
+
+#likeButton:hover {
+    box-shadow: rgb(220, 53, 69);
+    transform: scale(1);
+    animation: pulse 1s infinite;
+}
+
+#likeButton {
+    height: 30px;
+    width: 60px;
+    text-align: center;
+}
+
+.infoText {
+    font-size: 0.9rem;
+    font-weight: normal;
+    /* Rimosso il grassetto */
+}
+
+.picture {
+    height: 200px;
+    object-fit: cover;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header {
+    min-height: 350px;
+    /* Altezza adattabile per evitare sovrapposizioni */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+
+    70% {
+        transform: scale(1.15);
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    /* Ridotto lo spazio tra le righe */
+}
+
+/* Su schermi più grandi (tablet e desktop) usa due colonne */
+@media (min-width: 768px) {
+    .infoGrid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 40px;
+        /* Maggiore distanza tra le colonne */
+        row-gap: 10px;
+        /* Ridotto lo spazio tra le righe */
+    }
+
+    .card-header {
+        min-height: auto;
+        /* Altezza adattabile anche su schermi più grandi */
+    }
+}
+
+@media (min-width: 991px) {
+    .card-header {
+        height: 400px;
+        /* Altezza adattabile anche su schermi più grandi */
+    }
+}
