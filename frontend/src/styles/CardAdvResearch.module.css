@@ -58,7 +58,7 @@ h5 {
 .card-header {
     padding-bottom: 0;
     /* Rimuove il padding extra sotto l'header */
-    min-height: 350px;
+    min-height: 250px;
     /* Altezza adattabile per evitare sovrapposizioni */
     display: flex;
     flex-direction: column;
@@ -102,7 +102,7 @@ h5 {
     }
 
     .card-header {
-        min-height: 290px;
+        min-height: 250px;
         /* Altezza adattabile anche su schermi più grandi */
     }
 
@@ -120,28 +120,28 @@ h5 {
 /* Media query per impostare l'altezza delle card in base ai vari dispositivi */
 @media (min-width: 769px) {
     .card-header {
-        height: 300px;
+        height: 285px;
         /* Altezza adattabile anche su schermi più grandi */
     }
 }
 
 @media (min-width: 992px) {
     .card-header {
-        height: 490px;
+        height: 380px;
         /* Altezza adattabile anche su schermi più grandi */
     }
 }
 
 @media (min-width: 1200px) {
     .card-header {
-        height: 410px;
+        height: 350px;
         /* Altezza adattabile anche su schermi più grandi */
     }
 }
 
 @media (min-width: 1400px) {
     .card-header {
-        height: 326px;
+        height: 280px;
         /* Altezza adattabile anche su schermi più grandi */
     }
 }
