@@ -32,7 +32,7 @@ const SearchProvider = ({ children }) => {
     useEffect(() => {
         setIsLoading(true);
         const params = {};
-
+        if(window.location.pathname === "/advanced-research") {
         if (searchFormData.search) {
             params.search = searchFormData.search;
         }
@@ -45,13 +45,13 @@ const SearchProvider = ({ children }) => {
         if (searchFormData.category > 0) {
             params.category = searchFormData.category;
         }
-
+    }
         const queryParams = new URLSearchParams(params).toString();
 
         if (queryParams) {
             window.history.pushState({}, '', `?${queryParams}`);
         } else {
-            window.history.pushState({}, '', '/advanced-research');
+            return;
         }
 
         fetchApi();
@@ -121,7 +121,7 @@ const SearchProvider = ({ children }) => {
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setHomeApartments(res.data.items);
                 setApartmentsCount(res.data.count);
-                res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
+                res?.data?.count <= 8 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
 
             })
             .catch((err) => {
@@ -140,7 +140,7 @@ const SearchProvider = ({ children }) => {
                 setFilteredApi(res.data.items);
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setApartmentsCount(res.data.count);
-                res?.data?.count <= 20 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
+                res?.data?.count <= 8 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);
             })
             .catch((err) => {
                 console.error(err);

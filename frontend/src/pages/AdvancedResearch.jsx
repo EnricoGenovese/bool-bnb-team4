@@ -46,6 +46,10 @@ export default function AdevancedResearch() {
         });
 
         fetchApi();
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
     }, [searchParams]);
     return (
         <>

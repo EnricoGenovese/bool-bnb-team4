@@ -1,20 +1,15 @@
 import { useState } from "react";
-import { useGlobalContext } from "../contexts/GlobalContext";
 import style from "../styles/Pagination.module.css";
 
 export default function Pagination({ filteredPage, handleFilteredPageChange, numFilteredPages }) {
-
-
     const [pageInput, setPageInput] = useState(""); // Stato per l'input della pagina
     const [showInput, setShowInput] = useState(false); // Stato per mostrare/nascondere l'input
 
     function scrollFiltered() {
-        window.scrollTo(
-            {
-                top: 0,
-                behavior: "smooth"
-            }
-        )
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
     // Funzione per generare i numeri di pagina in base alla logica richiesta
@@ -36,7 +31,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
             } else if (filteredPage === numFilteredPages) {
                 pages = [1, '...', numFilteredPages - 2, numFilteredPages - 1, numFilteredPages];
             } else if (filteredPage >= 3 && filteredPage < numFilteredPages - 1) {
-                pages = [1, '...', filteredPage - 1, page, filteredPage + 1, '...', numFilteredPages];
+                pages = [1, '...', filteredPage - 1, filteredPage, filteredPage + 1, '...', numFilteredPages];
             }
         }
 
@@ -74,7 +69,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                 <li className={`page-item ${filteredPage <= 1 ? "disabled" : ""} px-5`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
-                        onClick={() => { handleFilteredPageChange(filteredPage - 1), scrollFiltered() }}
+                        onClick={() => { handleFilteredPageChange(filteredPage - 1); scrollFiltered(); }}
                     >
                         Previous
                     </button>
@@ -98,9 +93,8 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                         ) : (
                             <button
                                 className={`page-link ${num === filteredPage ? `${style.active}` : `${style.dark}`} ${style.pageBtn}`}
-                                onClick={() => { handleFilteredPageChange(num), scrollFiltered() }}
+                                onClick={() => { handleFilteredPageChange(num); scrollFiltered(); }}
                             > {num}
-
                             </button>
                         )}
                     </li>
@@ -128,7 +122,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                 <li className={`page-item ${filteredPage >= numFilteredPages ? "disabled" : ""} px-5`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
-                        onClick={() => { handleFilteredPageChange(filteredPage + 1), scrollFiltered() }}
+                        onClick={() => { handleFilteredPageChange(filteredPage + 1); scrollFiltered(); }}
                     >
                         Next
                     </button>
