@@ -44,14 +44,12 @@ export default function AdevancedResearch() {
             minRooms,
             minBeds
         });
-        console.log("prima", filteredApi);
         fetchApi();
-        console.log("bah",filteredApi);
         window.scrollTo({
             top: 0,
             behavior: "instant"
         });
-    }, [searchParams]);
+    }, [searchParams, searchFormData]);
     return (
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />

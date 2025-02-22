@@ -7,6 +7,8 @@ import {
   indexCategories,
   indexMostLovedHomePage,
   indexMostVisitedCityHomePage,
+  indexLastTimeChanceHomePage,
+  indexCategoriesHomePage,
   show,
   store,
   upload,
@@ -20,6 +22,8 @@ router.get("/", index);
 router.get("/categories", indexCategories)
 router.get("/mostlovedhomepage", indexMostLovedHomePage);
 router.get("/mostvisitedcityhomepage", indexMostVisitedCityHomePage);
+router.get("/lasttimechancehomepage", indexLastTimeChanceHomePage);
+router.get("/categorieshomepage", indexCategoriesHomePage);
 
 // Show - Read one -
 router.get("/:slug", show);
