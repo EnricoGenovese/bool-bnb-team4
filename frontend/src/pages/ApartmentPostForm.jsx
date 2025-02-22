@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
 import { toast } from 'react-toastify'; // Importa il Toast
@@ -254,10 +255,19 @@ export default function ApartmentPostForm() {
     };
 
     return (
-        <section className={StyleApartmentPostForm.formContainer}>
+        <motion.section
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={StyleApartmentPostForm.formContainer}>
             <div className="container mb-5">
                 <form onSubmit={handleSubmit} className="p-4 shadow-lg rounded bg-light" noValidate>
-                    <h2 className=" mb-4">Add a New Property</h2>
+                    <motion.h2
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className=" mb-4">Add a New Property
+                    </motion.h2>
 
 
                     <div className="mb-3">
@@ -563,9 +573,13 @@ export default function ApartmentPostForm() {
                     )}
 
                     <button type="submit" className="btn btn-send w-100 mt-3" disabled={isFormEmpty}>Add apartment</button>
-                    <button type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</button >
+                    <motion.button
+                        initial={{ y: +100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</motion.button >
                 </form>
             </div>
-        </section>
+        </motion.section>
     );
 }
