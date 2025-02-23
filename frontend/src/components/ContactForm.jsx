@@ -47,8 +47,6 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
 
         if (!formData.message.trim()) {
             errors.message = 'Comments required';
-        } else if (formData.message.length > 255) {
-            errors.message = 'The comment must contain at most 255 characters';
         }
 
         if (!formData.isTermsAccepted) {  // Controllo sulla checkbox
