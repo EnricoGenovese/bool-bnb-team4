@@ -49,7 +49,7 @@ export default function AdevancedResearch() {
             top: 0,
             behavior: "instant"
         });
-    }, [searchParams, searchFormData]);
+    }, [searchParams, searchFormData,page]);
     return (
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />

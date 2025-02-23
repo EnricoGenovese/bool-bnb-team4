@@ -148,7 +148,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 >
                     {apartment.item.description}
                 </motion.h2>
-                <Card className="d-flex flex-column flex-md-row p-3 w-100" style={{ maxWidth: "100%" }} key={apartment.item.id}>
+                <Card className="d-flex flex-column flex-md-row p-3 w-100" style={{ maxWidth: "100%", height:"650px" }} key={apartment.item.id}>
                     <motion.div
                         initial={{ x: -180, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
