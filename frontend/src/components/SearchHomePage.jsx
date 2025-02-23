@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import { NavLink, Link, useNavigate } from "react-router-dom"; // Assicurati che sia 'react-router-dom'
-import styles from '../styles/SearchHomePage.module.css';  // Usa CSS Modules, se preferisci
+import styles from '../styles/Link.module.css';  // Usa CSS Modules, se preferisci
 
 export default function SearchHomePage() {
     const [temp, setTemp] = useState(""); // Usa una stringa per 'searchParam'
@@ -89,6 +89,13 @@ export default function SearchHomePage() {
                             className="btn btn-send w-100 w-md-0"
                             to={temp.trim() !== "" && !hasSpecialCharacters ? `/advanced-research?search=${formattingSlug(temp)}` : "#"}
                             disabled={isFormEmpty}
+                            style={{
+                                color: isFormEmpty ? '#888' : '',               // Colore grigio se disabilitato
+                                backgroundColor: isFormEmpty ? '#C6A664' : '',  // Colore di sfondo più chiaro se disabilitato
+                                cursor: isFormEmpty ? 'not-allowed' : '',        // Cambia il cursore a "non consentito"
+                                pointerEvents: isFormEmpty ? 'none' : '',        // Disabilita gli eventi del mouse
+                                opacity: isFormEmpty ? 0.5 : 1                  // Riduce l'opacità se disabilitato
+                            }}
                         >
                             Search
                         </Link>

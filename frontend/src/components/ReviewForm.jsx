@@ -114,7 +114,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
                     />
                 ))}
 
-                <button type="button" className="btn btn-send ms-3 rounded-start-2" disabled={isVoteEmpty} onClick={() => { clearInput("vote") }}>I changed my mind about voting! <FaStar style={{ cursor: "pointer", marginBottom: "6px" }} /></button>
+
             </div>
 
             <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
