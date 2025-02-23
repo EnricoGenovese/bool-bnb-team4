@@ -284,6 +284,7 @@ export default function ApartmentPostForm() {
                                 value={apartmentData.description}
                                 placeholder={"Enter summary title describing the property"}
                                 onChange={handleInput}
+                                autoComplete="off"
                             />
                             {apartmentData.description && (
                                 <span
@@ -315,6 +316,7 @@ export default function ApartmentPostForm() {
                                 value={apartmentData.address}
                                 placeholder={"Enter full address"}
                                 onChange={handleInput}
+                                autoComplete="off"
                             />
                             {apartmentData.address && (
                                 <span
@@ -347,6 +349,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.city}
                                     placeholder={"Enter city"}
                                     onChange={handleInput}
+                                    autoComplete="off"
                                 />
                                 {apartmentData.city && (
                                     <span
@@ -379,6 +382,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.state}
                                     placeholder={"Enter state"}
                                     onChange={handleInput}
+                                    autoComplete="off"
                                 />
                                 {apartmentData.state && (
                                     <span
@@ -432,6 +436,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.roomsNumber}
                                     placeholder="Enter number of rooms"
                                     onChange={handleInput}
+                                    autoComplete="off"
 
                                 />
                                 {apartmentData.roomsNumber && (
@@ -463,6 +468,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.bedsNumber}
                                     placeholder="Enter number of beds"
                                     onChange={handleInput}
+                                    autoComplete="off"
 
                                 />
                                 {apartmentData.bedsNumber && (
@@ -494,6 +500,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.bathroomsNumber}
                                     placeholder="Enter number of bathrooms"
                                     onChange={handleInput}
+                                    autoComplete="off"
                                 />
                                 {apartmentData.bathroomsNumber && (
                                     <span
@@ -524,8 +531,7 @@ export default function ApartmentPostForm() {
                                     value={apartmentData.squareMeters}
                                     placeholder="Enter square meters"
                                     onChange={handleInput}
-
-
+                                    autoComplete="off"
                                 />
                                 {apartmentData.squareMeters && (
                                     <span
