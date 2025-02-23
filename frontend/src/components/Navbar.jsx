@@ -34,7 +34,7 @@ export default function Navbar() {
                         className={`w-100 collapse navbar-collapse my-2  ${isOpen ? "show" : ""}`}
                         id="navbarSupportedContent"
                     >
-                        <ul className="navbar-nav me-3 mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
+                        <ul className="navbar-nav mb-2 mb-lg-0 fw-bold text-shadow-1 align-items-center">
 
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link text-decoration-none navlink-hover custom-link" onClick={handleToggle}>

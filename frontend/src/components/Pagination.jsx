@@ -66,7 +66,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
         <nav className="col-12 d-flex justify-content-center mt-5">
             <ul className="pagination">
                 {/* Pulsante per andare alla pagina precedente */}
-                <li className={`page-item ${filteredPage <= 1 ? "disabled" : ""} px-5`}>
+                <li className={`page-item ${filteredPage <= 1 ? "disabled" : ""} px-5 d-none d-md-block`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
                         onClick={() => { handleFilteredPageChange(filteredPage - 1); scrollFiltered(); }}
@@ -119,7 +119,7 @@ export default function Pagination({ filteredPage, handleFilteredPageChange, num
                 )}
 
                 {/* Pulsante per andare alla pagina successiva */}
-                <li className={`page-item ${filteredPage >= numFilteredPages ? "disabled" : ""} px-5`}>
+                <li className={`page-item ${filteredPage >= numFilteredPages ? "disabled" : ""} px-5 d-none d-md-block`}>
                     <button
                         className={`page-link ${style.pageBtn}`}
                         onClick={() => { handleFilteredPageChange(filteredPage + 1); scrollFiltered(); }}

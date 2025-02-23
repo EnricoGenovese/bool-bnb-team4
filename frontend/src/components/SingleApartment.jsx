@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import React from "react";
 import { Card } from "react-bootstrap";
-import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaHome, FaDoorOpen, FaEnvelope, FaTimes } from "react-icons/fa";
+import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt, FaHome, FaDoorOpen, FaEnvelope, FaTimes, FaStar, FaPen, FaBook, FaEdit } from "react-icons/fa";
 import ReviewForm from "./ReviewForm";
 import ContactForm from "./ContactForm";
 import Star from "./Star";
@@ -148,7 +148,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 >
                     {apartment.item.description}
                 </motion.h2>
-                <Card className="d-flex flex-column flex-md-row p-3 w-100" style={{ maxWidth: "100%", height:"650px" }} key={apartment.item.id}>
+                <Card className="d-flex flex-column flex-md-row p-3 w-100" style={{ maxWidth: "100%", height: "80vh" }} key={apartment.item.id}>
                     <motion.div
                         initial={{ x: -180, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -183,12 +183,13 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                                         animate={{ x: 0, opacity: 1 }}
                                         transition={{ duration: 0.8, ease: "easeOut" }}
                                     >
+                                        <p className="fw-bold d-flex flex-nowrap"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}, {apartment.item.city}</p>
+                                        <p className=" d-flex flex-nowrap"><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
                                         <p className="d-flex flex-nowrap"><FaDoorOpen fill="#8B2635" size="20" className="me-3" /> {apartment.item["rooms_number"]} Rooms</p>
                                         <p className="d-flex flex-nowrap"><FaBed fill="#8B2635" size="20" className="me-3" /> {apartment.item["beds_number"]} Beds</p>
                                         <p className="d-flex flex-nowrap"><FaBath fill="#8B2635" size="20" className="me-3" /> {apartment.item["bathrooms_number"]} Bathrooms</p>
                                         <p className="d-flex flex-nowrap"><FaRulerCombined fill="#8B2635" size="20" className="me-3" /> {apartment.item["square_meters"]} m²</p>
-                                        <p className="d-flex flex-nowrap"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" /> {apartment.item.address}, {apartment.item.city}</p>
-                                        <p className="d-flex flex-nowrap"><FaHome fill="#8B2635" size="20" className="me-3" /> {category?.name}</p>
+
 
 
                                         <div className="d-flex gap-2 pt-3">
@@ -203,13 +204,17 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                                             </button>
                                             <button className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3"
                                                 onClick={() => setIsOverlayOpen(true)}>
-                                                <span><FaEnvelope className="mx-auto d-inline-block me-md-2" /></span>
+                                                <span><FaEnvelope className="mx-auto d-inline-block me-md-1" style={{ marginBottom: "3px" }} /></span>
                                                 <span className="d-none d-md-inline-block">Send Email</span>
+                                            </button>
+                                            <button type="button" className="btn btn-send text-light btn-sm d-flex justify-content-around align-content-between align-self-center px-3" onClick={scrollToReview}
+                                            >  <span><FaEdit className="text-center mx-md-auto d-inline-block me-md-1" style={{ marginBottom: "3px" }} /></span>
+                                                <span className="d-none d-md-inline-block">Add your review</span>
                                             </button>
                                         </div>
                                     </motion.div>
                                 </Card.Text>
-                                <div id="reviewsCollapse" className="w-100 d-flex justify-content-center align-content-center mt-3" style={{ border: "1px solid  #2E3532", borderRadius: "10px", overflow: "hidden" }}>
+                                <div id="reviewsCollapse" className="w-100 d-none d-md-flex justify-content-center align-content-center mt-3" style={{ border: "1px solid  #2E3532", borderRadius: "10px", overflow: "hidden", height: "30vh" }}>
                                     <MapComponent longitude={longitude} latitude={latitude} />
                                 </div>
                             </Card.Body>
@@ -228,11 +233,9 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 </div>
             )}
 
-            <section className="container m-auto pt-5 my-5" >
+            <section className="container m-auto pt-5 my-1" >
 
-                <button type="button" className="btn btn-send my-3" onClick={scrollToReview}
-                >Add your review
-                </button>
+
 
 
                 <motion.h3
@@ -252,7 +255,7 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 {showHideButton()}
             </section >
 
-            <section ref={reviewRef}>
+            <section ref={reviewRef} className="my-5">
 
                 <motion.h3
                     initial={{ x: -180, opacity: 0 }}

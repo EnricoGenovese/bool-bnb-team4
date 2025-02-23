@@ -7,8 +7,9 @@ import { PiListNumbersFill } from "react-icons/pi";
 import { FaStar, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import FormStyle from "../styles/ReviewForm.module.css";
-import styles from "../styles/SearchHomePage.module.css";
+
 import stylesReset from "../styles/ResetButton.module.css";
+import StyleApartmentPostForm from "../styles/ApartmentPostForm.module.css";
 
 
 
@@ -39,8 +40,10 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
     const today = new Date().toISOString().split("T")[0];
 
     return (
-        <form id="reviewForm" className="container m-auto" onSubmit={submit} noValidate>
+        <form id="reviewForm" className="container m-auto py-1" onSubmit={submit} noValidate>
+            <p className="mt-3">Fields marked with * are required</p>
             <label htmlFor="name">Name *</label>
+            <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 2 Max 50 characters</div>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>
                 <input type="text" className="form-control" id="name" name="name" placeholder="Enter your name" value={formData.name} onChange={onHandleInput} />
@@ -56,6 +59,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
             <p>{errors.name && <span className={`error-message  mb-3 ${FormStyle.errorMessage}`}>{errors.name}</span>}</p>
 
             <label htmlFor="text">Comment *</label>
+            <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}> Max 255 characters</div>
             <div className="input-group">
                 <span className="input-group-text"><MdRateReview /></span>
                 <textarea className="form-control" id="text" name="text" rows="3" placeholder="Enter your comment" value={formData.text} onChange={onHandleInput}></textarea>
@@ -85,7 +89,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
             </div>
             <p>{errors.entryDate && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.entryDate}</span>}</p>
 
-            <label htmlFor="daysOfStay">Days of stay... *</label>
+            <label htmlFor="daysOfStay">Days of stay *</label>
             <div className="input-group">
                 <span className="input-group-text"><PiListNumbersFill /></span>
                 <input type="number" className="form-control" id="daysOfStay" name="daysOfStay" placeholder="Insert days of stay" value={formData.daysOfStay} onChange={onHandleInput} />
@@ -118,7 +122,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
             <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
             <div className="mt-5">
 
-                <button type="submit" className="btn btn-send" disabled={isFormEmpty}>Add comment</button>
+                <button type="submit" className="btn btn-send">Add comment</button>
                 <button
                     type="button"
                     className={`btn ms-2 ${stylesReset.btnReset}`}
@@ -128,7 +132,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
                     Reset
                 </button>
             </div>
-            <p className="mt-3">* Fields marked with * are required</p>
+
         </form>
     );
 }

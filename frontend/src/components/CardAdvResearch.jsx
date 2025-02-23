@@ -49,7 +49,7 @@ export default function CardAdvResearch({ apartment, addLike }) {
             <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className={`card-body h-100 ${style["card-header"]}`}>
-                    <h5 className="card-title">{apartment.description.length > 25 ? apartment.description.substring(0, 24) + ("...") : apartment.description}</h5>
+                    <h5 className="fw-bold card-title">{apartment.description.length > 25 ? apartment.description.substring(0, 24) + ("...") : apartment.description}</h5>
                     <div className="">
                         <p className="fw-bold card-text text-break "><FaCity fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.city}</p>
                     </div>
@@ -63,7 +63,7 @@ export default function CardAdvResearch({ apartment, addLike }) {
                         <p className="card-text text-break "><FaDoorOpen fill="#8B2635" size="20" className="me-3" />Rooms:&nbsp;{apartment.rooms_number}</p>
                     </div>
                     <div className=" my-2 ">
-                        <p className="card-text text-break "><FaBed fill="#8B2635" size="20" className="me-3" />Beds&nbsp;{apartment.beds_number}</p>
+                        <p className="card-text text-break "><FaBed fill="#8B2635" size="20" className="me-3" />Beds:&nbsp;{apartment.beds_number}</p>
                     </div>
                 </div>
             </NavLink>

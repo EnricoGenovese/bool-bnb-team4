@@ -572,7 +572,7 @@ export default function ApartmentPostForm() {
                         </span>
                     )}
 
-                    <button type="submit" className="btn btn-send w-100 mt-3" disabled={isFormEmpty}>Add apartment</button>
+                    <button type="submit" className="btn btn-send w-100 mt-3">Add apartment</button>
                     <motion.button
                         initial={{ y: +100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}

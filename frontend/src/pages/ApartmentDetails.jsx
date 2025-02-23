@@ -169,7 +169,7 @@ export default function ApartmentDetails() {
                         type: "success",
                         message: `Your review has been added successfully`,
                     });
-                    window.scrollTo(0, 0);
+                    setTimeout(() => window.scrollTo(0, 700), 300);
                     toast.success("Review added succesfully"), {
                         position: "top-right",
                         autoClose: 3000,
