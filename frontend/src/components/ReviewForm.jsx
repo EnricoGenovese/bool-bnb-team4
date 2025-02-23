@@ -113,8 +113,6 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
                         style={{ cursor: "pointer", marginRight: "5px" }}
                     />
                 ))}
-
-
             </div>
 
             <p>{errors.vote && <span className={`error-message ${FormStyle.errorMessage}`}>{errors.vote}</span>}</p>
