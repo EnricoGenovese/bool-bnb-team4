@@ -183,7 +183,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                     </span>
                 )}
                 <div className="d-grid gap-2 mt-3">
-                    <button type="submit" className="btn btn-send" disabled={isSubmitting || !isFormValid()}>
+                    <button type="submit" className="btn btn-send" disabled={isSubmitting}>
                         {isSubmitting ? 'Sending...' : 'Send'}
                     </button>
                     <button

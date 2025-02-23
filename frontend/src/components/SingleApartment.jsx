@@ -100,20 +100,14 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
         console.log("limitReviews: ", limitReviews);
         console.log("apartment.reviewsCount: ", apartment.reviewsCount - 1);
 
-        if ((apartment.reviewsCount - 1) == limitReviews) {
-            return (
-                <div className="d-flex justify-content-end w-100">
-                    <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
-                </div>
-            )
-        }
+
         if (apartment.reviewsCount > 3) {
-            if (apartment.reviewsCount - 1 >= limitReviews) {
+            if (apartment.reviewsCount - 1 > limitReviews) {
                 if (limitReviews > 3) {
                     return (
                         <div className="d-flex justify-content-between">
                             <button type="button" className="btn btn-send my-3 d-flex align-self-start" onClick={clickedShowMoreRewiews}>Show other comments</button>
-                            <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+                            <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}>Hide other comments</button>
 
                         </div>
                     )
@@ -123,10 +117,10 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                 }
             }
 
-            else if (apartment.reviewsCount >= 3) {
+            else if (apartment.reviewsCount > 3) {
                 return (
                     <div className="d-flex justify-content-end w-100">
-                        <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}><a href="#reviewsCollapse" className="text-decoration-none btn-send">Hide other comments</a></button>
+                        <button type="button" className="btn btn-send my-3 d-flex align-self-end" onClick={clickedCollapseRewiews}>Hide other comments</button>
                     </div>
                 )
             }

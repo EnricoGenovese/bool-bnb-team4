@@ -219,6 +219,7 @@ export default function ApartmentDetails() {
     function clickedCollapseRewiews() {
         setLimitReviews(2);
         getApartment();
+        window.scrollTo(0, 700);
     }
 
     return (

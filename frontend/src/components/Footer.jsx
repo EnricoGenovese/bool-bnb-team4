@@ -19,7 +19,7 @@ export default function Footer() {
     return (
         <footer className="bg-dark text-light text-lg-start ">
             <div className="container p-4 d-flex flex-column justify-content-center">
-                <div className="row container-small justify-content-center">
+                <div id="footer-links" className="row container-small justify-content-center">
                     <div className="col-6 col-md-3 mb-4 mb-md-2 flex-grow-1">
                         <h5 className="text-uppercase text-white">Company</h5>
                         <ul className="list-unstyled">

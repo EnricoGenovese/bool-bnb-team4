@@ -177,6 +177,10 @@ input[type="text"] {
     border-color: var(--bs-border-color) !important;
 }
 
+#footer-links li:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 992px) {
 
     #navbarSupportedContent {
