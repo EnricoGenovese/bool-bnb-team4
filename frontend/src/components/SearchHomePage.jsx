@@ -87,6 +87,13 @@ export default function SearchHomePage() {
                             className="btn btn-send w-100 w-md-0"
                             to={temp.trim() !== "" && !hasSpecialCharacters ? `/advanced-research?search=${formattingSlug(temp)}` : "#"}
                             disabled={isFormEmpty}
+                            style={{
+                                color: isFormEmpty ? '#888' : '',               // Colore grigio se disabilitato
+                                backgroundColor: isFormEmpty ? '#C6A664' : '',  // Colore di sfondo più chiaro se disabilitato
+                                cursor: isFormEmpty ? 'not-allowed' : '',        // Cambia il cursore a "non consentito"
+                                pointerEvents: isFormEmpty ? 'none' : '',        // Disabilita gli eventi del mouse
+                                opacity: isFormEmpty ? 0.5 : 1                  // Riduce l'opacità se disabilitato
+                            }}
                         >
                             Search
                         </Link>
