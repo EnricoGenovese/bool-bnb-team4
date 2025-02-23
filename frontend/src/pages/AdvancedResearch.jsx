@@ -54,10 +54,19 @@ export default function AdevancedResearch() {
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
             <div className="container m-auto row mb-3">
-                <h3 className="pt-5">Results for your research: {apartmentsCount} {searchFormData?.search ?
-                    <>for <strong>{searchFormData.search}</strong></>
-                    : ""}
+                <h3 className="pt-5">
+                    {filteredApi.length < 1 ? "" : (
+                        <>
+                            Results for your research: {apartmentsCount}{" "}
+                            {searchFormData?.search ? (
+                                <>for <strong>{searchFormData.search}</strong></>
+                            ) : (
+                                ""
+                            )}
+                        </>
+                    )}
                 </h3>
+
 
                 {filteredApi.length >= 1 ?
                     filteredApi?.map((apartment, index) => (
