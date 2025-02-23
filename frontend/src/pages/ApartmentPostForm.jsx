@@ -271,8 +271,8 @@ export default function ApartmentPostForm() {
 
 
                     <div className="mb-3">
-                        <div className={`pb-3 ps-2 ${StyleApartmentPostForm.fieldInfo}`}>All fields are required</div>
-                        <label htmlFor="description" className="form-label">Summary Title describing the property:</label>
+                        <div className={`pb-3 ps-2 ${StyleApartmentPostForm.fieldInfo}`}>Fields marked with * are required</div>
+                        <label htmlFor="description" className="form-label">Summary Title describing the property: *</label>
                         <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
                         <div className="input-group">
                             <span className="input-group-text"><FaBuilding /></span>
@@ -303,7 +303,7 @@ export default function ApartmentPostForm() {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="address" className="form-label">Full address:</label>
+                        <label htmlFor="address" className="form-label">Full address: *</label>
                         <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 5 Max 100 characters</div>
                         <div className="input-group">
                             <span className="input-group-text"><FaMapMarkerAlt /></span>
@@ -335,7 +335,7 @@ export default function ApartmentPostForm() {
                     <div className="row">
 
                         <div className="mb-3 col-md-6">
-                            <label htmlFor="city" className="form-label">City:</label>
+                            <label htmlFor="city" className="form-label">City: *</label>
                             <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Max 100 characters</div>
                             <div className="input-group">
                                 <span className="input-group-text"><FaCity /></span>
@@ -367,7 +367,7 @@ export default function ApartmentPostForm() {
 
 
                         <div className="mb-3 col-md-6">
-                            <label htmlFor="state" className="form-label">State:</label>
+                            <label htmlFor="state" className="form-label">State: *</label>
                             <div className={`pb-1 ${StyleApartmentPostForm.fieldInfo}`}>Max 100 characters</div>
                             <div className="input-group">
                                 <span className="input-group-text"><FaGlobeEurope /></span>
@@ -400,7 +400,7 @@ export default function ApartmentPostForm() {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="image" className="form-label">Upload an Image:</label>
+                        <label htmlFor="image" className="form-label">Upload an Image: *</label>
                         <div className={`pb-1 ps-2 ${StyleApartmentPostForm.fieldInfo}`}>The uploaded file must be an image (JPEG, PNG, JPG), max-size 10MB</div>
                         <input
                             type="file"
@@ -421,7 +421,7 @@ export default function ApartmentPostForm() {
 
                     <div className="row">
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="roomsNumber" className="form-label">Number of rooms:</label>
+                            <label htmlFor="roomsNumber" className="form-label">Number of rooms: *</label>
                             <div className="input-group">
                                 <span className="input-group-text"><FaDoorClosed /></span>
                                 <input
@@ -452,7 +452,7 @@ export default function ApartmentPostForm() {
                         </div>
 
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="bedsNumber" className="form-label">Number of beds:</label>
+                            <label htmlFor="bedsNumber" className="form-label">Number of beds: *</label>
                             <div className="input-group">
                                 <span className="input-group-text"><FaBed /></span>
                                 <input
@@ -483,7 +483,7 @@ export default function ApartmentPostForm() {
                         </div>
 
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="bathroomsNumber" className="form-label">Number of bath<span className="d-inline d-md-none d-lg-inline">rooms</span>:</label>
+                            <label htmlFor="bathroomsNumber" className="form-label">Number of bath<span className="d-inline d-md-none d-lg-inline">rooms</span>: *</label>
                             <div className="input-group">
                                 <span className="input-group-text"><FaBath /></span>
                                 <input
@@ -513,7 +513,7 @@ export default function ApartmentPostForm() {
                         </div>
 
                         <div className="col-md-3 mb-3">
-                            <label htmlFor="squareMeters" className="form-label">Square meters:</label>
+                            <label htmlFor="squareMeters" className="form-label">Square meters: *</label>
                             <div className="input-group">
                                 <span className="input-group-text"><FaRulerCombined /></span>
                                 <input
@@ -545,7 +545,7 @@ export default function ApartmentPostForm() {
                         </div>
 
                     </div>
-                    <label htmlFor="category" className="form-label">Property category:</label>
+                    <label htmlFor="category" className="form-label">Property category: *</label>
                     <div className=" input-group">
                         <span className="input-group-text"><FaHome /></span>
                         <select
