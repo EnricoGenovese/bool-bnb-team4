@@ -71,6 +71,7 @@ export default function SearchHomePage() {
                             placeholder="Insert city or address"
                             value={temp}
                             onChange={handleChange} // Usa onChange per aggiornare lo stato
+                            autoComplete="off"
                         />
                         {/* La X appare solo se c'è qualcosa nell'input */}
                         {temp && (

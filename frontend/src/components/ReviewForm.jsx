@@ -46,7 +46,7 @@ function ReviewForm({ submit, formData, setFormData, onChange, onHandleStarHover
             <div className={`pb-1  ${StyleApartmentPostForm.fieldInfo}`}>Min 2 Max 50 characters</div>
             <div className="input-group">
                 <span className="input-group-text"><IoMdContact /></span>
-                <input type="text" className="form-control" id="name" name="name" placeholder="Enter your name" value={formData.name} onChange={onHandleInput} />
+                <input type="text" className="form-control" id="name" name="name" placeholder="Enter your name" value={formData.name} onChange={onHandleInput} autoComplete="off" />
                 {formData.name && (
                     <span
                         className="input-group-text cursor-pointer"
