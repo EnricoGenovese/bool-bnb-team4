@@ -87,7 +87,7 @@ export default function FilteredSearch({ submit, onChange, tempFormData, handleR
                                     <FaHome />
                                 </span>
                                 <select
-                                    className="form-control"
+                                    className="form-select"
                                     id="category"
                                     name="category"
                                     value={tempFormData.category}
@@ -97,9 +97,19 @@ export default function FilteredSearch({ submit, onChange, tempFormData, handleR
                                     {categories.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.name}
+
                                         </option>
                                     ))}
+
                                 </select>
+                                {tempFormData.category != 0 && (
+                                    <span
+                                        className="input-group-text cursor-pointer"
+                                        onClick={() => { clearInput("category") }}
+                                    >
+                                        <FaTimes />
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </div>

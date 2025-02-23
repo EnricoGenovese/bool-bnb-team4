@@ -37,6 +37,19 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+select {
+    -webkit-appearance: none;
+    /* Per i browser Webkit come Chrome, Safari */
+    -moz-appearance: none;
+    /* Per Firefox */
+    appearance: none;
+    /* Per il supporto generale */
+    background: transparent;
+    /* Rendi lo sfondo trasparente */
+    padding-right: 20px;
+    /* Aggiungi spazio per evitare che il testo si sovrapponga */
+}
+
 input[type="number"] {
     -moz-appearance: textfield;
     /* Firefox */
