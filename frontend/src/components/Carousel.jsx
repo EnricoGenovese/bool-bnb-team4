@@ -40,7 +40,7 @@ const Carousel = ({ cardShow, data, CardComponent, cardProps }) => {
                     delay: 1000,
                     disableOnInteraction: false,
                 }}
-                speed={3000}
+                speed={1500}
                 navigation={true}
                 pagination={{ clickable: true }}
                 spaceBetween={50}
@@ -73,20 +73,15 @@ const Carousel = ({ cardShow, data, CardComponent, cardProps }) => {
                         color: white;
                     }
                     .swiper-pagination {
-                        bottom: 10px !important;
-                        display: flex;
-                        justify-content: center;
-                        gap: 22px; 
-                        width: max-content !important; 
-                        padding: 5px 10px;
-                        background-color: rgba(46, 53, 50, 0.8);
-                        border-radius: 10px;
-                        position: absolute;
-                        left: -50%;
-                        transform: translateX(80%);
-                    }
+    bottom: 0px !important;
+    display: inline-flex; /* Usa inline-flex per centrare solo il contenuto */
+    justify-content: center; /* Centra gli indicatori orizzontalmente */
+    gap: 10px; /* Se necessario, imposta uno spazio tra gli indicatori */
+}
+
+
                     .swiper-pagination-bullet {
-                        background: rgba(255, 255, 255, 0.7);
+                        background: rgba(0, 0, 0, 1);
                         width: 20px;
                         height: 20px;
                         position: relative;

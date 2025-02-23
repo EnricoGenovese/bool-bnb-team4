@@ -1,7 +1,7 @@
 import axios from "axios"
 import React from "react";
 import FilteredSearch from "../components/FilteredSearch";
-import Card from "../components/Card";
+import CardAdvResearch from "../components/CardAdvResearch";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState } from "react";
 import LoaderCard from "../components/LoaderCard";
@@ -44,13 +44,12 @@ export default function AdevancedResearch() {
             minRooms,
             minBeds
         });
-
         fetchApi();
         window.scrollTo({
             top: 0,
             behavior: "instant"
         });
-    }, [searchParams]);
+    }, [searchParams, searchFormData]);
     return (
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
@@ -72,7 +71,7 @@ export default function AdevancedResearch() {
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5, delay: index * delayAnim }} // Ritardo progressivo
                                         >
-                                            <Card apartment={apartment} addLike={addLike} />
+                                            <CardAdvResearch apartment={apartment} addLike={addLike} />
                                         </motion.div>
                                     )
                             }

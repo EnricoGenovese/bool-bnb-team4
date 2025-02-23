@@ -32,20 +32,20 @@ const SearchProvider = ({ children }) => {
     useEffect(() => {
         setIsLoading(true);
         const params = {};
-        if(window.location.pathname === "/advanced-research") {
-        if (searchFormData.search) {
-            params.search = searchFormData.search;
+        if (window.location.pathname === "/advanced-research") {
+            if (searchFormData.search) {
+                params.search = searchFormData.search;
+            }
+            if (searchFormData.minRooms > 0) {
+                params.minRooms = searchFormData.minRooms;
+            }
+            if (searchFormData.minBeds > 0) {
+                params.minBeds = searchFormData.minBeds;
+            }
+            if (searchFormData.category > 0) {
+                params.category = searchFormData.category;
+            }
         }
-        if (searchFormData.minRooms > 0) {
-            params.minRooms = searchFormData.minRooms;
-        }
-        if (searchFormData.minBeds > 0) {
-            params.minBeds = searchFormData.minBeds;
-        }
-        if (searchFormData.category > 0) {
-            params.category = searchFormData.category;
-        }
-    }
         const queryParams = new URLSearchParams(params).toString();
 
         if (queryParams) {
@@ -117,7 +117,6 @@ const SearchProvider = ({ children }) => {
 
         axios.get(`${apiURL}${endpoint}homepage`, { params })
             .then((res) => {
-                console.log(res.data);
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setHomeApartments(res.data.items);
                 setApartmentsCount(res.data.count);
@@ -138,6 +137,7 @@ const SearchProvider = ({ children }) => {
         axios.get(`${apiURL}${endpoint}`, { params })
             .then((res) => {
                 setFilteredApi(res.data.items);
+                console.log("boh", filteredApi);
                 setNumPages(Math.ceil(res.data.count / res.data.limit));
                 setApartmentsCount(res.data.count);
                 res?.data?.count <= 8 ? setIsPaginationFlag(true) : setIsPaginationFlag(false);

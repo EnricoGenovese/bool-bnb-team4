@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaTimes } from "react-icons/fa";
-import { NavLink, Link, useNavigate } from "react-router-dom"; // Assicurati che sia 'react-router-dom'
-import styles from '../styles/Link.module.css';  // Usa CSS Modules, se preferisci
+import { Link } from "react-router-dom"; // Usa Link come nel tuo codice originale
+import styles from '../styles/SearchHomePage.module.css';  // Usa CSS Modules, se preferisci
 
 export default function SearchHomePage() {
     const [temp, setTemp] = useState(""); // Usa una stringa per 'searchParam'
     const isFormEmpty = temp === "" || temp == 0; // Verifica se il campo è vuoto o uguale a 0
-    const hasSpecialCharacters = /[^a-zA-Z0-9]/.test(temp);
+    const hasSpecialCharacters = /[^a-zA-Z0-9\s]/.test(temp); // Modificato per permettere spazi
 
     const clearInput = () => {
         setTemp(""); // Svuota il campo di input
     };
-    const navigate = useNavigate();
 
     const formattingSlug = (string) => {
         // Prendi solo la parte prima della virgola
@@ -20,7 +19,7 @@ export default function SearchHomePage() {
 
         return cityName
             .toLowerCase()
-            .trim()
+            .trim() // Rimuove spazi sia a sinistra che a destra
             .normalize("NFD")
             .replace(/[^\w\s-]/g, '') // Rimuove caratteri non alfanumerici tranne spazi e trattini
             .replace(/[\s_-]+/g, '+') // Sostituisce spazi, trattini e underscore con '+'
@@ -32,15 +31,14 @@ export default function SearchHomePage() {
         setTemp(e.target.value); // Aggiorna lo stato con il nuovo valore dell'input
     };
 
-
-
     const handleKeyDown = (event) => {
         // Se il tasto premuto è "Enter" e il campo di input non è vuoto
         if (event.key === 'Enter') {
             event.preventDefault(); // Impediamo il comportamento di submit del form
-            if (temp.trim() !== "" && !hasSpecialCharacters) {
+            const trimmedInput = temp.trim(); // Rimuovi gli spazi solo ai lati
+            if (trimmedInput !== "" && !hasSpecialCharacters) {
                 // Naviga al link solo se l'input non è vuoto
-                window.location.href = `/advanced-research?search=${formattingSlug(temp)}`;
+                window.location.href = `/advanced-research?search=${formattingSlug(trimmedInput)}`;
             }
         }
     };

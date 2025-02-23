@@ -97,8 +97,7 @@ WHERE a.id IN (
     FROM apartments
     WHERE city = a.city
     GROUP BY city
-);
-`;
+);`;
 
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Errore del server', details: err });
@@ -113,6 +112,47 @@ WHERE a.id IN (
         res.json(response);
     });
 
+}
+
+function indexLastTimeChanceHomePage(req, res) {
+    const sql = `
+        SELECT * FROM apartments
+        ORDER BY RAND()
+        LIMIT 6;
+    `;
+
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+
+        res.json({
+            success: true,
+            count: results.length,
+            items: results
+        });
+    });
+}
+
+function indexCategoriesHomePage(req, res) {
+    const sql = `
+        SELECT a.*, c.name
+FROM apartments a
+JOIN categories c ON a.id_category = c.id
+WHERE a.id IN (
+    SELECT MIN(id)
+    FROM apartments
+    GROUP BY id_category
+);
+    `;
+
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Errore del server', details: err });
+
+        res.json({
+            success: true,
+            count: results.length,
+            items: results
+        });
+    });
 }
 
 function indexCategories(req, res) {
@@ -413,4 +453,4 @@ function modify(req, res) {
     })
 }
 
-export { index, indexCategories, indexMostLovedHomePage, indexMostVisitedCityHomePage, show, storereviews, store, upload, modify };
+export { index, indexCategories, indexMostLovedHomePage, indexMostVisitedCityHomePage, indexLastTimeChanceHomePage, indexCategoriesHomePage,show, storereviews, store, upload, modify };
