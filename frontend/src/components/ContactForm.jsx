@@ -80,8 +80,10 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                 .then(
                     (result) => {
                         console.log(result.text);
-                        setStatusMessage('Email sent successfully!');
+
+                        console.log('statusMessage after success:', statusMessage);  // Aggiungi un log
                         handleReset();  // Reset del form dopo invio
+                        setStatusMessage('Email sent successfully');  // Aggiungi un messaggio di successo
                     },
                     (error) => {
                         console.log(error.text);
@@ -91,6 +93,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                 .finally(() => {
                     setIsSubmitting(false);
                 });
+
             console.log("Il form è stato inviato con successo!");
         } else {
             console.log("L'invio del modulo non è riuscito a causa di errori di convalida");

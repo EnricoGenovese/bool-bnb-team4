@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination"
 import { useSearchContext } from "../contexts/SearchContext";
 
 
+
 export default function AdevancedResearch() {
 
     const { addLike, isLoading, setIsLoading, isHomePage, resetForm
@@ -29,6 +30,7 @@ export default function AdevancedResearch() {
                 minBeds: ""
             }
         )
+
     }
     const [searchParams] = useSearchParams();
 
@@ -52,7 +54,7 @@ export default function AdevancedResearch() {
     }, [searchParams, searchFormData, page]);
     return (
         <>
-            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
+            <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} handleReset={handleReset} />
             <div className="container m-auto row mb-3">
                 <h3 className="pt-5">
                     {filteredApi.length < 1 ? "" : (
