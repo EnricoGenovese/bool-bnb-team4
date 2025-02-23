@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
+
 import { motion } from "framer-motion";
 import axios from "axios";
 import { FaSearch, FaHome, FaBed, FaDoorClosed, FaTimes } from "react-icons/fa";
-import styles from "../styles/SearchHomePage.module.css";
+
 import stylesReset from "../styles/ResetButton.module.css";
 
 export default function FilteredSearch({ submit, onChange, tempFormData, handleReset }) {
     const [categories, setCategories] = useState([]);
     const categoriesAPI = "http://localhost:3000/api/apartments/categories";
     const { searchFormData, setSearchFormData } = useGlobalContext();
+
     const isFormEmpty = Object.values(tempFormData).every(value => value === "" || value == 0);
 
     const clearInput = (inputName) => {
