@@ -17,7 +17,7 @@ export default function Card({ apartment, addLike }) {
                 <div className={`card-body ${style["card-header"]}`}>
                     <h5 className="card-title">{apartment.description}</h5>
                     <div className="d-flex align-items-center my-2">
-                        <p className="card-text text-break d-flex flex-nowrap align-items-center"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address}</p>
+                        <p className="fw-bold card-text text-break d-flex flex-nowrap align-items-center"><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address}</p>
                     </div>
                     <div className="d-flex align-items-center">
                         <p className="fw-bold text-break d-flex flex-nowrap align-items-center"><FaCity fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.city}</p>
