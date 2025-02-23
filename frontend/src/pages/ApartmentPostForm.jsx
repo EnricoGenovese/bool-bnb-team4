@@ -582,7 +582,7 @@ export default function ApartmentPostForm() {
                     <motion.button
                         initial={{ y: +100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        transition={{ duration: 1.2, ease: "easeInOut"}}
                         type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</motion.button >
                 </form>
             </div>
