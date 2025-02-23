@@ -49,7 +49,7 @@ export default function AdevancedResearch() {
             top: 0,
             behavior: "instant"
         });
-    }, [searchParams, searchFormData]);
+    }, [searchParams, searchFormData, page]);
     return (
         <>
             <FilteredSearch submit={handleOnSubmit} onChange={handleOnChange} tempFormData={tempFormData} resetForm={() => { resetForm(tempFormData) }} handleReset={handleReset} />
@@ -61,7 +61,7 @@ export default function AdevancedResearch() {
 
                 {filteredApi.length >= 1 ?
                     filteredApi?.map((apartment, index) => (
-                        <div className="col-12 col-md-6 col-lg-3 g-4" key={apartment.id} >
+                        <div className="col-12 col-md-6 col-lg-3 g-4" style={{ height: "27rem" }} key={apartment.id} >
                             {
                                 isLoading ? <LoaderCard />
                                     :

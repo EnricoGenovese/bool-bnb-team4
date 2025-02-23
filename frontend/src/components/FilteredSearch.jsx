@@ -154,7 +154,7 @@ export default function FilteredSearch({ submit, onChange, tempFormData, handleR
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-send" disabled={isFormEmpty} >
+                <button type="submit" className="btn btn-send" >
                     Search
                 </button>
                 <button

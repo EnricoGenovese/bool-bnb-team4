@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import axios from "axios";
 import { FaMapMarkerAlt, FaCity, FaBed, FaBath, FaRulerCombined, FaHome, FaDoorOpen } from "react-icons/fa";
-import style from "../styles/CardAdvResearch.module.css";
+import style from "../styles/Card.module.css";
 
 const imgPath = import.meta.env.VITE_IMGPATH;
 const apiUrl = import.meta.env.VITE_APIURL;
@@ -23,6 +23,7 @@ export default function CardAdvResearch({ apartment, addLike }) {
             .catch((err) => {
                 console.log(err);
             });
+        console.log(apartment)
     }, []);
 
     // Trova la categoria dell'appartamento
@@ -43,43 +44,44 @@ export default function CardAdvResearch({ apartment, addLike }) {
     );
 
     return (
-        <div className="position-relative">
-            <div className={`card d-flex flex-column h-100 justify-content-between ${style["card-background"]}`} key={slug}>
-                <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
-                    <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
-                    <div className={`card-body ${style["card-header"]}`}>
-                        <h5 className="card-title pb-4">{apartment.description.length > 50 ?
-                            apartment.description.substring(0, 50) + "..."
-                            :
-                            apartment.description}
-                        </h5>
+        <div className={`card d-flex flex-column h-100 justify-content-between position-relative ${style["card-background"]}`} key={slug}>
 
-                        {/* Grid con due colonne su desktop, una su mobile */}
-                        <div className={style.infoGrid}>
-                            <InfoRow icon={FaMapMarkerAlt} text={apartment.address} />
-                            <InfoRow icon={FaCity} text={apartment.city} />
-                            <InfoRow icon={FaDoorOpen} text={`${apartment.rooms_number}`} />
-                            <InfoRow icon={FaBed} text={`${apartment.beds_number}`} />
-                            <InfoRow icon={FaHome} text={category?.name || "N/A"} />
-                        </div>
+            <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
+                <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
+                <div className={`card-body h-100 ${style["card-header"]}`}>
+                    <h5 className="card-title">{apartment.description.length > 25 ? apartment.description.substring(0, 24) + ("...") : apartment.description}</h5>
+                    <div className="">
+                        <p className="fw-bold card-text text-break "><FaCity fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.city}</p>
                     </div>
-                </NavLink>
-
-                <div className={`${style.cardFooter}`}>
-                    <button
-                        className="btn btn-danger text-light d-flex align-items-center justify-content-center"
-                        id={style.likeButton}
-                        onClick={() => {
-                            addLike(slug).then(() => {
-                                setLikes(likes + 1);
-                            });
-                        }}
-                    >
-                        <span className="d-inline-block me-2">&#9829;</span>
-                        <span className="ml-3 d-inline-block align-self-center">{likes}</span>
-                    </button>
+                    <div className=" my-2 ">
+                        <p className=" fw-bold card-text text-break "><FaMapMarkerAlt fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.address.length > 25 ? apartment.address.substring(0, 24) + ("...") : apartment.address} </p>
+                    </div>
+                    <div className=" my-2 ">
+                        <p className=" card-text text-break "><FaHome fill="#8B2635" size="20" className="me-3" />&nbsp;{apartment.category_name}</p>
+                    </div>
+                    <div className=" my-2 ">
+                        <p className="card-text text-break "><FaDoorOpen fill="#8B2635" size="20" className="me-3" />Rooms:&nbsp;{apartment.rooms_number}</p>
+                    </div>
+                    <div className=" my-2 ">
+                        <p className="card-text text-break "><FaBed fill="#8B2635" size="20" className="me-3" />Beds&nbsp;{apartment.beds_number}</p>
+                    </div>
                 </div>
+            </NavLink>
+            <div>
+                <button
+                    className="btn btn-danger text-light d-flex align-items-center justify-content-center"
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}
+                    id={style.likeButton}
+                    onClick={() => {
+                        addLike(slug).then(() => {
+                            setLikes(likes + 1);
+                        });
+                    }}
+                >
+                    <span className="d-inline-block me-2">&#9829;</span>
+                    <span className="ml-3 d-inline-block align-self-center">{likes}</span>
+                </button>
             </div>
-        </div>
+        </div >
     );
 }

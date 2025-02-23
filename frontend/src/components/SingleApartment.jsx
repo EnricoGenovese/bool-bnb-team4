@@ -159,8 +159,10 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                             src={imgPath + apartment.item.img}
                             alt={apartment.item.description}
                             className="w-100 d-md-none mb-3"
-                            style={{ height: "250px", objectFit: "cover" }}
+                            style={{ maxHeight: "250px", objectFit: "cover" }} // Limita l'altezza massima
                         />
+
+
                     </motion.div>
                     <div className="w-100 d-md-flex gap-3">
                         <div style={{ width: "66.67%", height: "100%" }} className="d-none d-md-block ">
@@ -169,8 +171,9 @@ export default function SingleApartment({ apartment, categories, city, ownerMail
                                 src={imgPath + apartment.item.img}
                                 alt={apartment.item.description}
                                 className="me-3"
-                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                style={{ width: "100%", maxHeight: "100%", objectFit: "cover" }} // Limita l'altezza massima
                             />
+
                         </div>
                         <div style={{ height: "100%" }} className="flex-grow-1">
                             <Card.Body className="w-100">
