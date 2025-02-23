@@ -16,9 +16,9 @@ const SearchProvider = ({ children }) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchFormData, setSearchFormData] = useState({
         search: searchParams.get('search') || '',
-        category: searchParams.get('category') || '',
-        minRooms: searchParams.get('minRooms') || '',
-        minBeds: searchParams.get('minBeds') || ''
+        category: searchParams.get('category') || 0,
+        minRooms: searchParams.get('minRooms') || 0,
+        minBeds: searchParams.get('minBeds') || 0
     });
     const [tempFormData, setTempFormData] = useState(searchFormData);
     const [isPaginationFlag, setIsPaginationFlag] = useState(false);
