@@ -121,6 +121,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                             onChange={handleEmailChange}
                             placeholder="Insert your email"
                             required
+                            autoComplete="off"
                         />
                         {email && (
                             <span
@@ -148,6 +149,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                             value={message}
                             onChange={handleMessageChange}
                             placeholder="Insert your message"
+                            autocomplete="off"
                             required
                         />
                         {message && (

@@ -63,6 +63,7 @@ export default function FilteredSearch({ submit, onChange, tempFormData, handleR
                             placeholder="Enter city or address"
                             value={tempFormData.search}
                             onChange={onChange}
+                            autocomplete="off"
                         />
                         {tempFormData.search && (
                             <span
