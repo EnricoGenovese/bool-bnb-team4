@@ -11,7 +11,7 @@ export default function Card({ apartment, addLike }) {
 
 
     return (
-        <div className={`card d-flex flex-column h-100 justify-content-between ${style["card-background"]}`} key={slug}>
+        <div className={`card d-flex flex-column h-100 justify-content-between position-relative ${style["card-background"]}`} key={slug}>
             <NavLink to={`/apartment/${slug}`} className="text-decoration-none text-dark">
                 <img className={`${style.picture} card-img-top`} src={`${imgPath}${apartment.img}`} alt={apartment.description} />
                 <div className={`card-body ${style["card-header"]}`}>
@@ -24,13 +24,17 @@ export default function Card({ apartment, addLike }) {
                     </div>
                 </div>
             </NavLink>
-            <div className={`${style.cardFooter} position-relative`} >
-                <button className="btn btn-danger text-light mx-4 my-2 d-flex align-items-center justify-content-center" id={style.likeButton}
+            <div>
+                <button
+                    className="btn btn-danger text-light d-flex align-items-center justify-content-center"
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}
+                    id={style.likeButton}
                     onClick={() => {
                         addLike(slug).then(() => {
                             setLikes(likes + 1);
                         });
-                    }}>
+                    }}
+                >
                     <span className="d-inline-block me-2">&#9829;</span>
                     <span className="ml-3 d-inline-block align-self-center">{likes}</span>
                 </button>
