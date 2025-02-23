@@ -587,11 +587,9 @@ export default function ApartmentPostForm() {
                     )}
 
                     <button type="submit" className="btn btn-send w-100 mt-3">Add apartment</button>
-                    <motion.button
-                        initial={{ y: +100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 1.2, ease: "easeInOut" }}
-                        type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</motion.button >
+                    <button
+
+                        type="button" className={`btn w-100 mt-3 ${styles.btnReset}`} onClick={handleReset} disabled={isFormEmpty} > Reset</button >
                 </form>
             </div>
         </motion.section>
