@@ -108,7 +108,8 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
             <h2 className="w-100 mb-4 text-start">Send mail for {city}'s {category.name}</h2>
             <form onSubmit={handleSubmit} className={styles.contactForm} noValidate>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label w-100 text-start">Your Email</label>
+                    <p className="mt-3 text-start">Fields marked with * are required</p>
+                    <label htmlFor="email" className="form-label w-100 text-start">Your Email *</label>
                     <div className="input-group">
                         <span className="input-group-text"><MdMail /></span>
                         <input
@@ -137,7 +138,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                     )}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="message" className="form-label w-100 text-start">Your message</label>
+                    <label htmlFor="message" className="form-label w-100 text-start">Your message *</label>
                     <div className="input-group">
                         <span className="input-group-text"><MdRateReview /></span>
                         <textarea
@@ -174,7 +175,7 @@ export default function ContactForm({ ownerMail, city, category, info, name }) {
                         onChange={handleTermsChange}
                     />
                     <label htmlFor="terms" className="form-check-label">
-                        I accept the <a href='/terms' target="_blank">terms and conditions</a>
+                        I accept the <a href='/terms' target="_blank">terms and conditions </a>*
                     </label>
                 </div>
                 {errors.isTermsAccepted && (
